@@ -1,22 +1,14 @@
+import SwiftUI
 import XCTest
 @testable import PFToolbox
 
 final class NSMutableAttributedStringTests: XCTestCase {
     
-    #if canImport(UIKit)
-    let color: UIColor = .red
-    let font: UIFont = UIFont.systemFont(ofSize: 12)
-    #elseif canImport(AppKit)
-    let color: NSColor = .red
-    let font: NSFont = NSFont.systemFont(ofSize: 12)
-    #endif
-
-    
     func testAddingAttributes() throws {
         let text = "This is my string"
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: color,
-            .font: font
+            .foregroundColor: Color(.red),
+            .font: Font.system(size: 12)
         ]
 
         // Create an attributed string with the attributes
