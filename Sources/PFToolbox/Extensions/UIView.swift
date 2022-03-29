@@ -18,11 +18,6 @@ public extension UIView {
         !UIAccessibility.isReduceMotionEnabled
     }
 
-    /// Returns true if the flag is true and Reduce Motion is not enabled
-    static func shouldAnimate(_ flag: Bool) -> Bool {
-        flag && shouldAnimate
-    }
-
     /// Pins the edges of the view to a container with optional insets.
     func pinEdges(to container: UIView, with insets: UIEdgeInsets = .zero) {
         translatesAutoresizingMaskIntoConstraints = false

@@ -29,3 +29,15 @@ public extension Collection {
         return !isEmpty
     }
 }
+
+// MARK: - Equatable Collections
+
+public extension Collection where Self.Element: Equatable {
+    /// Returns true if the collection only contains the single element
+    func onlyContains(_ element: Self.Element) -> Bool {
+        guard count == 1 else {
+            return false
+        }
+        return contains(where: { $0 == element })
+    }
+}

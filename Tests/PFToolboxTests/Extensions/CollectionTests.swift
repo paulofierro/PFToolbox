@@ -44,4 +44,16 @@ final class CollectionTests: XCTestCase {
         XCTAssertTrue(dict.isEmptyOrNil)
         XCTAssertTrue(string.isEmptyOrNil)
     }
+    
+    func testOnlyContains() {
+        let invalidString = "ABC"
+        let validString = "A"
+        XCTAssertFalse(invalidString.onlyContains("A"))
+        XCTAssertTrue(validString.onlyContains("A"))
+
+        let invalidArray = ["A", "B", "C"]
+        let validArray = ["A"]
+        XCTAssertFalse(invalidArray.onlyContains("A"))
+        XCTAssertTrue(validArray.onlyContains("A"))
+    }
 }
