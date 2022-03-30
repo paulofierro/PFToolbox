@@ -12,7 +12,6 @@ public extension Data {
     /// Loads a file from the bundle path
     static func load(filename: String) throws -> Data? {
         let path = Bundle.appPath.appendingPathComponent(filename)
-        log.verbose("Loading file from \(path)")
         let contents = try? String(contentsOf: path)
         return contents?.data(using: .utf8)
     }
