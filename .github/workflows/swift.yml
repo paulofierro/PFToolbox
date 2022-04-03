@@ -26,4 +26,7 @@ jobs:
         run: swift build -v
 
       - name: Run tests
-        run: swift test -v
+        run: swift test -v --enable-code-coverage
+
+      - name: Calculate code coverage
+        run: xcrun llvm-cov report .build/x86_64-apple-macosx/debug/PFToolboxPackageTests.xctest/Contents/MacOS/PFToolboxPackageTests -instr-profile=.build/x86_64-apple-macosx/debug/codecov/default.profdata -ignore-filename-regex=".build|Tests"
