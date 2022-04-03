@@ -6,10 +6,13 @@
 //
 
 import CoreGraphics
+import Foundation
 
 public extension CGFloat {
 
     func degreesToRadians() -> CGFloat {
-        CGFloat(Double(self) * Double.pi / 180.0)
+        Measurement(value: self, unit: UnitAngle.degrees)
+            .converted(to: .radians)
+            .value
     }
 }
