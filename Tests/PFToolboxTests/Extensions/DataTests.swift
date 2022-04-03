@@ -3,6 +3,11 @@ import XCTest
 
 final class DataTests: XCTestCase {
     
+    func testLoadingData() throws {
+        let data = try Data.load(filename: "fileNotFound.txt")
+        XCTAssertNil(data)
+    }
+    
     func testPrettyPrinting() throws {
         let json = ["name": "Paulo"]
         let data = try JSONSerialization.data(withJSONObject: json)
@@ -13,5 +18,11 @@ final class DataTests: XCTestCase {
           "name" : "Paulo"
         }
         """)
+    }
+    
+    func testInvalidPrettyPrinting() throws {
+        let string = "Invalid JSON"
+        let data = string.data(using: .utf8)
+        XCTAssertNil(data?.prettyPrinted())
     }
 }

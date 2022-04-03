@@ -8,4 +8,10 @@ final class GenericErrorTests: XCTestCase {
         let error: GenericError = .custom(message)
         XCTAssertEqual(error.localizedDescription, message)
     }
+    
+    func testEquality() throws {
+        let message = "Something bad happened"
+        let error: GenericError = .custom(message)
+        XCTAssertEqual(error, GenericError.custom(message))
+    }
 }

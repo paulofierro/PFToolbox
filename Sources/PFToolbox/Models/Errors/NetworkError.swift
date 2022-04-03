@@ -21,19 +21,7 @@ public enum NetworkError: Error {
 
 extension NetworkError: LocalizedError {
     public var errorDescription: String? {
-        switch self {
-        case .authenticationError(let code),
-             .badRequest(let code),
-             .failed(let code),
-             .noData(let code),
-             .outdated(let code),
-             .notFound(let code),
-             .badResponse(let code):
-            return "\(self) [\(code)]"
-
-        case .invalidResponse:
-            return "\(self)"
-        }
+        "\(self)"
     }
 }
 

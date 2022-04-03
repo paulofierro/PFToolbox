@@ -38,7 +38,7 @@ public extension String {
 
     /// Returns a string at a specific index, or nil if the index is out of bounds
     subscript(safeIndex index: Int) -> String? {
-        guard index < count - 1 else {
+        guard index < count else {
             return nil
         }
         return self[index ..< index + 1]

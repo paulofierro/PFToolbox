@@ -19,6 +19,7 @@ final class StringTests: XCTestCase {
         let yesValue: String?
         let oneValue: String?
         let otherValue: String?
+        let nilValue: String? = nil
         
         trueValue = "true"
         yesValue = "yes"
@@ -29,6 +30,7 @@ final class StringTests: XCTestCase {
         XCTAssertTrue(yesValue.boolValue)
         XCTAssertTrue(oneValue.boolValue)
         XCTAssertFalse(otherValue.boolValue)
+        XCTAssertFalse(nilValue.boolValue)
     }
     
     func testValidEmails() {
@@ -73,15 +75,13 @@ final class StringTests: XCTestCase {
     }
     
     func testSubscript() {
-        let string = ["1", "2", "3"]
-        XCTAssertEqual(string[0], "1")
-        XCTAssertEqual(string[1], "2")
-        XCTAssertEqual(string[2], "3")
+        let string = "Hi"
+        XCTAssertEqual(string[0], "H")
+        XCTAssertEqual(string[1], "i")
 
         // Test safe accessing
-        XCTAssertEqual(string[safeIndex: 0], "1")
-        XCTAssertEqual(string[safeIndex: 1], "2")
-        XCTAssertEqual(string[safeIndex: 2], "3")
-        XCTAssertNil(string[safeIndex: 3]) // Yay, nil!
+        XCTAssertEqual(string[safeIndex: 0], "H")
+        XCTAssertEqual(string[safeIndex: 1], "i")
+        XCTAssertNil(string[safeIndex: 2]) // Yay, nil!
     }
 }

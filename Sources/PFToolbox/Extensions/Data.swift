@@ -23,7 +23,7 @@ public extension Data {
             return String(decoding: jsonData, as: UTF8.self)
         } else {
             let string = String(data: self, encoding: .utf8)
-            log.error("JSON data was malformed: \(string ?? "-")")
+            log.error("JSON data was malformed: \(String(describing: string))")
         }
         return nil
     }
