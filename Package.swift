@@ -12,16 +12,19 @@ let package = Package(
     products: [
         .library(
             name: "PFToolbox",
-            targets: ["PFToolbox"]),
+            targets: ["PFToolbox"]
+        ),
     ],
     dependencies: [
     ],
     targets: [
         .target(
             name: "PFToolbox",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "PFToolboxTests",
-            dependencies: ["PFToolbox"]),
+            dependencies: ["PFToolbox"]
+        ),
     ]
 )
