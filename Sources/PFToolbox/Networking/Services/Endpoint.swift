@@ -1,5 +1,5 @@
 //
-//  EndPoint.swift
+//  Endpoint.swift
 //  
 //
 //  Created by Paulo Fierro.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol EndPoint {
+public protocol Endpoint {
     var baseURL: URL { get }
     var path: String { get }
     var method: HTTPMethod { get }

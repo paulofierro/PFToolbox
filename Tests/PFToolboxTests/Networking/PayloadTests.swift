@@ -2,7 +2,7 @@
 //  PayloadTests.swift
 //  
 //
-//  Created by Paulo Fierro on 31/5/22.
+//  Created by Paulo Fierro.
 //
 
 @testable import PFToolbox
