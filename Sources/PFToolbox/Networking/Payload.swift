@@ -7,14 +7,14 @@
 
 import Foundation
 
-typealias JSON = [String: Any]
+public typealias JSON = [String: Any]
 
 /// An encodable object that can be encoded as JSON to be sent to the API.
-protocol Payload: Encodable {
+public protocol Payload: Encodable {
     func toJSON() -> JSON?
 }
 
-extension Payload {
+public extension Payload {
 
     /// Enables subscript behavior for objects
     subscript(key: String) -> Any? {
