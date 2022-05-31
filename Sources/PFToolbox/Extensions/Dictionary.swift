@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Dictionary {
+public extension Dictionary {
     /// Adds/overwrites all the values from the new dictionary
     mutating func merge(dict: [Key: Value]?) {
         guard let dict = dict else { return }
