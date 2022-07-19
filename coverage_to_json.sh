@@ -7,4 +7,4 @@
 ./coverage.sh export | \
   jq '.data[0].totals.functions.percent' | \
   awk '{printf("%.2f%%",$1)}' | \
-  ( percentage=($(< /dev/stdin)); echo "{\"schemaVersion\": 1, \"label\": \"Coverage\", \"message\": \"${percentage}\", \"color\": \"green\"}" )
+  ( percentage=($(< /dev/stdin)); echo "{\"schemaVersion\": 1, \"label\": \"Coverage\", \"message\": \"${percentage}\", \"color\": \"orange\"}" )

@@ -27,14 +27,8 @@ jobs:
       - name: Print coverage report
         run: ./coverage.sh report
 
-      - name: Print working dir
-        run: pwd
-
       - name: Output coverage JSON
         run: ./coverage_to_json.sh > coverage.json
-
-      - name: Output file
-        run: cat coverage.json
 
       - name: Deploy coverage to gist
         uses: exuanbo/actions-deploy-gist@v1
