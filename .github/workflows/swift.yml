@@ -24,8 +24,24 @@ jobs:
       - name: Run tests
         run: swift test -v --enable-code-coverage
 
-      - name: Code coverage report
+      - name: Print coverage report
         run: ./coverage.sh report
 
-      - name: Code coverage summary
-        run: ./coverage_to_json.sh
+      - name: Print working dir
+        run: pwd
+
+      - name: Output coverage JSON
+        run: ./coverage_to_json.sh > coverage.json
+
+      - name: Output file
+        run: cat coverage.json
+
+      - name: Deploy coverage to gist
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.GIST_TOKEN }}
+          gist_id: 0d822c078bd16551d701770cb6a47aa4
+          gist_description: PFToolbox code coverage
+          gist_file_name: PFToolbox_coverage.json
+          file_path: coverage.json
+          file_type: text
