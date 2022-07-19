@@ -28,4 +28,4 @@ jobs:
         run: xcrun llvm-cov report .build/x86_64-apple-macosx/debug/PFToolboxPackageTests.xctest/Contents/MacOS/PFToolboxPackageTests -instr-profile=.build/x86_64-apple-macosx/debug/codecov/default.profdata -ignore-filename-regex=".build|Tests"
 
       - name: Code coverage summary
-        run: xcrun llvm-cov export .build/x86_64-apple-macosx/debug/PFToolboxPackageTests.xctest/Contents/MacOS/PFToolboxPackageTests -instr-profile=.build/x86_64-apple-macosx/debug/codecov/default.profdata -ignore-filename-regex=".build|Tests" | jq '.data[0].totals.functions.percent'
+        run: xcrun llvm-cov export .build/x86_64-apple-macosx/debug/PFToolboxPackageTests.xctest/Contents/MacOS/PFToolboxPackageTests -instr-profile=.build/x86_64-apple-macosx/debug/codecov/default.profdata -ignore-filename-regex=".build|Tests" | jq '.data[0].totals.functions.percent' | awk '{printf("%.2f%% \n",$1)}'
