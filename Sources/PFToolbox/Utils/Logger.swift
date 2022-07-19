@@ -8,7 +8,7 @@
 import Foundation
 import os
 
-/// The global logger
+/// The global logger. Remember to create your own!
 public let log = Logger(subsystem: "com.paulofierro.PFToolbox", category: "PFToolbox")
 
 /// A simple logger.
@@ -71,6 +71,10 @@ public struct Logger {
     /// Creates an OSLog object using our specific subsystem
     private let logIdentifier: OSLog
     
+    /// Creates an instance of the logger
+    /// - Parameters:
+    ///   - subsystem: The subsystem to use for the logger, e.g. "com.paulofierro.MyApp"
+    ///   - category: The category to use for the logger, e.g. "MyApp"
     public init(subsystem: String, category: String) {
         logIdentifier = OSLog(
             subsystem: subsystem,
