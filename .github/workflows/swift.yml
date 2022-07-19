@@ -25,13 +25,7 @@ jobs:
         run: swift test -v --enable-code-coverage
 
       - name: Code coverage report
-        run: xcrun llvm-cov report .build/x86_64-apple-macosx/debug/PFToolboxPackageTests.xctest/Contents/MacOS/PFToolboxPackageTests -instr-profile=.build/x86_64-apple-macosx/debug/codecov/default.profdata -ignore-filename-regex=".build|Tests"
+        run: ./coverage.sh report
 
       - name: Code coverage summary
-        run: >
-              xcrun llvm-cov export .build/x86_64-apple-macosx/debug/PFToolboxPackageTests.xctest/Contents/MacOS/PFToolboxPackageTests \
-              -instr-profile=.build/x86_64-apple-macosx/debug/codecov/default.profdata \
-              -ignore-filename-regex=".build|Tests" | \
-              jq '.data[0].totals.functions.percent' | \
-              awk '{printf("%.2f%%",$1)}' | \
-              ( percentage=($(< /dev/stdin)); echo "{\"schemaVersion\": 1, \"label\": \"Coverage\", \"message\": \"${percentage}\", \"color\": \"green\"}" ) 
+        run: ./coverage_to_json.sh
