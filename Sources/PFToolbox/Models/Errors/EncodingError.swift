@@ -23,3 +23,9 @@ extension EncodingError: LocalizedError {
         }
     }
 }
+
+extension EncodingError: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.errorDescription == rhs.errorDescription
+    }
+}
