@@ -26,4 +26,11 @@ final class DictionaryTests: XCTestCase {
         XCTAssertEqual(one["a"], 1)
         XCTAssertEqual(one["b"], 3)
     }
+    
+    func testMergingNil() async throws {
+        var one = ["a": 1, "b": 2]
+        one.merge(dict: nil)
+        XCTAssertEqual(one["a"], 1)
+        XCTAssertEqual(one["b"], 2)
+    }
 }

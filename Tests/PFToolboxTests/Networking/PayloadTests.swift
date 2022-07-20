@@ -8,7 +8,7 @@
 @testable import PFToolbox
 import XCTest
 
-class PayloadTests: XCTestCase {
+final class PayloadTests: XCTestCase {
 
     struct UnencodablePayload: Payload {
         let name: String
@@ -21,5 +21,15 @@ class PayloadTests: XCTestCase {
     func testFailedEncode() {
         let payload = UnencodablePayload(name: "")
         XCTAssertNil(payload.toJSON())
+        XCTAssertNil(payload["name"])
+    }
+    
+    struct TestPayload: Payload {
+        let id: String
+    }
+    
+    func testSubscript() throws {
+        let test = TestPayload(id: "123")
+        XCTAssertEqual(try XCTUnwrap(test["id"] as? String), "123")
     }
 }
