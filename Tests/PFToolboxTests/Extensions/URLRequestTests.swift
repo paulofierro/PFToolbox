@@ -35,4 +35,35 @@ final class URLRequestTests: XCTestCase {
             XCTAssertFalse($0.isUploadMethod)
         }
     }
+    
+    func testAddingJSONPayload() throws {
+        // No payload
+        var request = URLRequest(url: URL(string: "https://paulofierro.com")!)
+        XCTAssertNil(request.httpBody)
+
+        let params: JSON = ["a": "1"]
+
+        // Add params
+        try? request.addJSONPayload(params)
+        XCTAssertNotNil(request.httpBody)
+
+        // Test the presence of the right header
+        XCTAssertNotNil(request.allHTTPHeaderFields)
+        let header = try XCTUnwrap(request.allHTTPHeaderFields?.first)
+        // Test its contents
+        XCTAssertEqual(header.key, HTTPHeaderField.contentType.rawValue)
+        XCTAssertEqual(header.value, HTTPHeaderValue.jsonContent.rawValue)
+    }
+    
+    func testAddingInvalidJSONPayload() {
+        // No payload
+        var request = URLRequest(url: URL(string: "https://paulofierro.com")!)
+        XCTAssertNil(request.httpBody)
+
+        let params: JSON = ["a": ()]
+        // Test error throwing
+        XCTAssertThrowsError(try request.addJSONPayload(params), "") { error in
+            XCTAssertEqual(error as? EncodingError, EncodingError.encodingFailed)
+        }
+    }
 }

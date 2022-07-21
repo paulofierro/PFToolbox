@@ -6,22 +6,25 @@ import PackageDescription
 let package = Package(
     name: "PFToolbox",
     platforms: [
-        .macOS(.v12),
+        .macOS(.v11),
         .iOS(.v13)
     ],
     products: [
         .library(
             name: "PFToolbox",
-            targets: ["PFToolbox"]),
+            targets: ["PFToolbox"]
+        ),
     ],
     dependencies: [
     ],
     targets: [
         .target(
             name: "PFToolbox",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "PFToolboxTests",
-            dependencies: ["PFToolbox"]),
+            dependencies: ["PFToolbox"]
+        ),
     ]
 )

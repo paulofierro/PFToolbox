@@ -1,6 +1,7 @@
 import XCTest
 @testable import PFToolbox
 
+#if canImport(AppKit)
 final class NSViewTests: XCTestCase {
     
     func testPinningEdges() throws {
@@ -17,3 +18,4 @@ final class NSViewTests: XCTestCase {
         XCTAssertTrue(view.constraints.isEmpty)
     }
 }
+#endif

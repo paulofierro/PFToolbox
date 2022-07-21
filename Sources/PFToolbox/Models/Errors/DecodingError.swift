@@ -20,3 +20,9 @@ extension DecodingError: LocalizedError {
         }
     }
 }
+
+extension DecodingError: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.errorDescription == rhs.errorDescription
+    }
+}

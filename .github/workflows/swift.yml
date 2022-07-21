@@ -10,14 +10,10 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-12
 
     steps:
       - uses: actions/checkout@v3
-
-      - uses: fwal/setup-swift@v1
-        with:
-          swift-version: '5.6'
 
       - name: Get Swift version
         run: swift --version
@@ -28,5 +24,18 @@ jobs:
       - name: Run tests
         run: swift test -v --enable-code-coverage
 
-      - name: Calculate code coverage
-        run: xcrun llvm-cov report .build/x86_64-apple-macosx/debug/PFToolboxPackageTests.xctest/Contents/MacOS/PFToolboxPackageTests -instr-profile=.build/x86_64-apple-macosx/debug/codecov/default.profdata -ignore-filename-regex=".build|Tests"
+      - name: Print coverage report
+        run: ./coverage.sh report
+
+      - name: Output coverage JSON
+        run: ./coverage_to_json.sh > coverage.json
+
+      - name: Deploy coverage to gist
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.GIST_TOKEN }}
+          gist_id: 0d822c078bd16551d701770cb6a47aa4
+          gist_description: PFToolbox code coverage
+          gist_file_name: PFToolbox_coverage.json
+          file_path: coverage.json
+          file_type: text

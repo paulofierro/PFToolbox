@@ -23,7 +23,7 @@ extension GenericError: LocalizedError {
 }
 
 extension GenericError: Equatable {
-    public static func == (lhs: GenericError, rhs: GenericError) -> Bool {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.errorDescription == rhs.errorDescription
     }
 }
