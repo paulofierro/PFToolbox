@@ -84,11 +84,7 @@ public struct Logger {
         #if DEBUG
         currentLogLevel = .debug
         #else
-        if RequestManager.shared.isUsingDev {
-            currentLogLevel = .debug
-        } else {
-            currentLogLevel = .error
-        }
+        currentLogLevel = .error
         #endif
         info("Created logger...")
     }
