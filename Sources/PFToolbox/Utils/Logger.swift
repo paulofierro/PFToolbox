@@ -17,7 +17,7 @@ public let log = Logger(subsystem: "com.paulofierro.PFToolbox", category: "PFToo
 ///     - Terminal: Run `log stream --level=debug --predicate 'subsystem contains "{{MY_SUBSYSTEM}}"'`
 public struct Logger {
     /// Defines the level of logs
-    private enum LogLevel: String {
+    public enum LogLevel: String {
         case none
         case error
         case warning
@@ -75,17 +75,12 @@ public struct Logger {
     /// - Parameters:
     ///   - subsystem: The subsystem to use for the logger, e.g. "com.paulofierro.MyApp"
     ///   - category: The category to use for the logger, e.g. "MyApp"
-    public init(subsystem: String, category: String) {
+    public init(subsystem: String, category: String, logLevel: LogLevel = .error) {
         logIdentifier = OSLog(
             subsystem: subsystem,
             category: category
         )
-        
-        #if DEBUG
-        currentLogLevel = .debug
-        #else
-        currentLogLevel = .error
-        #endif
+        currentLogLevel = logLevel
         info("Created logger...")
     }
 
