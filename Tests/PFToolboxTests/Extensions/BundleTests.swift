@@ -16,7 +16,7 @@ final class BundleTests: XCTestCase {
     
     func testVersionNumber() throws {
         let version = try XCTUnwrap(Bundle.main.versionNumber)
-        XCTAssertTrue(version.contains("13."))
+        XCTAssertTrue(version.contains("14."))
     }
     
     func testTeamIdentifier() throws {
