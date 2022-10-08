@@ -66,7 +66,7 @@ public struct Logger {
     }
 
     /// The default log level
-    private let currentLogLevel: LogLevel
+    public var logLevel: LogLevel
 
     /// Creates an OSLog object using our specific subsystem
     private let logIdentifier: OSLog
@@ -75,12 +75,12 @@ public struct Logger {
     /// - Parameters:
     ///   - subsystem: The subsystem to use for the logger, e.g. "com.paulofierro.MyApp"
     ///   - category: The category to use for the logger, e.g. "MyApp"
-    public init(subsystem: String, category: String, logLevel: LogLevel = .error) {
-        logIdentifier = OSLog(
+    public init(subsystem: String, category: String, logLevel: LogLevel = .debug) {
+        self.logIdentifier = OSLog(
             subsystem: subsystem,
             category: category
         )
-        currentLogLevel = logLevel
+        self.logLevel = logLevel
         info("Created logger...")
     }
 
@@ -113,7 +113,7 @@ extension Logger {
     /// Prints a message to the log if available
     // swiftlint:disable:next function_parameter_count
     private func printMessage(_ message: String, emoji: String, logLevel: LogLevel, file: String, line: Int, function: String) {
-        guard currentLogLevel.allowedLevels.contains(logLevel) else {
+        guard logLevel.allowedLevels.contains(logLevel) else {
             return
         }
 
