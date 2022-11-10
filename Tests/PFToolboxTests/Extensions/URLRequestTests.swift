@@ -1,5 +1,10 @@
-import XCTest
+//
+//   URLRequestTests.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
+//
+
 @testable import PFToolbox
+import XCTest
 
 final class URLRequestTests: XCTestCase {
     func testAddingHeaders() throws {
@@ -26,16 +31,16 @@ final class URLRequestTests: XCTestCase {
     func testUploadMethods() {
         let uploadMethods: [HTTPMethod] = [.post, .put, .patch]
         let downloadMethods: [HTTPMethod] = [.get, .delete]
-        
+
         uploadMethods.forEach {
             XCTAssertTrue($0.isUploadMethod)
         }
-        
+
         downloadMethods.forEach {
             XCTAssertFalse($0.isUploadMethod)
         }
     }
-    
+
     func testAddingJSONPayload() throws {
         // No payload
         var request = URLRequest(url: URL(string: "https://paulofierro.com")!)
@@ -54,7 +59,7 @@ final class URLRequestTests: XCTestCase {
         XCTAssertEqual(header.key, HTTPHeaderField.contentType.rawValue)
         XCTAssertEqual(header.value, HTTPHeaderValue.jsonContent.rawValue)
     }
-    
+
     func testAddingInvalidJSONPayload() {
         // No payload
         var request = URLRequest(url: URL(string: "https://paulofierro.com")!)

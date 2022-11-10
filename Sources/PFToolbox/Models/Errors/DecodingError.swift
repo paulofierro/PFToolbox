@@ -1,8 +1,6 @@
 //
-//  DecodingError.swift
-//  
-//
-//  Created by Paulo Fierro.
+//   DecodingError.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation

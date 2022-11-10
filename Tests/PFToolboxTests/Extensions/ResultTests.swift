@@ -1,5 +1,10 @@
-import XCTest
+//
+//   ResultTests.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
+//
+
 @testable import PFToolbox
+import XCTest
 
 final class ResultTests: XCTestCase {
     func testURLCreation() {
@@ -8,13 +13,13 @@ final class ResultTests: XCTestCase {
         case .success:
             // Do nothing
             break
-            
+
         case .failure:
             XCTFail("Result should not be a failure")
         }
     }
-    
+
     private func getResult() -> Result<Void, Error> {
-        return .success
+        .success
     }
 }

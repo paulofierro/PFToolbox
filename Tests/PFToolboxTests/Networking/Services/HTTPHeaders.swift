@@ -1,8 +1,12 @@
-import XCTest
+//
+//   HTTPHeaders.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
+//
+
 @testable import PFToolbox
+import XCTest
 
 final class HTTPHeadersTests: XCTestCase {
-    
     func testEquality() throws {
         XCTAssertEqual(HTTPHeaderValue.jsonContent.rawValue, "application/json")
         XCTAssertEqual(HTTPHeaderValue.basicAuthorization(token: "XYZ").rawValue, "Basic XYZ")

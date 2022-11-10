@@ -1,8 +1,6 @@
 //
-//  Result.swift
-//  
-//
-//  Created by Paulo Fierro.
+//   Result.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation

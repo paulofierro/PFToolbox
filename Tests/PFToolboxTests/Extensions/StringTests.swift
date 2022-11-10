@@ -1,5 +1,10 @@
-import XCTest
+//
+//   StringTests.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
+//
+
 @testable import PFToolbox
+import XCTest
 
 final class StringTests: XCTestCase {
     func testBoolValues() throws {
@@ -7,32 +12,32 @@ final class StringTests: XCTestCase {
         let yesValue = "yes"
         let oneValue = "1"
         let otherValue = "other"
-        
+
         XCTAssertTrue(trueValue.boolValue)
         XCTAssertTrue(yesValue.boolValue)
         XCTAssertTrue(oneValue.boolValue)
         XCTAssertFalse(otherValue.boolValue)
     }
-    
+
     func testOptionalBoolValues() throws {
         let trueValue: String?
         let yesValue: String?
         let oneValue: String?
         let otherValue: String?
         let nilValue: String? = nil
-        
+
         trueValue = "true"
         yesValue = "yes"
         oneValue = "1"
         otherValue = "other"
-        
+
         XCTAssertTrue(trueValue.boolValue)
         XCTAssertTrue(yesValue.boolValue)
         XCTAssertTrue(oneValue.boolValue)
         XCTAssertFalse(otherValue.boolValue)
         XCTAssertFalse(nilValue.boolValue)
     }
-    
+
     func testValidEmails() {
         let addresses: [String] = [
             "paulo@paulofierro.com",
@@ -45,7 +50,7 @@ final class StringTests: XCTestCase {
             XCTAssertTrue(address.isValidEmailAddress)
         }
     }
-    
+
     func testInvalidEmails() {
         let addresses: [String] = [
             "paulo.fierro?paulofierro.com",
@@ -58,7 +63,7 @@ final class StringTests: XCTestCase {
             XCTAssertFalse(address.isValidEmailAddress)
         }
     }
-    
+
     func testTrim() {
         let originalString = "This is a string"
         let string = "This is a string"
@@ -73,7 +78,7 @@ final class StringTests: XCTestCase {
         XCTAssertEqual(stringWithSpaces.trim(), originalString)
         XCTAssertEqual(stringWithNewlines.trim(), originalString)
     }
-    
+
     func testSubscript() {
         let string = "Hi"
         XCTAssertEqual(string[0], "H")

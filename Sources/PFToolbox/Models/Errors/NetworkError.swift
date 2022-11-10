@@ -1,8 +1,6 @@
 //
-//  NetworkError.swift
-//  
-//
-//  Created by Paulo Fierro.
+//   NetworkError.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -24,7 +22,6 @@ extension NetworkError: LocalizedError {
         "\(self)"
     }
 }
-
 
 extension NetworkError: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {

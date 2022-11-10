@@ -1,8 +1,6 @@
 //
-//  Logger.swift
-//  
-//
-//  Created by Paulo Fierro.
+//   Logger.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -70,13 +68,13 @@ public struct Logger {
 
     /// Creates an OSLog object using our specific subsystem
     private let logIdentifier: OSLog
-    
+
     /// Creates an instance of the logger
     /// - Parameters:
     ///   - subsystem: The subsystem to use for the logger, e.g. "com.paulofierro.MyApp"
     ///   - category: The category to use for the logger, e.g. "MyApp"
     public init(subsystem: String, category: String, logLevel: LogLevel = .debug) {
-        self.logIdentifier = OSLog(
+        logIdentifier = OSLog(
             subsystem: subsystem,
             category: category
         )

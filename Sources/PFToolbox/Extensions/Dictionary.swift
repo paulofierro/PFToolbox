@@ -1,8 +1,6 @@
 //
-//  Dictionary.swift
-//  
-//
-//  Created by Paulo Fierro on 31/5/22.
+//   Dictionary.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -10,8 +8,8 @@ import Foundation
 public extension Dictionary {
     /// Adds/overwrites all the values from the new dictionary
     mutating func merge(dict: [Key: Value]?) {
-        guard let dict = dict else { return }
-        
+        guard let dict else { return }
+
         for (k, v) in dict {
             updateValue(v, forKey: k)
         }

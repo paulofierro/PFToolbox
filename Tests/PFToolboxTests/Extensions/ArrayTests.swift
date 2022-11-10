@@ -1,5 +1,10 @@
-import XCTest
+//
+//   ArrayTests.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
+//
+
 @testable import PFToolbox
+import XCTest
 
 final class ArrayTests: XCTestCase {
     func testSafeIndex() {

@@ -1,19 +1,16 @@
 //
-//  Bundle.swift
-//  
-//
-//  Created by Paulo Fierro.
+//   Bundle.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation
 
 public extension Bundle {
-
     /// Returns the path to the app
     static var appPath: URL {
-        return Bundle.main.bundleURL.deletingLastPathComponent()
+        Bundle.main.bundleURL.deletingLastPathComponent()
     }
-    
+
     /// Returns the executable name
     var executableName: String? {
         infoDictionary?["CFBundleExecutable"] as? String
@@ -28,7 +25,7 @@ public extension Bundle {
     var versionNumber: String? {
         infoDictionary?["CFBundleShortVersionString"] as? String
     }
-    
+
     /// The team identifier prefix
     var teamIdentifierPrefix: String {
         infoDictionary?["TeamIdentifierPrefix"] as? String ?? ""

@@ -1,15 +1,12 @@
 //
-//  PayloadTests.swift
-//  
-//
-//  Created by Paulo Fierro.
+//   PayloadTests.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 @testable import PFToolbox
 import XCTest
 
 final class PayloadTests: XCTestCase {
-
     struct UnencodablePayload: Payload {
         let name: String
 
@@ -23,11 +20,11 @@ final class PayloadTests: XCTestCase {
         XCTAssertNil(payload.toJSON())
         XCTAssertNil(payload["name"])
     }
-    
+
     struct TestPayload: Payload {
         let id: String
     }
-    
+
     func testSubscript() throws {
         let test = TestPayload(id: "123")
         XCTAssertEqual(try XCTUnwrap(test["id"] as? String), "123")

@@ -1,5 +1,10 @@
-import XCTest
+//
+//   PFToolboxTests.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
+//
+
 @testable import PFToolbox
+import XCTest
 
 final class PFToolboxTests: XCTestCase {
     func testExample() throws {

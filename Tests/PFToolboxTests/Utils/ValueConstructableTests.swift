@@ -1,5 +1,10 @@
-import XCTest
+//
+//   ValueConstructableTests.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
+//
+
 @testable import PFToolbox
+import XCTest
 
 class ValueConstructableTests: XCTestCase {
     enum StringEnum: String, ValueConstructable {
@@ -37,7 +42,7 @@ class ValueConstructableTests: XCTestCase {
         XCTAssertEqual(StringEnum.from(""), StringEnum.one)
         XCTAssertEqual(IntEnum.from(nil), IntEnum.one)
     }
-    
+
     func testOptionalDefaultValue() throws {
         let value: String? = ""
         XCTAssertEqual(StringEnum.from(value), StringEnum.one)

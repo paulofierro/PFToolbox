@@ -1,15 +1,12 @@
 //
-//  DictionaryTests.swift
-//  
-//
-//  Created by Paulo Fierro.
+//   DictionaryTests.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
-import XCTest
 @testable import PFToolbox
+import XCTest
 
 final class DictionaryTests: XCTestCase {
-    
     func testMerging() async throws {
         var one = ["a": 1, "b": 2]
         let two = ["c": 3]
@@ -18,7 +15,7 @@ final class DictionaryTests: XCTestCase {
         XCTAssertEqual(one["b"], 2)
         XCTAssertEqual(one["c"], 3)
     }
-    
+
     func testMergingOverwrite() async throws {
         var one = ["a": 1, "b": 2]
         let two = ["b": 3]
@@ -26,7 +23,7 @@ final class DictionaryTests: XCTestCase {
         XCTAssertEqual(one["a"], 1)
         XCTAssertEqual(one["b"], 3)
     }
-    
+
     func testMergingNil() async throws {
         var one = ["a": 1, "b": 2]
         one.merge(dict: nil)

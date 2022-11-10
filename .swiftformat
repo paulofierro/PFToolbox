@@ -1,0 +1,19 @@
+# SwiftFormat configuration
+#
+# Rules: https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md
+#
+
+--header "\n  {file}\n  Copyright © {year} Paulo Fierro. All rights reserved.\n"
+--swiftversion 5.7
+
+#
+# NOTES:
+#
+# hoistPatternLet   - 🤢 can be enabled, but not a fan.
+# trailingClosures  – 👎 we prefer explicit closures
+# trailingCommas    - 👎 these aren't useful
+# unusedArguments   - 👎 removing args that aren't in use isn't useful
+# wrapMultilineStatementBraces - 👎 no thanks
+#
+
+--disable hoistPatternLet, trailingClosures, trailingCommas, unusedArguments, wrapMultilineStatementBraces

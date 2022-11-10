@@ -1,8 +1,6 @@
 //
-//  HTTPHeaders.swift
-//  
-//
-//  Created by Paulo Fierro.
+//   HTTPHeaders.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -27,7 +25,7 @@ public enum HTTPHeaderValue {
     case noCache
     case gzipEncoding
     case generic(string: String)
-    
+
     var rawValue: String {
         switch self {
         case .jsonContent:

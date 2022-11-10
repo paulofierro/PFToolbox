@@ -1,8 +1,6 @@
 //
-//  Endpoint.swift
-//  
-//
-//  Created by Paulo Fierro.
+//   Endpoint.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation

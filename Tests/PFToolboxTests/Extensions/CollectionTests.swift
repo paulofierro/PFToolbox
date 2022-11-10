@@ -1,5 +1,10 @@
-import XCTest
+//
+//   CollectionTests.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
+//
+
 @testable import PFToolbox
+import XCTest
 
 final class CollectionTests: XCTestCase {
     func testIsNotEmpty() {
@@ -44,7 +49,7 @@ final class CollectionTests: XCTestCase {
         XCTAssertTrue(dict.isEmptyOrNil)
         XCTAssertTrue(string.isEmptyOrNil)
     }
-    
+
     func testOnlyContains() {
         let invalidString = "ABC"
         let validString = "A"

@@ -1,8 +1,12 @@
-import XCTest
+//
+//   NetworkErrorTests.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
+//
+
 @testable import PFToolbox
+import XCTest
 
 final class NetworkErrorTests: XCTestCase {
-    
     func testEquality() throws {
         XCTAssertEqual(NetworkError.authenticationError(400).localizedDescription, "authenticationError(400)")
         XCTAssertEqual(NetworkError.badRequest(300).localizedDescription, "badRequest(300)")

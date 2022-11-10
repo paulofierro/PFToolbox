@@ -1,8 +1,6 @@
 //
-//  HTTPTask.swift
-//  
-//
-//  Created by Paulo Fierro on 31/5/22.
+//   HTTPTask.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation

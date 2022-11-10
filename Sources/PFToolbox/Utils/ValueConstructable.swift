@@ -1,20 +1,18 @@
 //
-//  ValueConstructable.swift
-//  
-//
-//  Created by Paulo Fierro on 17/8/22.
+//   ValueConstructable.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 public protocol ValueConstructable {
     // Defines the value type that is stored
     associatedtype Item
-    
+
     /// The default value to use when none can be found for the value that was provided.
     static func defaultValue() -> Self
-    
+
     /// Returns the case for this enum that can be constructed from the value.
     static func from(_ value: Item) -> Self
-    
+
     /// Returns the case for this enum that can be constructed from the optional value.
     static func from(_ value: Item?) -> Self
 }
@@ -32,7 +30,7 @@ public extension ValueConstructable where Self: RawRepresentable, Self.RawValue 
 
     /// Returns a case based on the optional, raw value passed in, or the default value if none is found.
     static func from(_ value: Item?) -> Self {
-        guard let value = value else {
+        guard let value else {
             return defaultValue()
         }
         return from(value)

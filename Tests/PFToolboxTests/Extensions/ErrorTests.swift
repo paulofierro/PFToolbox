@@ -1,5 +1,10 @@
-import XCTest
+//
+//   ErrorTests.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
+//
+
 @testable import PFToolbox
+import XCTest
 
 final class ErrorTests: XCTestCase {
     let url = URL.from(string: "http://paulofierro.com")

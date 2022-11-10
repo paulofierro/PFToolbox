@@ -1,24 +1,21 @@
 //
-//  String.swift
-//  
-//
-//  Created by Paulo Fierro.
+//   String.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation
 
 public extension String {
-
     /// Matches the behaviour found in NSString
     var boolValue: Bool {
-        switch self.lowercased() {
+        switch lowercased() {
         case "true", "yes", "1":
             return true
         default:
             return false
         }
     }
-    
+
     /// Returns true if the string is a valid email address
     var isValidEmailAddress: Bool {
         let pattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -35,7 +32,6 @@ public extension String {
 // MARK: - Subscript Helpers
 
 public extension String {
-
     /// Returns a string at a specific index, or nil if the index is out of bounds
     subscript(safeIndex index: Int) -> String? {
         guard index < count else {
@@ -63,10 +59,10 @@ public extension String {
     }
 }
 
-public extension Optional where Wrapped == String {
+public extension String? {
     /// Matches the behaviour found in NSString
     var boolValue: Bool {
-        guard let self = self else {
+        guard let self else {
             return false
         }
         return self.boolValue

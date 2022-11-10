@@ -1,8 +1,6 @@
 //
-//  URLRequest.swift
-//  
-//
-//  Created by Paulo Fierro.
+//   URLRequest.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -10,14 +8,14 @@ import Foundation
 public extension URLRequest {
     /// Adds HTTP headers to a request
     mutating func addHeaders(_ headers: HTTPHeaders?) {
-        guard let headers = headers else {
+        guard let headers else {
             return
         }
         for (key, value) in headers {
             setValue(value.rawValue, forHTTPHeaderField: key.rawValue)
         }
     }
-    
+
     /// Add a JSON payload to a request. Also adds required HTTP headers if these are missing
     mutating func addJSONPayload(_ json: JSON) throws {
         do {
@@ -26,9 +24,9 @@ public extension URLRequest {
             }
             httpBody = try JSONSerialization.data(withJSONObject: json)
             #if DEBUG
-            if let prettyJSON = httpBody?.prettyPrinted() {
-                log.debug("JSON: \(prettyJSON)")
-            }
+                if let prettyJSON = httpBody?.prettyPrinted() {
+                    log.debug("JSON: \(prettyJSON)")
+                }
             #endif
 
             // Add the content-type header if its not already present
@@ -40,6 +38,7 @@ public extension URLRequest {
 }
 
 // MARK: - Helpers
+
 extension URLRequest {
     /// Adds the content-type header if its not already present
     private mutating func addContentTypeHeader(for type: String) {

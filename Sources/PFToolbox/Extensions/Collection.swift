@@ -1,17 +1,14 @@
 //
-//  Collection.swift
-//  
-//
-//  Created by Paulo Fierro.
+//   Collection.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation
 
 public extension Optional where Wrapped: Collection {
-
     /// Sugar for asking an optional collection if it's both not empty and contains elements
     var isNotEmpty: Bool {
-        return !isEmptyOrNil
+        !isEmptyOrNil
     }
 
     /// Sugar for asking an optional collection if it's either empty or nil
@@ -26,7 +23,7 @@ public extension Optional where Wrapped: Collection {
 public extension Collection {
     /// Sugar for asking an collection if it's not empty
     var isNotEmpty: Bool {
-        return !isEmpty
+        !isEmpty
     }
 }
 

@@ -1,8 +1,6 @@
 //
-//  Payload.swift
-//  
-//
-//  Created by Paulo Fierro on 31/5/22.
+//   Payload.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -15,10 +13,9 @@ public protocol Payload: Encodable {
 }
 
 public extension Payload {
-
     /// Enables subscript behavior for objects
     subscript(key: String) -> Any? {
-        guard let jsonObj = self.toJSON() else {
+        guard let jsonObj = toJSON() else {
             return nil
         }
         return jsonObj[key]
@@ -29,7 +26,7 @@ public extension Payload {
         let encoder = JSONEncoder()
 
         guard let data = try? encoder.encode(self),
-            let jsonObj = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? JSON else {
+              let jsonObj = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? JSON else {
             return nil
         }
         return jsonObj

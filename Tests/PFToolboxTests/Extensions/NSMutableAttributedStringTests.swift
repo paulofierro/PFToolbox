@@ -1,9 +1,13 @@
+//
+//   NSMutableAttributedStringTests.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
+//
+
+@testable import PFToolbox
 import SwiftUI
 import XCTest
-@testable import PFToolbox
 
 final class NSMutableAttributedStringTests: XCTestCase {
-    
     func testAddingAttributes() throws {
         let text = "This is my string"
         let attributes: [NSAttributedString.Key: Any] = [

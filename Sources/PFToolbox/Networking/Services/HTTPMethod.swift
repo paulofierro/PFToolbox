@@ -1,8 +1,6 @@
 //
-//  HTTPMethod.swift
-//  
-//
-//  Created by Paulo Fierro.
+//   HTTPMethod.swift
+//   Copyright © 2022 Paulo Fierro. All rights reserved.
 //
 
 import Foundation
