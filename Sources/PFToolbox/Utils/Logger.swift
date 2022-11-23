@@ -108,7 +108,6 @@ public struct Logger {
 // MARK: - Private Methods
 
 extension Logger {
-    /// Prints a message to the log if available
     // swiftlint:disable:next function_parameter_count
     private func printMessage(_ message: String, emoji: String, logLevel: LogLevel, file: String, line: Int, function: String) {
         guard logLevel.allowedLevels.contains(logLevel) else {

@@ -10,8 +10,8 @@ public extension Dictionary {
     mutating func merge(dict: [Key: Value]?) {
         guard let dict else { return }
 
-        for (k, v) in dict {
-            updateValue(v, forKey: k)
+        for (key, value) in dict {
+            updateValue(value, forKey: key)
         }
     }
 }
