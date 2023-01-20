@@ -13,7 +13,7 @@ let package = Package(
         .library(
             name: "PFToolbox",
             targets: ["PFToolbox"]
-        ),
+        )
     ],
     dependencies: [
     ],
@@ -25,6 +25,6 @@ let package = Package(
         .testTarget(
             name: "PFToolboxTests",
             dependencies: ["PFToolbox"]
-        ),
+        )
     ]
 )

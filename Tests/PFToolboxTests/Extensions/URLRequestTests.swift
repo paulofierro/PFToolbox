@@ -7,9 +7,11 @@
 import XCTest
 
 final class URLRequestTests: XCTestCase {
+    private let url = URL.from(string: "https://paulofierro.com")
+
     func testAddingHeaders() throws {
         // No headers
-        var request = URLRequest(url: URL(string: "https://paulofierro.com")!)
+        var request = URLRequest(url: url)
         XCTAssertNil(request.allHTTPHeaderFields)
 
         // Add nothing
@@ -43,7 +45,7 @@ final class URLRequestTests: XCTestCase {
 
     func testAddingJSONPayload() throws {
         // No payload
-        var request = URLRequest(url: URL(string: "https://paulofierro.com")!)
+        var request = URLRequest(url: url)
         XCTAssertNil(request.httpBody)
 
         let params: JSON = ["a": "1"]
@@ -62,7 +64,7 @@ final class URLRequestTests: XCTestCase {
 
     func testAddingInvalidJSONPayload() {
         // No payload
-        var request = URLRequest(url: URL(string: "https://paulofierro.com")!)
+        var request = URLRequest(url: url)
         XCTAssertNil(request.httpBody)
 
         let params: JSON = ["a": ()]
