@@ -6,3 +6,5 @@ xcuserdata/
 DerivedData/
 .swiftpm/
 .netrc
+*.profraw
+/lcov.info

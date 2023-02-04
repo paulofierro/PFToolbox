@@ -24,12 +24,10 @@ jobs:
       - name: Output coverage
         run: ./coverage.sh
 
-      - name: Deploy coverage to gist
-        uses: exuanbo/actions-deploy-gist@v1
+      - uses: codecov/codecov-action@v3
         with:
-          token: ${{ secrets.GIST_TOKEN }}
-          gist_id: 0d822c078bd16551d701770cb6a47aa4
-          gist_description: PFToolbox code coverage
-          gist_file_name: PFToolbox_coverage.json
-          file_path: coverage.json
-          file_type: text
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./lcov.info
+          name: codecov-umbrella
+          verbose: true
+        

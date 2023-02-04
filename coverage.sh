@@ -7,22 +7,22 @@
 
 BUILD_PATH="./.build/"
 PACKAGE_NAME="PFToolbox"
-
-#
-# Extracts the LLVM code coverage as either a tabular report or export (JSON)
-#
-extractCoverage() {
-  xcrun llvm-cov $1 ${BUILD_PATH}/x86_64-apple-macosx/debug/${PACKAGE_NAME}PackageTests.xctest/Contents/MacOS/${PACKAGE_NAME}PackageTests \
-    -instr-profile=${BUILD_PATH}/x86_64-apple-macosx/debug/codecov/default.profdata \
-    -ignore-filename-regex="${BUILD_PATH}|Tests"
-}
+OUTPUT_FILE="lcov.info"
+COVERAGE_PATH="${BUILD_PATH}/x86_64-apple-macosx/debug/${PACKAGE_NAME}PackageTests.xctest/Contents/MacOS/${PACKAGE_NAME}PackageTests"
+PROFILE="${BUILD_PATH}/x86_64-apple-macosx/debug/codecov/default.profdata"
+IGNORE="${BUILD_PATH}|Tests"
 
 # Print out the tabular report
-extractCoverage report
+xcrun llvm-cov report ${COVERAGE_PATH} \
+    -instr-profile=${PROFILE} \
+    -ignore-filename-regex=${IGNORE} \
+    -use-color
 
-# Convert the exported JSON into our own format and save it as coverage.json
-extractCoverage export | \
-  jq '.data[0].totals.functions.percent' | \
-  awk '{printf("%.2f%%",$1)}' | \
-  ( percentage=($(< /dev/stdin)); echo "{\"schemaVersion\": 1, \"label\": \"Coverage\", \"message\": \"${percentage}\", \"color\": \"orange\"}" ) \
-  > coverage.json
+# Convert the report as LCOV which Codecov.io can upload
+xcrun llvm-cov export ${COVERAGE_PATH} \
+    -instr-profile=${PROFILE} \
+    -ignore-filename-regex=${IGNORE} \
+    -format=lcov \
+    > ${OUTPUT_FILE}
+
+echo "Code coverage exported to ${OUTPUT_FILE}"
