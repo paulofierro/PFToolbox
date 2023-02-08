@@ -1,6 +1,6 @@
 //
 //   PFToolbox.swift
-//   Copyright © 2022 Paulo Fierro. All rights reserved.
+//   Copyright © 2023 Paulo Fierro. All rights reserved.
 //
 
 public struct PFToolbox {
