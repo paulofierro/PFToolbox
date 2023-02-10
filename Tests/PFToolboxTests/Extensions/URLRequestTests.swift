@@ -92,4 +92,22 @@ final class URLRequestTests: XCTestCase {
         XCTAssertEqual(header.key, HTTPHeaderField.contentType.rawValue)
         XCTAssertEqual(header.value, HTTPHeaderValue.urlEncodedFormContent.rawValue)
     }
+    
+    func testCreatingRequestWithMethods() throws {
+        let url = URL.from(string: "http://jadehopper.com")
+        let getRequest = URLRequest(url: url)
+        XCTAssertEqual(getRequest.httpMethod, "GET")
+        
+        let postRequest = URLRequest(url: url, httpMethod: .post)
+        XCTAssertEqual(postRequest.httpMethod, "POST")
+        
+        let putRequest = URLRequest(url: url, httpMethod: .put)
+        XCTAssertEqual(putRequest.httpMethod, "PUT")
+        
+        let patchRequest = URLRequest(url: url, httpMethod: .patch)
+        XCTAssertEqual(patchRequest.httpMethod, "PATCH")
+        
+        let deleteRequest = URLRequest(url: url, httpMethod: .delete)
+        XCTAssertEqual(deleteRequest.httpMethod, "DELETE")
+    }
 }

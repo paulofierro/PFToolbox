@@ -6,6 +6,20 @@
 import Foundation
 
 public extension URLRequest {
+    /// Creates and initializes a URLRequest with the given URL and cache policy.
+    /// - parameter: url The URL for the request.
+    /// - parameter: httpMethod The HTTP method to use for the request
+    /// - parameter: cachePolicy The cache policy for the request. Defaults to `.useProtocolCachePolicy`
+    /// - parameter: timeoutInterval The timeout interval for the request. See the commentary for the `timeoutInterval` for more information on timeout intervals. Defaults to 60.0
+    init(url: URL, httpMethod: HTTPMethod, cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy, timeoutInterval: TimeInterval = 60.0) {
+        self.init(
+            url: url,
+            cachePolicy: cachePolicy,
+            timeoutInterval: timeoutInterval
+        )
+        self.httpMethod = httpMethod.rawValue
+    }
+
     /// Adds HTTP headers to a request
     mutating func addHeaders(_ headers: HTTPHeaders?) {
         guard let headers else {
