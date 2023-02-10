@@ -30,10 +30,22 @@ public extension URLRequest {
             #endif
 
             // Add the content-type header if its not already present
-            addContentTypeHeader(for: HTTPHeaderValue.jsonContent.rawValue)
+            addContentTypeHeader(for: .jsonContent)
         } catch {
             throw EncodingError.encodingFailed
         }
+    }
+    
+    /// Adds a dictionary of string values to a request. Also adds required HTTP headers if these are missing
+    mutating func addURLEncodedForm(params: [String : String]) throws {
+        let parameters = params.map { key, value in
+            "\(key)=\(value.percentEscapeString())"
+        }
+
+        httpBody = parameters
+            .joined(separator: "&")
+            .data(using: .utf8)
+        addContentTypeHeader(for: .urlEncodedFormContent)
     }
 }
 
@@ -41,11 +53,11 @@ public extension URLRequest {
 
 extension URLRequest {
     /// Adds the content-type header if its not already present
-    private mutating func addContentTypeHeader(for type: String) {
+    private mutating func addContentTypeHeader(for type: HTTPHeaderValue) {
         // Add the content-type header if its not already present
         let contentType = HTTPHeaderField.contentType.rawValue
-        if value(forHTTPHeaderField: type) == nil {
-            setValue(type, forHTTPHeaderField: contentType)
+        if value(forHTTPHeaderField: type.rawValue) == nil {
+            setValue(type.rawValue, forHTTPHeaderField: contentType)
         }
     }
 }

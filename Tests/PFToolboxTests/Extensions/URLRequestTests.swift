@@ -61,7 +61,7 @@ final class URLRequestTests: XCTestCase {
         XCTAssertEqual(header.key, HTTPHeaderField.contentType.rawValue)
         XCTAssertEqual(header.value, HTTPHeaderValue.jsonContent.rawValue)
     }
-
+    
     func testAddingInvalidJSONPayload() {
         // No payload
         var request = URLRequest(url: url)
@@ -72,5 +72,24 @@ final class URLRequestTests: XCTestCase {
         XCTAssertThrowsError(try request.addJSONPayload(params), "") { error in
             XCTAssertEqual(error as? EncodingError, EncodingError.encodingFailed)
         }
+    }
+    
+    func testAddingFormPayload() throws {
+        // No payload
+        var request = URLRequest(url: url)
+        XCTAssertNil(request.httpBody)
+
+        let params = ["a": "1"]
+
+        // Add params
+        try? request.addURLEncodedForm(params: params)
+        XCTAssertNotNil(request.httpBody)
+
+        // Test the presence of the right header
+        XCTAssertNotNil(request.allHTTPHeaderFields)
+        let header = try XCTUnwrap(request.allHTTPHeaderFields?.first)
+        // Test its contents
+        XCTAssertEqual(header.key, HTTPHeaderField.contentType.rawValue)
+        XCTAssertEqual(header.value, HTTPHeaderValue.urlEncodedFormContent.rawValue)
     }
 }

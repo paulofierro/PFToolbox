@@ -27,6 +27,19 @@ public extension String {
     func trim() -> String {
         trimmingCharacters(in: .whitespacesAndNewlines)
     }
+    
+    /// Adds percent escaping to a string, or returns the original if adding percent encoding fails
+    func percentEscapeString() -> String {
+        let characters = CharacterSet(charactersIn: "-._* ")
+            .union(.alphanumerics)
+        
+        guard let string = addingPercentEncoding(withAllowedCharacters: characters) else {
+            return self
+        }
+        return string
+            .replacingOccurrences(of: " ", with: "+")
+            .replacingOccurrences(of: " ", with: "+", options: [], range: nil)
+      }
 }
 
 // MARK: - Subscript Helpers
@@ -58,6 +71,8 @@ public extension String {
         return String(self[start ..< end])
     }
 }
+
+// MARK: - Optional Helpers
 
 public extension String? {
     /// Matches the behaviour found in NSString

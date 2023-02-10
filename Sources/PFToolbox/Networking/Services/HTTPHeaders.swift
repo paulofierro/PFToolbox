@@ -19,6 +19,7 @@ public enum HTTPHeaderField: String {
 
 public enum HTTPHeaderValue {
     case jsonContent
+    case urlEncodedFormContent
     case basicAuthorization(token: String)
     case bearer(token: String)
     case safariUserAgent
@@ -30,6 +31,8 @@ public enum HTTPHeaderValue {
         switch self {
         case .jsonContent:
             return "application/json"
+        case .urlEncodedFormContent:
+            return "application/x-www-form-urlencoded"
         case .basicAuthorization(let token):
             return "Basic \(token)"
         case .bearer(let token):
