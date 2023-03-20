@@ -90,6 +90,15 @@ final class StringTests: XCTestCase {
         XCTAssertNil(string[safeIndex: 2]) // Yay, nil!
     }
 
+    func testPercentEscapingInvalidString() throws {
+        let bytes: [UInt8] = [0xD8, 0x00]
+        let invalidString = try XCTUnwrap(String(
+            bytes: bytes,
+            encoding: .utf16BigEndian
+        ))
+        XCTAssertEqual(invalidString, invalidString.percentEscapeString())
+    }
+
     func testPercentEscapingString() {
         var string = "a_b.c*d"
         XCTAssertEqual(string, string.percentEscapeString())
@@ -99,11 +108,5 @@ final class StringTests: XCTestCase {
 
         string = "paulo@paulofierro.com"
         XCTAssertEqual("paulo%40paulofierro.com", string.percentEscapeString())
-
-        let invalidString = String(
-            bytes: [0xD8, 0x00] as [UInt8],
-            encoding: .utf16BigEndian
-        )
-        XCTAssertEqual(invalidString, invalidString?.percentEscapeString())
     }
 }
