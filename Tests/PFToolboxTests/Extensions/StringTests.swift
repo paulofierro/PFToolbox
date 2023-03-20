@@ -99,5 +99,11 @@ final class StringTests: XCTestCase {
 
         string = "paulo@paulofierro.com"
         XCTAssertEqual("paulo%40paulofierro.com", string.percentEscapeString())
+
+        let invalidString = String(
+            bytes: [0xD8, 0x00] as [UInt8],
+            encoding: .utf16BigEndian
+        )
+        XCTAssertEqual(invalidString, invalidString?.percentEscapeString())
     }
 }

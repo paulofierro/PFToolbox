@@ -140,7 +140,7 @@ final class URLRequestTests: XCTestCase {
         let deleteRequest = URLRequest(url: url, httpMethod: .delete)
         XCTAssertEqual(deleteRequest.httpMethod, "DELETE")
     }
-    
+
     func testAddingURLParams() throws {
         let username = "paulo"
         let password = "password"
@@ -153,7 +153,7 @@ final class URLRequestTests: XCTestCase {
         )
         XCTAssertEqual(request.url?.absoluteString, "\(url.absoluteString)?password=\(password)&username=\(username)")
     }
-    
+
     func testAddingNoURLParams() throws {
         var request = URLRequest(url: url)
         request.addURLParameters([:])
