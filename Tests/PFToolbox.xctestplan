@@ -1,0 +1,32 @@
+{
+  "configurations" : [
+    {
+      "id" : "2AD43CED-385E-46AA-8A31-9CF6CE26CE20",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "PFToolbox",
+          "name" : "PFToolbox"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "PFToolboxTests",
+        "name" : "PFToolboxTests"
+      }
+    }
+  ],
+  "version" : 1
+}

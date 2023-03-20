@@ -61,10 +61,30 @@ public struct Logger {
                 return [.error, .warning, .info, .debug]
             }
         }
+
+        /// Returns the corresponding emoji
+        var emoji: String {
+            switch self {
+            case .error:
+                return "‼️‼️‼️"
+
+            case .warning:
+                return "⚠️⚠️⚠️"
+
+            case .info:
+                return "✳️✳️✳️"
+
+            case .debug:
+                return "🔹🔹🔹"
+
+            default:
+                return ""
+            }
+        }
     }
 
     /// The default log level
-    public var logLevel: LogLevel
+    internal var currentLogLevel: LogLevel
 
     /// Creates an OSLog object using our specific subsystem
     private let logIdentifier: OSLog
@@ -78,40 +98,45 @@ public struct Logger {
             subsystem: subsystem,
             category: category
         )
-        self.logLevel = logLevel
-        info("Created logger...")
+        currentLogLevel = logLevel
     }
 
     // MARK: - Public Methods
 
     /// Prints a debug message
-    public func debug(_ message: String, file: String = #fileID, line: Int = #line, function: String = #function) {
-        printMessage(message, emoji: "🔹🔹🔹", logLevel: .debug, file: file, line: line, function: function)
+    @discardableResult
+    public func debug(_ message: String?, file: String = #fileID, line: Int = #line, function: String = #function) -> Bool {
+        printMessage(message, logLevel: .debug, file: file, line: line, function: function)
     }
 
     /// Prints an informative message
-    public func info(_ message: String, file: String = #fileID, line: Int = #line, function: String = #function) {
-        printMessage(message, emoji: "🔸🔸🔸", logLevel: .info, file: file, line: line, function: function)
+    @discardableResult
+    public func info(_ message: String?, file: String = #fileID, line: Int = #line, function: String = #function) -> Bool {
+        printMessage(message, logLevel: .info, file: file, line: line, function: function)
     }
 
     /// Prints a warning message
-    public func warn(_ message: String, file: String = #fileID, line: Int = #line, function: String = #function) {
-        printMessage(message, emoji: "⚠️⚠️⚠️", logLevel: .warning, file: file, line: line, function: function)
+    @discardableResult
+    public func warn(_ message: String?, file: String = #fileID, line: Int = #line, function: String = #function) -> Bool {
+        printMessage(message, logLevel: .warning, file: file, line: line, function: function)
     }
 
     /// Prints an error message
-    public func error(_ message: String, file: String = #fileID, line: Int = #line, function: String = #function) {
-        printMessage(message, emoji: "‼️‼️‼️", logLevel: .error, file: file, line: line, function: function)
+    @discardableResult
+    public func error(_ message: String?, file: String = #fileID, line: Int = #line, function: String = #function) -> Bool {
+        printMessage(message, logLevel: .error, file: file, line: line, function: function)
     }
 }
 
 // MARK: - Private Methods
 
 extension Logger {
-    // swiftlint:disable:next function_parameter_count
-    private func printMessage(_ message: String, emoji: String, logLevel: LogLevel, file: String, line: Int, function: String) {
-        guard logLevel.allowedLevels.contains(logLevel) else {
-            return
+    /// Prints a message to the log if available
+    @discardableResult
+    private func printMessage(_ message: String?, logLevel: LogLevel, file: String, line: Int, function: String) -> Bool {
+        guard let message else { return false }
+        guard currentLogLevel.allowedLevels.contains(logLevel) else {
+            return false
         }
 
         // Figure out where the log message came from
@@ -127,7 +152,8 @@ extension Logger {
             "%{public}@ %{public}@ %{public}@",
             log: logIdentifier,
             type: logLevel.logType,
-            emitter, emoji, message
+            emitter, logLevel.emoji, message
         )
+        return true
     }
 }
