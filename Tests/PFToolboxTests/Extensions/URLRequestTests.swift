@@ -9,7 +9,7 @@ import XCTest
 final class URLRequestTests: XCTestCase {
     private let url = URL.from(string: "https://paulofierro.com")
 
-    func testAddingHeaders() throws {
+    func testAddingHeaderArray() throws {
         // No headers
         var request = URLRequest(url: url)
         XCTAssertNil(request.allHTTPHeaderFields)
@@ -28,6 +28,36 @@ final class URLRequestTests: XCTestCase {
         let header = try XCTUnwrap(request.allHTTPHeaderFields?[HTTPHeaderField.contentType.rawValue])
         // Test its contents
         XCTAssertEqual(header, value)
+    }
+
+    func testAddingDefinedHeader() throws {
+        // No headers
+        var request = URLRequest(url: url)
+        XCTAssertNil(request.allHTTPHeaderFields)
+
+        request.addValue(.jsonContent, for: .contentType)
+        XCTAssertNotNil(request.allHTTPHeaderFields)
+
+        // Test its presence
+        XCTAssertNotNil(request.allHTTPHeaderFields)
+        let header = try XCTUnwrap(request.allHTTPHeaderFields?[HTTPHeaderField.contentType.rawValue])
+        // Test its contents
+        XCTAssertEqual(header, HTTPHeaderValue.jsonContent.rawValue)
+    }
+
+    func testAddingStringHeader() throws {
+        // No headers
+        var request = URLRequest(url: url)
+        XCTAssertNil(request.allHTTPHeaderFields)
+
+        request.addValue(HTTPHeaderValue.jsonContent.rawValue, for: .contentType)
+        XCTAssertNotNil(request.allHTTPHeaderFields)
+
+        // Test its presence
+        XCTAssertNotNil(request.allHTTPHeaderFields)
+        let header = try XCTUnwrap(request.allHTTPHeaderFields?[HTTPHeaderField.contentType.rawValue])
+        // Test its contents
+        XCTAssertEqual(header, HTTPHeaderValue.jsonContent.rawValue)
     }
 
     func testUploadMethods() {
@@ -61,7 +91,7 @@ final class URLRequestTests: XCTestCase {
         XCTAssertEqual(header.key, HTTPHeaderField.contentType.rawValue)
         XCTAssertEqual(header.value, HTTPHeaderValue.jsonContent.rawValue)
     }
-    
+
     func testAddingInvalidJSONPayload() {
         // No payload
         var request = URLRequest(url: url)
@@ -73,7 +103,7 @@ final class URLRequestTests: XCTestCase {
             XCTAssertEqual(error as? EncodingError, EncodingError.encodingFailed)
         }
     }
-    
+
     func testAddingFormPayload() throws {
         // No payload
         var request = URLRequest(url: url)
@@ -92,22 +122,41 @@ final class URLRequestTests: XCTestCase {
         XCTAssertEqual(header.key, HTTPHeaderField.contentType.rawValue)
         XCTAssertEqual(header.value, HTTPHeaderValue.urlEncodedFormContent.rawValue)
     }
-    
+
     func testCreatingRequestWithMethods() throws {
         let url = URL.from(string: "http://jadehopper.com")
         let getRequest = URLRequest(url: url)
         XCTAssertEqual(getRequest.httpMethod, "GET")
-        
+
         let postRequest = URLRequest(url: url, httpMethod: .post)
         XCTAssertEqual(postRequest.httpMethod, "POST")
-        
+
         let putRequest = URLRequest(url: url, httpMethod: .put)
         XCTAssertEqual(putRequest.httpMethod, "PUT")
-        
+
         let patchRequest = URLRequest(url: url, httpMethod: .patch)
         XCTAssertEqual(patchRequest.httpMethod, "PATCH")
-        
+
         let deleteRequest = URLRequest(url: url, httpMethod: .delete)
         XCTAssertEqual(deleteRequest.httpMethod, "DELETE")
+    }
+    
+    func testAddingURLParams() throws {
+        let username = "paulo"
+        let password = "password"
+        var request = URLRequest(url: url)
+        request.addURLParameters(
+            [
+                "username": username,
+                "password": password
+            ]
+        )
+        XCTAssertEqual(request.url?.absoluteString, "\(url.absoluteString)?password=\(password)&username=\(username)")
+    }
+    
+    func testAddingNoURLParams() throws {
+        var request = URLRequest(url: url)
+        request.addURLParameters([:])
+        XCTAssertEqual(request.url?.absoluteString, url.absoluteString)
     }
 }

@@ -6,6 +6,7 @@
 import Foundation
 
 public typealias JSON = [String: Any]
+public typealias Parameters = [String: Any]
 
 /// An encodable object that can be encoded as JSON to be sent to the API.
 public protocol Payload: Encodable {

@@ -1,30 +1,34 @@
-// swift-tools-version: 5.6
+// swift-tools-version: 5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
+let name = "PFToolbox"
 let package = Package(
-    name: "PFToolbox",
+    name: name,
     platforms: [
-        .macOS(.v11),
+        .macOS(.v12),
         .iOS(.v13)
     ],
     products: [
         .library(
-            name: "PFToolbox",
-            targets: ["PFToolbox"]
+            name: name,
+            targets: [
+                name
+            ]
         )
     ],
-    dependencies: [
-    ],
+    dependencies: [],
     targets: [
         .target(
-            name: "PFToolbox",
+            name: name,
             dependencies: []
         ),
         .testTarget(
-            name: "PFToolboxTests",
-            dependencies: ["PFToolbox"]
+            name: "\(name)Tests",
+            dependencies: [
+                Target.Dependency(stringLiteral: name)
+            ]
         )
     ]
 )

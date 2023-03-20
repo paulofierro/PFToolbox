@@ -20,14 +20,25 @@ public extension URLRequest {
         self.httpMethod = httpMethod.rawValue
     }
 
-    /// Adds HTTP headers to a request
-    mutating func addHeaders(_ headers: HTTPHeaders?) {
-        guard let headers else {
-            return
-        }
-        for (key, value) in headers {
-            setValue(value.rawValue, forHTTPHeaderField: key.rawValue)
-        }
+    /// Add URL parameters to a request
+    mutating func addURLParameters(_ parameters: Parameters) {
+        guard let url, parameters.isNotEmpty else { return }
+
+        // Add a query item for each param
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        components?.queryItems = parameters
+            .sorted(by: {
+                $0.key < $1.key
+            })
+            .map { key, value in
+                URLQueryItem(
+                    name: key,
+                    value: "\(value)".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+                )
+            }
+
+        // Finally replace our URL
+        self.url = components?.url
     }
 
     /// Add a JSON payload to a request. Also adds required HTTP headers if these are missing
@@ -49,9 +60,9 @@ public extension URLRequest {
             throw EncodingError.encodingFailed
         }
     }
-    
+
     /// Adds a dictionary of string values to a request. Also adds required HTTP headers if these are missing
-    mutating func addURLEncodedForm(params: [String : String]) throws {
+    mutating func addURLEncodedForm(params: [String: String]) throws {
         let parameters = params.map { key, value in
             "\(key)=\(value.percentEscapeString())"
         }
@@ -63,15 +74,33 @@ public extension URLRequest {
     }
 }
 
+// MARK: - Header Methods
+
+public extension URLRequest {
+    /// Adds HTTP headers to a request
+    mutating func addHeaders(_ headers: HTTPHeaders?) {
+        headers?.forEach { key, value in
+            addValue(value, for: key)
+        }
+    }
+
+    /// Sets a header value for a defined header field
+    mutating func addValue(_ value: HTTPHeaderValue, for header: HTTPHeaderField) {
+        addValue(value.rawValue, forHTTPHeaderField: header.rawValue)
+    }
+
+    /// Sets an arbitrary string for a defined header field
+    mutating func addValue(_ value: String, for header: HTTPHeaderField) {
+        addValue(value, forHTTPHeaderField: header.rawValue)
+    }
+}
+
 // MARK: - Helpers
 
 extension URLRequest {
     /// Adds the content-type header if its not already present
     private mutating func addContentTypeHeader(for type: HTTPHeaderValue) {
-        // Add the content-type header if its not already present
-        let contentType = HTTPHeaderField.contentType.rawValue
-        if value(forHTTPHeaderField: type.rawValue) == nil {
-            setValue(type.rawValue, forHTTPHeaderField: contentType)
-        }
+        guard value(forHTTPHeaderField: type.rawValue) == nil else { return }
+        setValue(type.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
     }
 }

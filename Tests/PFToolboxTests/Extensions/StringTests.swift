@@ -89,14 +89,14 @@ final class StringTests: XCTestCase {
         XCTAssertEqual(string[safeIndex: 1], "i")
         XCTAssertNil(string[safeIndex: 2]) // Yay, nil!
     }
-    
+
     func testPercentEscapingString() {
         var string = "a_b.c*d"
         XCTAssertEqual(string, string.percentEscapeString())
-        
+
         string = "Hello World!"
         XCTAssertEqual("Hello+World%21", string.percentEscapeString())
-        
+
         string = "paulo@paulofierro.com"
         XCTAssertEqual("paulo%40paulofierro.com", string.percentEscapeString())
     }

@@ -5,11 +5,12 @@
 # Date: Jan 20, 2023
 #
 
-BUILD_PATH="./.build/"
+BUILD_PATH="./.build"
 PACKAGE_NAME="PFToolbox"
 OUTPUT_FILE="lcov.info"
-COVERAGE_PATH="${BUILD_PATH}/x86_64-apple-macosx/debug/${PACKAGE_NAME}PackageTests.xctest/Contents/MacOS/${PACKAGE_NAME}PackageTests"
-PROFILE="${BUILD_PATH}/x86_64-apple-macosx/debug/codecov/default.profdata"
+ARCH=`uname -m`
+COVERAGE_PATH="${BUILD_PATH}/${ARCH}-apple-macosx/debug/${PACKAGE_NAME}PackageTests.xctest/Contents/MacOS/${PACKAGE_NAME}PackageTests"
+PROFILE="${BUILD_PATH}/${ARCH}-apple-macosx/debug/codecov/default.profdata"
 IGNORE="${BUILD_PATH}|Tests"
 
 # Print out the tabular report
