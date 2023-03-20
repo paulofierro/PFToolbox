@@ -24,7 +24,7 @@ public extension ValueConstructable where Self: RawRepresentable, Self.RawValue 
         if let object = Self(rawValue: value) {
             return object
         }
-        log.error("Could not find a \(Self.self) for \"\(value)\"")
+        log.warn("Could not find a \(Self.self) for \"\(value)\"")
         return defaultValue()
     }
 

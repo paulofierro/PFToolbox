@@ -20,6 +20,40 @@ public extension URLRequest {
         self.httpMethod = httpMethod.rawValue
     }
 
+    /// Creates a URLRequest for an endpoint
+    /// - parameter: route The endpoint route
+    /// - parameter: cachePolicy The cache policy for the request. Defaults to `.useProtocolCachePolicy`
+    /// - parameter: timeoutInterval The timeout interval for the request. See the commentary for the `timeoutInterval` for more information on timeout intervals. Defaults to 60.0
+    static func buildRequest(
+        from route: Endpoint,
+        cachePolicy: URLRequest.CachePolicy = .reloadIgnoringLocalAndRemoteCacheData,
+        timeoutInterval: TimeInterval = 60.0
+    ) throws -> Self {
+        let url = route.baseURL.appendingPathComponent(route.path)
+        var request = URLRequest(
+            url: url,
+            cachePolicy: cachePolicy,
+            timeoutInterval: timeoutInterval
+        )
+
+        request.httpMethod = route.method.rawValue
+        request.addHeaders(route.headers)
+        request.addURLParameters(route.urlParameters)
+
+        switch route.task {
+        case .request:
+            // Do nothing
+            break
+        case .requestWithJSONPayload(let payload):
+            if let json = payload?.toJSON() {
+                try request.addJSONPayload(json)
+            }
+        case .requestWithForm(let params):
+            try request.addURLEncodedForm(params: params)
+        }
+        return request
+    }
+
     /// Add URL parameters to a request
     mutating func addURLParameters(_ parameters: Parameters) {
         guard let url, parameters.isNotEmpty else { return }
@@ -98,9 +132,8 @@ public extension URLRequest {
 // MARK: - Helpers
 
 extension URLRequest {
-    /// Adds the content-type header if its not already present
+    /// Adds the content-type header
     private mutating func addContentTypeHeader(for type: HTTPHeaderValue) {
-        guard value(forHTTPHeaderField: type.rawValue) == nil else { return }
         setValue(type.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
     }
 }

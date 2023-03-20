@@ -159,4 +159,152 @@ final class URLRequestTests: XCTestCase {
         request.addURLParameters([:])
         XCTAssertEqual(request.url?.absoluteString, url.absoluteString)
     }
+
+    func testBuildStartRequest() throws {
+        let request = try URLRequest.buildRequest(
+            from: TestEndpoint.start,
+            cachePolicy: .returnCacheDataDontLoad,
+            timeoutInterval: 10
+        )
+        XCTAssertEqual(request.url?.absoluteString, "https://test.com/start")
+        XCTAssertEqual(request.cachePolicy, .returnCacheDataDontLoad)
+        XCTAssertEqual(request.timeoutInterval, 10)
+        XCTAssertEqual(request.httpMethod, "GET")
+        XCTAssertEqual(request.allHTTPHeaderFields, [:])
+    }
+
+    func testBuildLoginRequest() throws {
+        let username = "user"
+        let password = "pass"
+        let request = try URLRequest.buildRequest(
+            from: TestEndpoint.login(
+                username: username,
+                password: password
+            )
+        )
+        XCTAssertEqual(request.url?.absoluteString, "https://test.com/login?password=\(password)&username=\(username)")
+        XCTAssertEqual(request.cachePolicy, .reloadIgnoringLocalAndRemoteCacheData)
+        XCTAssertEqual(request.timeoutInterval, 60)
+        XCTAssertEqual(request.httpMethod, "POST")
+        XCTAssertEqual(request.allHTTPHeaderFields?[HTTPHeaderField.cacheControl.rawValue], HTTPHeaderValue.noCache.rawValue)
+
+        let body = "password=\(password)&username=\(username)"
+        let data = try XCTUnwrap(request.httpBody)
+        let string = String(data: data, encoding: .utf8)
+        XCTAssertEqual(string, body)
+    }
+
+    func testBuildPostDataRequest() throws {
+        let message = "Hello world"
+        let request = try URLRequest.buildRequest(
+            from: TestEndpoint.postData(message: message)
+        )
+        XCTAssertEqual(request.url?.absoluteString, "https://test.com/postMessage")
+        XCTAssertEqual(request.cachePolicy, .reloadIgnoringLocalAndRemoteCacheData)
+        XCTAssertEqual(request.timeoutInterval, 60)
+        XCTAssertEqual(request.httpMethod, "POST")
+        XCTAssertEqual(request.allHTTPHeaderFields, [HTTPHeaderField.contentType.rawValue: HTTPHeaderValue.jsonContent.rawValue])
+
+        let json = try XCTUnwrap(MessagePayload(message: message).toJSON())
+        let serializedPayload = try JSONSerialization.data(withJSONObject: json)
+        XCTAssertEqual(request.httpBody, serializedPayload)
+    }
+
+    func testBuildPostDataRequestWithIllegalData() throws {
+        let bytes: [UInt8] = [0xD8, 0x00]
+        let invalidString = try XCTUnwrap(String(
+            bytes: bytes,
+            encoding: .utf16BigEndian
+        ))
+        let request = try URLRequest.buildRequest(
+            from: TestEndpoint.postData(message: invalidString)
+        )
+        XCTAssertEqual(request.url?.absoluteString, "https://test.com/postMessage")
+        XCTAssertEqual(request.cachePolicy, .reloadIgnoringLocalAndRemoteCacheData)
+        XCTAssertEqual(request.timeoutInterval, 60)
+        XCTAssertEqual(request.httpMethod, "POST")
+
+        // Invalid data, so no content type was added
+        XCTAssertEqual(request.allHTTPHeaderFields, [:])
+        XCTAssertNil(request.httpBody)
+    }
+}
+
+private enum TestEndpoint {
+    case start
+    case login(username: String, password: String)
+    case postData(message: String)
+}
+
+extension TestEndpoint: Endpoint {
+    public var baseURL: URL {
+        URL.from(string: "https://test.com")
+    }
+
+    public var path: String {
+        switch self {
+        case .start:
+            return "start"
+
+        case .login:
+            return "login"
+
+        case .postData:
+            return "postMessage"
+        }
+    }
+
+    public var method: HTTPMethod {
+        switch self {
+        case .start:
+            return .get
+
+        default:
+            return .post
+        }
+    }
+
+    public var task: HTTPTask {
+        switch self {
+        case .start:
+            return .request
+
+        case .login(let username, let password):
+            return .requestWithForm([
+                "username": username,
+                "password": password
+            ])
+
+        case .postData(let message):
+            let payload = MessagePayload(message: message)
+            return .requestWithJSONPayload(payload)
+        }
+    }
+
+    public var headers: HTTPHeaders {
+        switch self {
+        case .login:
+            return [
+                .cacheControl: .noCache
+            ]
+        default:
+            return [:]
+        }
+    }
+
+    public var urlParameters: Parameters {
+        switch self {
+        case .login(let username, let password):
+            return [
+                "username": username,
+                "password": password
+            ]
+        default:
+            return [:]
+        }
+    }
+}
+
+struct MessagePayload: Payload {
+    let message: String
 }

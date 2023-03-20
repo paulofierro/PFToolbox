@@ -8,4 +8,5 @@ import Foundation
 public enum HTTPTask {
     case request
     case requestWithJSONPayload(_ payload: Payload?)
+    case requestWithForm(_ params: [String: String])
 }

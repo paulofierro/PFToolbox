@@ -11,7 +11,7 @@ OUTPUT_FILE="lcov.info"
 ARCH=`uname -m`
 COVERAGE_PATH="${BUILD_PATH}/${ARCH}-apple-macosx/debug/${PACKAGE_NAME}PackageTests.xctest/Contents/MacOS/${PACKAGE_NAME}PackageTests"
 PROFILE="${BUILD_PATH}/${ARCH}-apple-macosx/debug/codecov/default.profdata"
-IGNORE="${BUILD_PATH}|Tests"
+IGNORE="${BUILD_PATH}|Tests|FatalError"
 
 # Print out the tabular report
 xcrun llvm-cov report ${COVERAGE_PATH} \
