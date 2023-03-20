@@ -30,7 +30,7 @@ final class LoggerTests: XCTestCase {
         XCTAssertEqual(Logger.LogLevel.info.allowedLevels, [.error, .warning, .info])
         XCTAssertEqual(Logger.LogLevel.debug.allowedLevels, [.error, .warning, .info, .debug])
     }
-    
+
     func testEmoji() {
         XCTAssertTrue(Logger.LogLevel.none.emoji.isEmpty)
         XCTAssertTrue(Logger.LogLevel.error.emoji.contains("‼️"))
