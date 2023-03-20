@@ -40,6 +40,16 @@ public extension String {
             .replacingOccurrences(of: " ", with: "+")
             .replacingOccurrences(of: " ", with: "+", options: [], range: nil)
     }
+
+    /// Saves the contents of a string to disk within the app bundle.
+    /// Returns the path to the file on disk
+    @discardableResult
+    func saveToDisk(path: String) throws -> URL {
+        let path = URL.from(string: "file:///\(path)")
+        try write(to: path, atomically: true, encoding: .utf8)
+        log.info("Saved to \(path.absoluteString)")
+        return path
+    }
 }
 
 // MARK: - Subscript Helpers

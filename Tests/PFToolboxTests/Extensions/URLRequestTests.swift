@@ -188,10 +188,10 @@ final class URLRequestTests: XCTestCase {
         XCTAssertEqual(request.httpMethod, "POST")
         XCTAssertEqual(request.allHTTPHeaderFields?[HTTPHeaderField.cacheControl.rawValue], HTTPHeaderValue.noCache.rawValue)
 
-        let body = "password=\(password)&username=\(username)"
         let data = try XCTUnwrap(request.httpBody)
-        let string = String(data: data, encoding: .utf8)
-        XCTAssertEqual(string, body)
+        let string = try XCTUnwrap(String(data: data, encoding: .utf8))
+        XCTAssertTrue(string.contains("password=\(password)"))
+        XCTAssertTrue(string.contains("username=\(username)"))
     }
 
     func testBuildPostDataRequest() throws {

@@ -109,4 +109,14 @@ final class StringTests: XCTestCase {
         string = "paulo@paulofierro.com"
         XCTAssertEqual("paulo%40paulofierro.com", string.percentEscapeString())
     }
+
+    func testSavingToDisk() throws {
+        let string = "hello world"
+        let url = try string.saveToDisk(path: "/tmp/test")
+        XCTAssertTrue(FileManager.default.fileExists(atPath: url.path))
+
+        let data = try XCTUnwrap(FileManager.default.contents(atPath: url.path))
+        let readString = try XCTUnwrap(String(data: data, encoding: .utf8))
+        XCTAssertEqual(string, readString)
+    }
 }
