@@ -10,7 +10,10 @@ on:
 
 jobs:
   build:
-    runs-on: macOS-12
+    runs-on: macOS-latest
+    defaults:
+      run:
+        shell: bash # Enables fail-fast behaviour via set -eo pipefail
 
     steps:
       - uses: actions/checkout@v3
@@ -19,7 +22,7 @@ jobs:
         run: swift --version
 
       - name: Run tests
-        run: swift test -v --enable-code-coverage | xcpretty
+        run: swift test --enable-code-coverage | xcpretty
 
       - name: Output coverage
         run: ./coverage.sh
@@ -30,4 +33,3 @@ jobs:
           files: ./lcov.info
           name: codecov-umbrella
           verbose: true
-        
