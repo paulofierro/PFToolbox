@@ -22,11 +22,12 @@
         }
 
         /// Loads a .xib file from the same bundle as the view, and instantiates it
-        func loadNib() {
-            let type = type(of: self)
+        func loadNib(in bundle: Bundle? = nil) {
+            let className = "\(Self.self)"
+            let nibBundle = bundle ?? Bundle.main
             let nib = NSNib(
-                nibNamed: String(describing: type),
-                bundle: Bundle(for: type)
+                nibNamed: NSNib.Name(className),
+                bundle: nibBundle
             )
             nib?.instantiate(withOwner: self, topLevelObjects: nil)
         }
