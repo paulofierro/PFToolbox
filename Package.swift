@@ -18,16 +18,31 @@ let package = Package(
             ]
         )
     ],
-    dependencies: [],
+    dependencies: [
+        .package(
+            url: "https://github.com/sindresorhus/ExceptionCatcher",
+            from: "2.0.1"
+        ),
+        .package(
+            url: "https://github.com/mattgallagher/CwlPreconditionTesting",
+            from: "2.0.0"
+        )
+    ],
     targets: [
         .target(
             name: name,
-            dependencies: []
+            dependencies: [],
+            resources: []
         ),
         .testTarget(
             name: "\(name)Tests",
             dependencies: [
-                Target.Dependency(stringLiteral: name)
+                Target.Dependency(stringLiteral: name),
+                "ExceptionCatcher",
+                "CwlPreconditionTesting"
+            ],
+            resources: [
+                .process("Resources")
             ]
         )
     ]

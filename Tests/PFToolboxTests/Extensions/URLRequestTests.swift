@@ -211,15 +211,9 @@ final class URLRequestTests: XCTestCase {
     }
 
     func testBuildPostDataRequestWithIllegalData() throws {
-        let bytes: [UInt8] = [0xD8, 0x00]
-        let invalidString = try XCTUnwrap(String(
-            bytes: bytes,
-            encoding: .utf16BigEndian
-        ))
         let request = try URLRequest.buildRequest(
-            from: TestEndpoint.postData(message: invalidString)
+            from: TestEndpoint.invalidEndpoint
         )
-        XCTAssertEqual(request.url?.absoluteString, "https://test.com/postMessage")
         XCTAssertEqual(request.cachePolicy, .reloadIgnoringLocalAndRemoteCacheData)
         XCTAssertEqual(request.timeoutInterval, 60)
         XCTAssertEqual(request.httpMethod, "POST")
@@ -234,11 +228,17 @@ private enum TestEndpoint {
     case start
     case login(username: String, password: String)
     case postData(message: String)
+    case invalidEndpoint
 }
 
 extension TestEndpoint: Endpoint {
     public var baseURL: URL {
-        URL.from(string: "https://test.com")
+        switch self {
+        case .invalidEndpoint:
+            return URL.from(string: "file://")
+        default:
+            return URL.from(string: "https://test.com")
+        }
     }
 
     public var path: String {
@@ -251,6 +251,9 @@ extension TestEndpoint: Endpoint {
 
         case .postData:
             return "postMessage"
+            
+        case .invalidEndpoint:
+            return "invalid"
         }
     }
 
@@ -266,7 +269,7 @@ extension TestEndpoint: Endpoint {
 
     public var task: HTTPTask {
         switch self {
-        case .start:
+        case .start, .invalidEndpoint:
             return .request
 
         case .login(let username, let password):

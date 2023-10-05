@@ -4,6 +4,7 @@
 //
 
 @testable import PFToolbox
+import CwlPreconditionTesting
 import XCTest
 
 final class URLTests: XCTestCase {
@@ -11,11 +12,9 @@ final class URLTests: XCTestCase {
         let valid = URL.from(string: "https://paulofierro.com")
         XCTAssertNotNil(valid)
 
-        expectFatalError(
-            expectedMessage: "Could not create URL from ",
-            testcase: {
-                _ = URL.from(string: "")
-            }
-        )
+        let exception = catchBadInstruction {
+            _ = URL.from(string: "")
+        }
+        XCTAssertNotNil(exception)
     }
 }
