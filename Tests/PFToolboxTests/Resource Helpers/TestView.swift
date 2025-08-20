@@ -1,13 +1,11 @@
 //
-//  TestView.swift
-//
-//
-//  Created by Paulo Fierro on 5/10/23.
+//   TestView.swift
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 #if canImport(AppKit)
-import AppKit
+    import AppKit
 
-/// An empty view
-final class TestView: NSView {}
+    /// An empty view
+    final class TestView: NSView {}
 #endif

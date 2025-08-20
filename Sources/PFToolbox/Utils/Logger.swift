@@ -1,6 +1,6 @@
 //
 //   Logger.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -26,19 +26,19 @@ public struct Logger {
         var logType: OSLogType {
             switch self {
             case .error:
-                return .error
+                .error
 
             case .warning:
-                return .fault
+                .fault
 
             case .info:
-                return .info
+                .info
 
             case .debug:
-                return .debug
+                .debug
 
             default:
-                return .default
+                .default
             }
         }
 
@@ -46,19 +46,19 @@ public struct Logger {
         var allowedLevels: [LogLevel] {
             switch self {
             case .none:
-                return []
+                []
 
             case .error:
-                return [.error]
+                [.error]
 
             case .warning:
-                return [.error, .warning]
+                [.error, .warning]
 
             case .info:
-                return [.error, .warning, .info]
+                [.error, .warning, .info]
 
             case .debug:
-                return [.error, .warning, .info, .debug]
+                [.error, .warning, .info, .debug]
             }
         }
 
@@ -66,25 +66,25 @@ public struct Logger {
         var emoji: String {
             switch self {
             case .error:
-                return "‼️‼️‼️"
+                "‼️‼️‼️"
 
             case .warning:
-                return "⚠️⚠️⚠️"
+                "⚠️⚠️⚠️"
 
             case .info:
-                return "✳️✳️✳️"
+                "✳️✳️✳️"
 
             case .debug:
-                return "🔹🔹🔹"
+                "🔹🔹🔹"
 
             default:
-                return ""
+                ""
             }
         }
     }
 
     /// The default log level
-    internal var currentLogLevel: LogLevel
+    var currentLogLevel: LogLevel
 
     /// Creates an OSLog object using our specific subsystem
     private let logIdentifier: OSLog

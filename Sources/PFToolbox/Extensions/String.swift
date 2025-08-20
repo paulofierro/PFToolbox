@@ -1,6 +1,6 @@
 //
 //   String.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -10,9 +10,9 @@ public extension String {
     var boolValue: Bool {
         switch lowercased() {
         case "true", "yes", "1":
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 

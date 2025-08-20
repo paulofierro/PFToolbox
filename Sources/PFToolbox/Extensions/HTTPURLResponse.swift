@@ -1,6 +1,6 @@
 //
 //   HTTPURLResponse.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -10,22 +10,22 @@ public extension HTTPURLResponse {
     var statusCodeError: NetworkError? {
         switch statusCode {
         case 200 ... 299:
-            return nil
+            nil
 
         case 404:
-            return NetworkError.notFound(statusCode)
+            NetworkError.notFound(statusCode)
 
         case 401 ... 499:
-            return NetworkError.authenticationError(statusCode)
+            NetworkError.authenticationError(statusCode)
 
         case 500 ... 599:
-            return NetworkError.badRequest(statusCode)
+            NetworkError.badRequest(statusCode)
 
         case 600:
-            return NetworkError.outdated(statusCode)
+            NetworkError.outdated(statusCode)
 
         default:
-            return NetworkError.badResponse(statusCode)
+            NetworkError.badResponse(statusCode)
         }
     }
 }

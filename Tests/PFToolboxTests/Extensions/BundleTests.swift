@@ -1,6 +1,6 @@
 //
 //   BundleTests.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 @testable import PFToolbox
@@ -21,7 +21,9 @@ final class BundleTests: XCTestCase {
 
     func testVersionNumber() throws {
         let version = try XCTUnwrap(Bundle.main.versionNumber)
-        if #available(macOS 14, *) {
+        if #available(macOS 15, *) {
+            XCTAssertTrue(version.contains("16."))
+        } else if #available(macOS 14, *) {
             XCTAssertTrue(version.contains("15."))
         } else {
             XCTAssertTrue(version.contains("14."))

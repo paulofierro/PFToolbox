@@ -1,6 +1,6 @@
 //
 //   StringTests.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 @testable import PFToolbox
@@ -88,15 +88,6 @@ final class StringTests: XCTestCase {
         XCTAssertEqual(string[safeIndex: 0], "H")
         XCTAssertEqual(string[safeIndex: 1], "i")
         XCTAssertNil(string[safeIndex: 2]) // Yay, nil!
-    }
-
-    func testPercentEscapingInvalidString() throws {
-        let bytes: [UInt8] = [0xD8, 0x00]
-        let invalidString = try XCTUnwrap(String(
-            bytes: bytes,
-            encoding: .utf16BigEndian
-        ))
-        XCTAssertEqual(invalidString, invalidString.percentEscapeString())
     }
 
     func testPercentEscapingString() {

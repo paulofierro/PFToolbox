@@ -1,6 +1,6 @@
 //
 //   GenericError.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -15,7 +15,7 @@ extension GenericError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .custom(let string):
-            return string
+            string
         }
     }
 }

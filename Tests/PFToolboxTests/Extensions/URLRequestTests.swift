@@ -1,6 +1,6 @@
 //
 //   URLRequestTests.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 @testable import PFToolbox
@@ -64,12 +64,12 @@ final class URLRequestTests: XCTestCase {
         let uploadMethods: [HTTPMethod] = [.post, .put, .patch]
         let downloadMethods: [HTTPMethod] = [.get, .delete]
 
-        uploadMethods.forEach {
-            XCTAssertTrue($0.isUploadMethod)
+        for uploadMethod in uploadMethods {
+            XCTAssertTrue(uploadMethod.isUploadMethod)
         }
 
-        downloadMethods.forEach {
-            XCTAssertFalse($0.isUploadMethod)
+        for downloadMethod in downloadMethods {
+            XCTAssertFalse(downloadMethod.isUploadMethod)
         }
     }
 
@@ -235,35 +235,35 @@ extension TestEndpoint: Endpoint {
     public var baseURL: URL {
         switch self {
         case .invalidEndpoint:
-            return URL.from(string: "file://")
+            URL.from(string: "file://")
         default:
-            return URL.from(string: "https://test.com")
+            URL.from(string: "https://test.com")
         }
     }
 
     public var path: String {
         switch self {
         case .start:
-            return "start"
+            "start"
 
         case .login:
-            return "login"
+            "login"
 
         case .postData:
-            return "postMessage"
-            
+            "postMessage"
+
         case .invalidEndpoint:
-            return "invalid"
+            "invalid"
         }
     }
 
     public var method: HTTPMethod {
         switch self {
         case .start:
-            return .get
+            .get
 
         default:
-            return .post
+            .post
         }
     }
 
@@ -287,23 +287,23 @@ extension TestEndpoint: Endpoint {
     public var headers: HTTPHeaders {
         switch self {
         case .login:
-            return [
+            [
                 .cacheControl: .noCache
             ]
         default:
-            return [:]
+            [:]
         }
     }
 
     public var urlParameters: Parameters {
         switch self {
         case .login(let username, let password):
-            return [
+            [
                 "username": username,
                 "password": password
             ]
         default:
-            return [:]
+            [:]
         }
     }
 }

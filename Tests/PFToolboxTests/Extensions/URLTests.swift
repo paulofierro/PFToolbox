@@ -1,10 +1,10 @@
 //
 //   URLTests.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
-@testable import PFToolbox
 import CwlPreconditionTesting
+@testable import PFToolbox
 import XCTest
 
 final class URLTests: XCTestCase {

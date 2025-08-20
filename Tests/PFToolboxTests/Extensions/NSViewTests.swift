@@ -1,18 +1,18 @@
 //
 //   NSViewTests.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
-@testable import PFToolbox
 import ExceptionCatcher
+@testable import PFToolbox
 import XCTest
 
 #if canImport(AppKit)
     final class NSViewTests: XCTestCase {
         func testLoadingNib() throws {
             // TODO: For some reason this fails on Github Actions
-            //let testView = TestView()
-            //testView.loadNib(in: Bundle.module)
+            // let testView = TestView()
+            // testView.loadNib(in: Bundle.module)
         }
 
         func testLoadingNibFromMain() throws {
@@ -25,7 +25,7 @@ import XCTest
                 XCTAssertTrue(error.localizedDescription.contains("could not load the nib"))
             }
         }
-        
+
         func testPinningEdges() throws {
             let superView = NSView(frame: .zero)
             let view = NSView(frame: .zero)

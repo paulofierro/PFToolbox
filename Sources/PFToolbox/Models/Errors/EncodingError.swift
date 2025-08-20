@@ -1,6 +1,6 @@
 //
 //   EncodingError.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -15,9 +15,9 @@ extension EncodingError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .noData:
-            return "Encoded JSON is nil"
+            "Encoded JSON is nil"
         case .encodingFailed:
-            return "Failed to encode JSON"
+            "Failed to encode JSON"
         }
     }
 }

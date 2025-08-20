@@ -3,8 +3,8 @@
 # Rules: https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md
 #
 
---header "\n  {file}\n  Copyright © {year} Paulo Fierro. All rights reserved.\n"
---swiftversion 5.7
+--header "\n  {file}\n  Copyright © Paulo Fierro. All rights reserved.\n"
+--swiftversion 5.9
 
 #
 # NOTES:

@@ -1,6 +1,6 @@
 //
 //   GenericErrorTests.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 @testable import PFToolbox

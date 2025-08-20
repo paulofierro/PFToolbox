@@ -1,6 +1,6 @@
 //
 //   HTTPHeaders.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -30,21 +30,21 @@ public enum HTTPHeaderValue {
     var rawValue: String {
         switch self {
         case .jsonContent:
-            return "application/json"
+            "application/json"
         case .urlEncodedFormContent:
-            return "application/x-www-form-urlencoded"
+            "application/x-www-form-urlencoded"
         case .basicAuthorization(let token):
-            return "Basic \(token)"
+            "Basic \(token)"
         case .bearer(let token):
-            return "Bearer \(token)"
+            "Bearer \(token)"
         case .safariUserAgent:
-            return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Safari/605.1.15"
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Safari/605.1.15"
         case .noCache:
-            return "no-cache"
+            "no-cache"
         case .gzipEncoding:
-            return "gzip"
+            "gzip"
         case .generic(let string):
-            return string
+            string
         }
     }
 }

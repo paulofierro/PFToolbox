@@ -1,6 +1,6 @@
 //
 //   DecodingError.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -14,7 +14,7 @@ extension DecodingError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .fileNotFound(let filename):
-            return "File not found: \(filename)"
+            "File not found: \(filename)"
         }
     }
 }

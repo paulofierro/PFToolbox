@@ -1,6 +1,6 @@
 //
 //   HTTPMethod.swift
-//   Copyright © 2023 Paulo Fierro. All rights reserved.
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -15,9 +15,9 @@ public enum HTTPMethod: String {
     var isUploadMethod: Bool {
         switch self {
         case .post, .put, .patch:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 }
