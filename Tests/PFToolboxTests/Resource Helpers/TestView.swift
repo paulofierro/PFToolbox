@@ -4,8 +4,8 @@
 //
 
 #if canImport(AppKit)
-    import AppKit
+import AppKit
 
-    /// An empty view
-    final class TestView: NSView {}
+/// An empty view
+final class TestView: NSView {}
 #endif

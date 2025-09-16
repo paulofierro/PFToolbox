@@ -6,6 +6,7 @@
 @testable import PFToolbox
 import XCTest
 
+@MainActor
 final class PFToolboxTests: XCTestCase {
     func testExample() throws {
         // This is an example of a functional test case.

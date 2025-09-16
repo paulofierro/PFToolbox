@@ -6,6 +6,7 @@
 @testable import PFToolbox
 import XCTest
 
+@MainActor
 final class PayloadTests: XCTestCase {
     struct UnencodablePayload: Payload {
         let name: String

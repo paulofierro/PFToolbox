@@ -6,6 +6,7 @@
 @testable import PFToolbox
 import XCTest
 
+@MainActor
 final class LoggerTests: XCTestCase {
     func testExistence() throws {
         let log = Logger(

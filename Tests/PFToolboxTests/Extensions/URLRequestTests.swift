@@ -6,6 +6,7 @@
 @testable import PFToolbox
 import XCTest
 
+@MainActor
 final class URLRequestTests: XCTestCase {
     private let url = URL.from(string: "https://paulofierro.com")
 

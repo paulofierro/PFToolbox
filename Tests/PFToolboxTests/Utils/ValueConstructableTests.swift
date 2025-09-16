@@ -6,7 +6,8 @@
 @testable import PFToolbox
 import XCTest
 
-class ValueConstructableTests: XCTestCase {
+@MainActor
+final class ValueConstructableTests: XCTestCase {
     enum StringEnum: String, ValueConstructable {
         case one, two, three
 

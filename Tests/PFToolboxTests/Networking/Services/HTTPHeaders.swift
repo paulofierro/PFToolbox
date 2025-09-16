@@ -6,6 +6,7 @@
 @testable import PFToolbox
 import XCTest
 
+@MainActor
 final class HTTPHeadersTests: XCTestCase {
     func testEquality() throws {
         XCTAssertEqual(HTTPHeaderValue.jsonContent.rawValue, "application/json")
