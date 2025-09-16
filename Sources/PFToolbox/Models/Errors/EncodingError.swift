@@ -6,7 +6,7 @@
 import Foundation
 
 /// Errors that can occur in the JSON encoding process
-public enum EncodingError: Error {
+public enum EncodingError: Error, Equatable {
     case noData
     case encodingFailed
 }
@@ -19,11 +19,5 @@ extension EncodingError: LocalizedError {
         case .encodingFailed:
             "Failed to encode JSON"
         }
-    }
-}
-
-extension EncodingError: Equatable {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.errorDescription == rhs.errorDescription
     }
 }

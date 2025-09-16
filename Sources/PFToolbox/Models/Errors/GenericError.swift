@@ -6,7 +6,7 @@
 import Foundation
 
 /// Generic errors
-public enum GenericError: Error {
+public enum GenericError: Error, Equatable {
     /// Something happened
     case custom(String)
 }
@@ -17,11 +17,5 @@ extension GenericError: LocalizedError {
         case .custom(let string):
             string
         }
-    }
-}
-
-extension GenericError: Equatable {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.errorDescription == rhs.errorDescription
     }
 }
