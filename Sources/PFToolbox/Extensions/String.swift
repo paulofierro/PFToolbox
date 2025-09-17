@@ -60,7 +60,7 @@ public extension String {
         guard index < count else {
             return nil
         }
-        return self[index ..< index + 1]
+        return self[index]
     }
 
     /// Returns a string at a specific index
