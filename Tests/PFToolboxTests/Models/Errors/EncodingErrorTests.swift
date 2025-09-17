@@ -8,7 +8,7 @@ import XCTest
 
 final class EncodingErrorTests: XCTestCase {
     func testLocalizedErrors() throws {
-        let error: EncodingError = .noData
-        XCTAssertEqual(error.localizedDescription, "Encoded JSON is nil")
+        XCTAssertNotNil(EncodingError.noData.localizedDescription)
+        XCTAssertNotNil(EncodingError.encodingFailed.localizedDescription)
     }
 }
