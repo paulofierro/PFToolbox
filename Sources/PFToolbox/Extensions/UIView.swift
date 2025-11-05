@@ -7,9 +7,6 @@
     import UIKit
 
     public extension UIView {
-        /// The default duration to use for animations
-        static let defaultAnimationDuration: TimeInterval = 0.4
-
         /// Checks if Reduce Motion is enabled, and otherwise returns true
         static var shouldAnimate: Bool {
             !UIAccessibility.isReduceMotionEnabled

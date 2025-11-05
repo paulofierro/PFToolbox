@@ -7,9 +7,6 @@
     import AppKit
 
     public extension NSView {
-        /// The default duration to use for animations
-        static let defaultAnimationDuration: TimeInterval = 0.4
-
         /// Pins the edges of the view to a container with optional insets.
         func pinEdges(to container: NSView, with insets: NSEdgeInsets = .init()) {
             translatesAutoresizingMaskIntoConstraints = false
