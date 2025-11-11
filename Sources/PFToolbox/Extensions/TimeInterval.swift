@@ -5,7 +5,7 @@
 
 import Foundation
 
-extension TimeInterval {
+public extension TimeInterval {
     /// The default duration to use for animations
     static let defaultAnimationDuration: TimeInterval = 0.4
 }
