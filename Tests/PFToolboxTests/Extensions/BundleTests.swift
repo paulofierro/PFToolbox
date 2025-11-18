@@ -35,6 +35,6 @@ final class BundleTests: XCTestCase {
     }
 
     func testIdentifier() throws {
-        XCTAssertEqual(Bundle.main.identifier, "Optional(\"com.apple.dt.xctest.tool\")")
+        XCTAssertEqual(Bundle.main.identifier, "com.apple.dt.xctest.tool")
     }
 }
