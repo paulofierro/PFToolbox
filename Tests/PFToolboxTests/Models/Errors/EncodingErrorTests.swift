@@ -4,11 +4,11 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class EncodingErrorTests: XCTestCase {
-    func testLocalizedErrors() {
-        XCTAssertNotNil(EncodingError.noData.localizedDescription)
-        XCTAssertNotNil(EncodingError.encodingFailed.localizedDescription)
+struct EncodingErrorTests {
+    @Test func localizedErrors() {
+        #expect(EncodingError.noData.localizedDescription.isEmpty == false)
+        #expect(EncodingError.encodingFailed.localizedDescription.isEmpty == false)
     }
 }

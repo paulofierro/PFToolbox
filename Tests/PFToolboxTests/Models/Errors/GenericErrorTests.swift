@@ -4,18 +4,18 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class GenericErrorTests: XCTestCase {
-    func testLocalizedErrors() {
+struct GenericErrorTests {
+    @Test func localizedErrors() {
         let message = "Something happened"
         let error: GenericError = .custom(message)
-        XCTAssertEqual(error.localizedDescription, message)
+        #expect(error.localizedDescription == message)
     }
 
-    func testEquality() {
+    @Test func equality() {
         let message = "Something bad happened"
         let error: GenericError = .custom(message)
-        XCTAssertEqual(error, GenericError.custom(message))
+        #expect(error == GenericError.custom(message))
     }
 }

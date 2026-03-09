@@ -3,23 +3,24 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
+import Foundation
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class StringTests: XCTestCase {
-    func testBoolValues() {
+struct StringTests {
+    @Test func boolValues() {
         let trueValue = "true"
         let yesValue = "yes"
         let oneValue = "1"
         let otherValue = "other"
 
-        XCTAssertTrue(trueValue.boolValue)
-        XCTAssertTrue(yesValue.boolValue)
-        XCTAssertTrue(oneValue.boolValue)
-        XCTAssertFalse(otherValue.boolValue)
+        #expect(trueValue.boolValue)
+        #expect(yesValue.boolValue)
+        #expect(oneValue.boolValue)
+        #expect(!otherValue.boolValue)
     }
 
-    func testOptionalBoolValues() {
+    @Test func optionalBoolValues() {
         let trueValue: String?
         let yesValue: String?
         let oneValue: String?
@@ -31,14 +32,14 @@ final class StringTests: XCTestCase {
         oneValue = "1"
         otherValue = "other"
 
-        XCTAssertTrue(trueValue.boolValue)
-        XCTAssertTrue(yesValue.boolValue)
-        XCTAssertTrue(oneValue.boolValue)
-        XCTAssertFalse(otherValue.boolValue)
-        XCTAssertFalse(nilValue.boolValue)
+        #expect(trueValue.boolValue)
+        #expect(yesValue.boolValue)
+        #expect(oneValue.boolValue)
+        #expect(!otherValue.boolValue)
+        #expect(!nilValue.boolValue)
     }
 
-    func testValidEmails() {
+    @Test func validEmails() {
         let addresses: [String] = [
             "paulo@paulofierro.com",
             "paulo+test@paulofierro.com",
@@ -47,11 +48,11 @@ final class StringTests: XCTestCase {
             "12345@paulofierro.ky"
         ]
         for address in addresses {
-            XCTAssertTrue(address.isValidEmailAddress)
+            #expect(address.isValidEmailAddress)
         }
     }
 
-    func testInvalidEmails() {
+    @Test func invalidEmails() {
         let addresses: [String] = [
             "paulo.fierro?paulofierro.com",
             "",
@@ -60,11 +61,11 @@ final class StringTests: XCTestCase {
             "user:pass@paulofierro.com"
         ]
         for address in addresses {
-            XCTAssertFalse(address.isValidEmailAddress)
+            #expect(!address.isValidEmailAddress)
         }
     }
 
-    func testTrim() {
+    @Test func trim() {
         let originalString = "This is a string"
         let string = "This is a string"
         let stringWithEndSpaces = "This is a string      "
@@ -73,41 +74,41 @@ final class StringTests: XCTestCase {
             This is a string
 
         """
-        XCTAssertEqual(string.trim(), originalString)
-        XCTAssertEqual(stringWithEndSpaces.trim(), originalString)
-        XCTAssertEqual(stringWithSpaces.trim(), originalString)
-        XCTAssertEqual(stringWithNewlines.trim(), originalString)
+        #expect(string.trim() == originalString)
+        #expect(stringWithEndSpaces.trim() == originalString)
+        #expect(stringWithSpaces.trim() == originalString)
+        #expect(stringWithNewlines.trim() == originalString)
     }
 
-    func testSubscript() {
+    @Test func subscriptAccess() {
         let string = "Hi"
-        XCTAssertEqual(string[0], "H")
-        XCTAssertEqual(string[1], "i")
+        #expect(string[0] == "H")
+        #expect(string[1] == "i")
 
         // Test safe accessing
-        XCTAssertEqual(string[safeIndex: 0], "H")
-        XCTAssertEqual(string[safeIndex: 1], "i")
-        XCTAssertNil(string[safeIndex: 2]) // Yay, nil!
+        #expect(string[safeIndex: 0] == "H")
+        #expect(string[safeIndex: 1] == "i")
+        #expect(string[safeIndex: 2] == nil) // Yay, nil!
     }
 
-    func testPercentEscapingString() {
+    @Test func percentEscapingString() {
         var string = "a_b.c*d"
-        XCTAssertEqual(string, string.percentEscapeString())
+        #expect(string == string.percentEscapeString())
 
         string = "Hello World!"
-        XCTAssertEqual("Hello+World%21", string.percentEscapeString())
+        #expect(string.percentEscapeString() == "Hello+World%21")
 
         string = "paulo@paulofierro.com"
-        XCTAssertEqual("paulo%40paulofierro.com", string.percentEscapeString())
+        #expect(string.percentEscapeString() == "paulo%40paulofierro.com")
     }
 
-    func testSavingToDisk() throws {
+    @Test func savingToDisk() throws {
         let string = "hello world"
         let url = try string.saveToDisk(path: "/tmp/test")
-        XCTAssertTrue(FileManager.default.fileExists(atPath: url.path))
+        #expect(FileManager.default.fileExists(atPath: url.path))
 
-        let data = try XCTUnwrap(FileManager.default.contents(atPath: url.path))
-        let readString = try XCTUnwrap(String(data: data, encoding: .utf8))
-        XCTAssertEqual(string, readString)
+        let data = try #require(FileManager.default.contents(atPath: url.path))
+        let readString = try #require(String(data: data, encoding: .utf8))
+        #expect(string == readString)
     }
 }

@@ -4,9 +4,9 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import Testing
 
-class ValueConstructableTests: XCTestCase {
+struct ValueConstructableTests {
     enum StringEnum: String, ValueConstructable {
         case one, two, three
 
@@ -23,29 +23,29 @@ class ValueConstructableTests: XCTestCase {
         }
     }
 
-    func testCreatingFromString() {
+    @Test func creatingFromString() {
         let value = StringEnum.from("two")
-        XCTAssertEqual(value, StringEnum.two)
+        #expect(value == StringEnum.two)
     }
 
-    func testCreatingFromInt() {
+    @Test func creatingFromInt() {
         let value = IntEnum.from(1)
-        XCTAssertEqual(value, IntEnum.two)
+        #expect(value == IntEnum.two)
     }
 
-    func testNilDefaultValue() {
-        XCTAssertEqual(StringEnum.from(nil), StringEnum.one)
-        XCTAssertEqual(IntEnum.from(nil), IntEnum.one)
+    @Test func nilDefaultValue() {
+        #expect(StringEnum.from(nil) == StringEnum.one)
+        #expect(IntEnum.from(nil) == IntEnum.one)
     }
 
-    func testEmptyDefaultValue() {
-        XCTAssertEqual(StringEnum.from(""), StringEnum.one)
-        XCTAssertEqual(IntEnum.from(nil), IntEnum.one)
+    @Test func emptyDefaultValue() {
+        #expect(StringEnum.from("") == StringEnum.one)
+        #expect(IntEnum.from(nil) == IntEnum.one)
     }
 
-    func testOptionalDefaultValue() {
+    @Test func optionalDefaultValue() {
         let value: String? = ""
-        XCTAssertEqual(StringEnum.from(value), StringEnum.one)
-        XCTAssertEqual(IntEnum.from(nil), IntEnum.one)
+        #expect(StringEnum.from(value) == StringEnum.one)
+        #expect(IntEnum.from(nil) == IntEnum.one)
     }
 }

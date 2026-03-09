@@ -4,61 +4,61 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class CollectionTests: XCTestCase {
-    func testIsNotEmpty() {
+struct CollectionTests {
+    @Test func isNotEmpty() {
         let array = [String]()
         let dict: [String: String] = [:]
         let string = ""
 
-        XCTAssertTrue(array.isEmpty)
-        XCTAssertTrue(dict.isEmpty)
-        XCTAssertTrue(string.isEmpty)
-        XCTAssertFalse(array.isNotEmpty)
-        XCTAssertFalse(dict.isNotEmpty)
-        XCTAssertFalse(string.isNotEmpty)
+        #expect(array.isEmpty)
+        #expect(dict.isEmpty)
+        #expect(string.isEmpty)
+        #expect(!array.isNotEmpty)
+        #expect(!dict.isNotEmpty)
+        #expect(!string.isNotEmpty)
     }
 
-    func testOptionalIsNotEmpty() {
+    @Test func optionalIsNotEmpty() {
         let array: [String]? = []
         let dict: [String: String]? = [:]
         let string: String? = ""
 
-        XCTAssertFalse(array.isNotEmpty)
-        XCTAssertFalse(dict.isNotEmpty)
-        XCTAssertFalse(string.isNotEmpty)
+        #expect(!array.isNotEmpty)
+        #expect(!dict.isNotEmpty)
+        #expect(!string.isNotEmpty)
     }
 
-    func testOptionalIsEmptyOrNil() {
+    @Test func optionalIsEmptyOrNil() {
         var array: [String]?
         var dict: [String: String]?
         var string: String?
 
         // Values are nil
-        XCTAssertTrue(array.isEmptyOrNil)
-        XCTAssertTrue(dict.isEmptyOrNil)
-        XCTAssertTrue(string.isEmptyOrNil)
+        #expect(array.isEmptyOrNil)
+        #expect(dict.isEmptyOrNil)
+        #expect(string.isEmptyOrNil)
 
         array = []
         dict = [:]
         string = ""
 
         // Values are empty
-        XCTAssertTrue(array.isEmptyOrNil)
-        XCTAssertTrue(dict.isEmptyOrNil)
-        XCTAssertTrue(string.isEmptyOrNil)
+        #expect(array.isEmptyOrNil)
+        #expect(dict.isEmptyOrNil)
+        #expect(string.isEmptyOrNil)
     }
 
-    func testOnlyContains() {
+    @Test func onlyContains() {
         let invalidString = "ABC"
         let validString = "A"
-        XCTAssertFalse(invalidString.onlyContains("A"))
-        XCTAssertTrue(validString.onlyContains("A"))
+        #expect(!invalidString.onlyContains("A"))
+        #expect(validString.onlyContains("A"))
 
         let invalidArray = ["A", "B", "C"]
         let validArray = ["A"]
-        XCTAssertFalse(invalidArray.onlyContains("A"))
-        XCTAssertTrue(validArray.onlyContains("A"))
+        #expect(!invalidArray.onlyContains("A"))
+        #expect(validArray.onlyContains("A"))
     }
 }

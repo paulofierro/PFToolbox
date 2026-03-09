@@ -4,9 +4,9 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class PayloadTests: XCTestCase {
+struct PayloadTests {
     struct UnencodablePayload: Payload {
         let name: String
 
@@ -15,18 +15,18 @@ final class PayloadTests: XCTestCase {
         }
     }
 
-    func testFailedEncode() {
+    @Test func failedEncode() {
         let payload = UnencodablePayload(name: "")
-        XCTAssertNil(payload.toJSON())
-        XCTAssertNil(payload["name"])
+        #expect(payload.toJSON() == nil)
+        #expect(payload["name"] == nil)
     }
 
     struct TestPayload: Payload {
         let id: String
     }
 
-    func testSubscript() throws {
+    @Test func subscriptAccess() throws {
         let test = TestPayload(id: "123")
-        XCTAssertEqual(try XCTUnwrap(test["id"] as? String), "123")
+        #expect(try #require(test["id"] as? String) == "123")
     }
 }

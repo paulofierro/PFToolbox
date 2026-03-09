@@ -4,11 +4,11 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class DecodingErrorTests: XCTestCase {
-    func testLocalizedErrors() {
+struct DecodingErrorTests {
+    @Test func localizedErrors() {
         let error: DecodingError = .fileNotFound("readme.txt")
-        XCTAssertEqual(error.localizedDescription, "File not found: readme.txt")
+        #expect(error.localizedDescription == "File not found: readme.txt")
     }
 }

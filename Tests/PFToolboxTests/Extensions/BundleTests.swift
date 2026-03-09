@@ -3,38 +3,39 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
+import Foundation
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class BundleTests: XCTestCase {
-    func testAppPath() {
-        XCTAssertNotNil(Bundle.appPath.absoluteString)
+struct BundleTests {
+    @Test func appPath() {
+        #expect(Bundle.appPath.absoluteString.isEmpty == false)
     }
 
-    func testExecutableName() {
-        XCTAssertEqual(Bundle.main.executableName, "xctest")
+    @Test func executableName() {
+        #expect(Bundle.main.executableName == "xctest")
     }
 
-    func testBundleName() {
-        XCTAssertEqual(Bundle.main.bundleName, "xctest")
+    @Test func bundleName() {
+        #expect(Bundle.main.bundleName == "xctest")
     }
 
-    func testVersionNumber() throws {
-        let version = try XCTUnwrap(Bundle.main.versionNumber)
+    @Test func versionNumber() throws {
+        let version = try #require(Bundle.main.versionNumber)
         if #available(macOS 15, *) {
-            XCTAssertTrue(version.contains("16."))
+            #expect(version.contains("16."))
         } else if #available(macOS 14, *) {
-            XCTAssertTrue(version.contains("15."))
+            #expect(version.contains("15."))
         } else {
-            XCTAssertTrue(version.contains("14."))
+            #expect(version.contains("14."))
         }
     }
 
-    func testTeamIdentifier() {
-        XCTAssertEqual(Bundle.main.teamIdentifierPrefix, "")
+    @Test func teamIdentifier() {
+        #expect(Bundle.main.teamIdentifierPrefix == "")
     }
 
-    func testIdentifier() {
-        XCTAssertEqual(Bundle.main.identifier, "com.apple.dt.xctest.tool")
+    @Test func identifier() {
+        #expect(Bundle.main.identifier == "com.apple.dt.xctest.tool")
     }
 }

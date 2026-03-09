@@ -4,10 +4,10 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class GlobalsTests: XCTestCase {
-    func testisShowingPreview() {
-        XCTAssertFalse(isShowingPreview())
+struct GlobalsTests {
+    @Test func isShowingPreviewTest() {
+        #expect(!isShowingPreview())
     }
 }

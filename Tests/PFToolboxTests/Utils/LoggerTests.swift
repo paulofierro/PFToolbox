@@ -4,52 +4,52 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class LoggerTests: XCTestCase {
-    func testExistence() {
+struct LoggerTests {
+    @Test func existence() {
         let log = Logger(
             subsystem: "com.paulofierro.PFToolboxTests",
             category: "PFToolboxTests"
         )
-        XCTAssertNotNil(log)
+        #expect(log.currentLogLevel == .debug)
     }
 
-    func testLogTypes() {
-        XCTAssertEqual(Logger.LogLevel.none.logType, .default)
-        XCTAssertEqual(Logger.LogLevel.error.logType, .error)
-        XCTAssertEqual(Logger.LogLevel.warning.logType, .fault)
-        XCTAssertEqual(Logger.LogLevel.info.logType, .info)
-        XCTAssertEqual(Logger.LogLevel.debug.logType, .debug)
+    @Test func logTypes() {
+        #expect(Logger.LogLevel.none.logType == .default)
+        #expect(Logger.LogLevel.error.logType == .error)
+        #expect(Logger.LogLevel.warning.logType == .fault)
+        #expect(Logger.LogLevel.info.logType == .info)
+        #expect(Logger.LogLevel.debug.logType == .debug)
     }
 
-    func testAllowedLevels() {
-        XCTAssertEqual(Logger.LogLevel.none.allowedLevels, [])
-        XCTAssertEqual(Logger.LogLevel.error.allowedLevels, [.error])
-        XCTAssertEqual(Logger.LogLevel.warning.allowedLevels, [.error, .warning])
-        XCTAssertEqual(Logger.LogLevel.info.allowedLevels, [.error, .warning, .info])
-        XCTAssertEqual(Logger.LogLevel.debug.allowedLevels, [.error, .warning, .info, .debug])
+    @Test func allowedLevels() {
+        #expect(Logger.LogLevel.none.allowedLevels == [])
+        #expect(Logger.LogLevel.error.allowedLevels == [.error])
+        #expect(Logger.LogLevel.warning.allowedLevels == [.error, .warning])
+        #expect(Logger.LogLevel.info.allowedLevels == [.error, .warning, .info])
+        #expect(Logger.LogLevel.debug.allowedLevels == [.error, .warning, .info, .debug])
     }
 
-    func testEmoji() {
-        XCTAssertTrue(Logger.LogLevel.none.emoji.isEmpty)
-        XCTAssertTrue(Logger.LogLevel.error.emoji.contains("‼️"))
-        XCTAssertTrue(Logger.LogLevel.warning.emoji.contains("⚠️"))
-        XCTAssertTrue(Logger.LogLevel.info.emoji.contains("✳️"))
-        XCTAssertTrue(Logger.LogLevel.debug.emoji.contains("🔹"))
+    @Test func emoji() {
+        #expect(Logger.LogLevel.none.emoji.isEmpty)
+        #expect(Logger.LogLevel.error.emoji.contains("‼️"))
+        #expect(Logger.LogLevel.warning.emoji.contains("⚠️"))
+        #expect(Logger.LogLevel.info.emoji.contains("✳️"))
+        #expect(Logger.LogLevel.debug.emoji.contains("🔹"))
     }
 
-    func testLogging() {
+    @Test func logging() {
         var logger = Logger(
             subsystem: "com.paulofierro.PFToolboxTests",
             category: "PFToolboxTests"
         )
         logger.currentLogLevel = .error
-        XCTAssertFalse(logger.debug("Test"))
-        XCTAssertFalse(logger.info("Test"))
-        XCTAssertFalse(logger.warn("Test"))
-        XCTAssertTrue(logger.error("Test"))
+        #expect(!logger.debug("Test"))
+        #expect(!logger.info("Test"))
+        #expect(!logger.warn("Test"))
+        #expect(logger.error("Test"))
 
-        XCTAssertFalse(logger.error(nil))
+        #expect(!logger.error(nil))
     }
 }

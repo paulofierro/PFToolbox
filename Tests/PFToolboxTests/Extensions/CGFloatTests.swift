@@ -3,12 +3,13 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
+import CoreGraphics
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class CGFloatTests: XCTestCase {
-    func testDegreesToRadians() {
+struct CGFloatTests {
+    @Test func degreesToRadians() {
         let value: CGFloat = 180
-        XCTAssertEqual(value.degreesToRadians(), Double.pi)
+        #expect(value.degreesToRadians() == CGFloat.pi)
     }
 }

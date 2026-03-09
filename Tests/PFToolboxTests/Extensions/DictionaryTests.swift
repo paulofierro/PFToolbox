@@ -4,30 +4,30 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class DictionaryTests: XCTestCase {
-    func testMerging() {
+struct DictionaryTests {
+    @Test func merging() {
         var one = ["a": 1, "b": 2]
         let two = ["c": 3]
         one.merge(dict: two)
-        XCTAssertEqual(one["a"], 1)
-        XCTAssertEqual(one["b"], 2)
-        XCTAssertEqual(one["c"], 3)
+        #expect(one["a"] == 1)
+        #expect(one["b"] == 2)
+        #expect(one["c"] == 3)
     }
 
-    func testMergingOverwrite() {
+    @Test func mergingOverwrite() {
         var one = ["a": 1, "b": 2]
         let two = ["b": 3]
         one.merge(dict: two)
-        XCTAssertEqual(one["a"], 1)
-        XCTAssertEqual(one["b"], 3)
+        #expect(one["a"] == 1)
+        #expect(one["b"] == 3)
     }
 
-    func testMergingNil() {
+    @Test func mergingNil() {
         var one = ["a": 1, "b": 2]
         one.merge(dict: nil)
-        XCTAssertEqual(one["a"], 1)
-        XCTAssertEqual(one["b"], 2)
+        #expect(one["a"] == 1)
+        #expect(one["b"] == 2)
     }
 }

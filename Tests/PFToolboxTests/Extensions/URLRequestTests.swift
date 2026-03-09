@@ -3,20 +3,21 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
+import Foundation
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class URLRequestTests: XCTestCase {
+struct URLRequestTests {
     private let url = URL.from(string: "https://paulofierro.com")
 
-    func testAddingHeaderArray() throws {
+    @Test func addingHeaderArray() throws {
         // No headers
         var request = URLRequest(url: url)
-        XCTAssertNil(request.allHTTPHeaderFields)
+        #expect(request.allHTTPHeaderFields == nil)
 
         // Add nothing
         request.addHeaders(nil)
-        XCTAssertNil(request.allHTTPHeaderFields)
+        #expect(request.allHTTPHeaderFields == nil)
 
         // Add header
         let value = "something"
@@ -24,124 +25,124 @@ final class URLRequestTests: XCTestCase {
         request.addHeaders(headers)
 
         // Test its presence
-        XCTAssertNotNil(request.allHTTPHeaderFields)
-        let header = try XCTUnwrap(request.allHTTPHeaderFields?[HTTPHeaderField.contentType.rawValue])
+        #expect(request.allHTTPHeaderFields != nil)
+        let header = try #require(request.allHTTPHeaderFields?[HTTPHeaderField.contentType.rawValue])
         // Test its contents
-        XCTAssertEqual(header, value)
+        #expect(header == value)
     }
 
-    func testAddingDefinedHeader() throws {
+    @Test func addingDefinedHeader() throws {
         // No headers
         var request = URLRequest(url: url)
-        XCTAssertNil(request.allHTTPHeaderFields)
+        #expect(request.allHTTPHeaderFields == nil)
 
         request.addValue(.jsonContent, for: .contentType)
-        XCTAssertNotNil(request.allHTTPHeaderFields)
+        #expect(request.allHTTPHeaderFields != nil)
 
         // Test its presence
-        XCTAssertNotNil(request.allHTTPHeaderFields)
-        let header = try XCTUnwrap(request.allHTTPHeaderFields?[HTTPHeaderField.contentType.rawValue])
+        #expect(request.allHTTPHeaderFields != nil)
+        let header = try #require(request.allHTTPHeaderFields?[HTTPHeaderField.contentType.rawValue])
         // Test its contents
-        XCTAssertEqual(header, HTTPHeaderValue.jsonContent.rawValue)
+        #expect(header == HTTPHeaderValue.jsonContent.rawValue)
     }
 
-    func testAddingStringHeader() throws {
+    @Test func addingStringHeader() throws {
         // No headers
         var request = URLRequest(url: url)
-        XCTAssertNil(request.allHTTPHeaderFields)
+        #expect(request.allHTTPHeaderFields == nil)
 
         request.addValue(HTTPHeaderValue.jsonContent.rawValue, for: .contentType)
-        XCTAssertNotNil(request.allHTTPHeaderFields)
+        #expect(request.allHTTPHeaderFields != nil)
 
         // Test its presence
-        XCTAssertNotNil(request.allHTTPHeaderFields)
-        let header = try XCTUnwrap(request.allHTTPHeaderFields?[HTTPHeaderField.contentType.rawValue])
+        #expect(request.allHTTPHeaderFields != nil)
+        let header = try #require(request.allHTTPHeaderFields?[HTTPHeaderField.contentType.rawValue])
         // Test its contents
-        XCTAssertEqual(header, HTTPHeaderValue.jsonContent.rawValue)
+        #expect(header == HTTPHeaderValue.jsonContent.rawValue)
     }
 
-    func testUploadMethods() {
+    @Test func uploadMethods() {
         let uploadMethods: [HTTPMethod] = [.post, .put, .patch]
         let downloadMethods: [HTTPMethod] = [.get, .delete]
 
         for uploadMethod in uploadMethods {
-            XCTAssertTrue(uploadMethod.isUploadMethod)
+            #expect(uploadMethod.isUploadMethod)
         }
 
         for downloadMethod in downloadMethods {
-            XCTAssertFalse(downloadMethod.isUploadMethod)
+            #expect(!downloadMethod.isUploadMethod)
         }
     }
 
-    func testAddingJSONPayload() throws {
+    @Test func addingJSONPayload() throws {
         // No payload
         var request = URLRequest(url: url)
-        XCTAssertNil(request.httpBody)
+        #expect(request.httpBody == nil)
 
         let params: JSON = ["a": "1"]
 
         // Add params
         try? request.addJSONPayload(params)
-        XCTAssertNotNil(request.httpBody)
+        #expect(request.httpBody != nil)
 
         // Test the presence of the right header
-        XCTAssertNotNil(request.allHTTPHeaderFields)
-        let header = try XCTUnwrap(request.allHTTPHeaderFields?.first)
+        #expect(request.allHTTPHeaderFields != nil)
+        let header = try #require(request.allHTTPHeaderFields?.first)
         // Test its contents
-        XCTAssertEqual(header.key, HTTPHeaderField.contentType.rawValue)
-        XCTAssertEqual(header.value, HTTPHeaderValue.jsonContent.rawValue)
+        #expect(header.key == HTTPHeaderField.contentType.rawValue)
+        #expect(header.value == HTTPHeaderValue.jsonContent.rawValue)
     }
 
-    func testAddingInvalidJSONPayload() {
+    @Test func addingInvalidJSONPayload() {
         // No payload
         var request = URLRequest(url: url)
-        XCTAssertNil(request.httpBody)
+        #expect(request.httpBody == nil)
 
         let params: JSON = ["a": ()]
         // Test error throwing
-        XCTAssertThrowsError(try request.addJSONPayload(params), "") { error in
-            XCTAssertEqual(error as? EncodingError, EncodingError.encodingFailed)
+        #expect(throws: EncodingError.encodingFailed) {
+            try request.addJSONPayload(params)
         }
     }
 
-    func testAddingFormPayload() throws {
+    @Test func addingFormPayload() throws {
         // No payload
         var request = URLRequest(url: url)
-        XCTAssertNil(request.httpBody)
+        #expect(request.httpBody == nil)
 
         let params = ["a": "1"]
 
         // Add params
         try? request.addURLEncodedForm(params: params)
-        XCTAssertNotNil(request.httpBody)
+        #expect(request.httpBody != nil)
 
         // Test the presence of the right header
-        XCTAssertNotNil(request.allHTTPHeaderFields)
-        let header = try XCTUnwrap(request.allHTTPHeaderFields?.first)
+        #expect(request.allHTTPHeaderFields != nil)
+        let header = try #require(request.allHTTPHeaderFields?.first)
         // Test its contents
-        XCTAssertEqual(header.key, HTTPHeaderField.contentType.rawValue)
-        XCTAssertEqual(header.value, HTTPHeaderValue.urlEncodedFormContent.rawValue)
+        #expect(header.key == HTTPHeaderField.contentType.rawValue)
+        #expect(header.value == HTTPHeaderValue.urlEncodedFormContent.rawValue)
     }
 
-    func testCreatingRequestWithMethods() {
+    @Test func creatingRequestWithMethods() {
         let url = URL.from(string: "http://jadehopper.com")
         let getRequest = URLRequest(url: url)
-        XCTAssertEqual(getRequest.httpMethod, "GET")
+        #expect(getRequest.httpMethod == "GET")
 
         let postRequest = URLRequest(url: url, httpMethod: .post)
-        XCTAssertEqual(postRequest.httpMethod, "POST")
+        #expect(postRequest.httpMethod == "POST")
 
         let putRequest = URLRequest(url: url, httpMethod: .put)
-        XCTAssertEqual(putRequest.httpMethod, "PUT")
+        #expect(putRequest.httpMethod == "PUT")
 
         let patchRequest = URLRequest(url: url, httpMethod: .patch)
-        XCTAssertEqual(patchRequest.httpMethod, "PATCH")
+        #expect(patchRequest.httpMethod == "PATCH")
 
         let deleteRequest = URLRequest(url: url, httpMethod: .delete)
-        XCTAssertEqual(deleteRequest.httpMethod, "DELETE")
+        #expect(deleteRequest.httpMethod == "DELETE")
     }
 
-    func testAddingURLParams() {
+    @Test func addingURLParams() {
         let username = "paulo"
         let password = "password"
         var request = URLRequest(url: url)
@@ -151,29 +152,29 @@ final class URLRequestTests: XCTestCase {
                 "password": password
             ]
         )
-        XCTAssertEqual(request.url?.absoluteString, "\(url.absoluteString)?password=\(password)&username=\(username)")
+        #expect(request.url?.absoluteString == "\(url.absoluteString)?password=\(password)&username=\(username)")
     }
 
-    func testAddingNoURLParams() {
+    @Test func addingNoURLParams() {
         var request = URLRequest(url: url)
         request.addURLParameters([:])
-        XCTAssertEqual(request.url?.absoluteString, url.absoluteString)
+        #expect(request.url?.absoluteString == url.absoluteString)
     }
 
-    func testBuildStartRequest() throws {
+    @Test func buildStartRequest() throws {
         let request = try URLRequest.buildRequest(
             from: TestEndpoint.start,
             cachePolicy: .returnCacheDataDontLoad,
             timeoutInterval: 10
         )
-        XCTAssertEqual(request.url?.absoluteString, "https://test.com/start")
-        XCTAssertEqual(request.cachePolicy, .returnCacheDataDontLoad)
-        XCTAssertEqual(request.timeoutInterval, 10)
-        XCTAssertEqual(request.httpMethod, "GET")
-        XCTAssertEqual(request.allHTTPHeaderFields, [:])
+        #expect(request.url?.absoluteString == "https://test.com/start")
+        #expect(request.cachePolicy == .returnCacheDataDontLoad)
+        #expect(request.timeoutInterval == 10)
+        #expect(request.httpMethod == "GET")
+        #expect(request.allHTTPHeaderFields == [:])
     }
 
-    func testBuildLoginRequest() throws {
+    @Test func buildLoginRequest() throws {
         let username = "user"
         let password = "pass"
         let request = try URLRequest.buildRequest(
@@ -182,45 +183,45 @@ final class URLRequestTests: XCTestCase {
                 password: password
             )
         )
-        XCTAssertEqual(request.url?.absoluteString, "https://test.com/login?password=\(password)&username=\(username)")
-        XCTAssertEqual(request.cachePolicy, .reloadIgnoringLocalAndRemoteCacheData)
-        XCTAssertEqual(request.timeoutInterval, 60)
-        XCTAssertEqual(request.httpMethod, "POST")
-        XCTAssertEqual(request.allHTTPHeaderFields?[HTTPHeaderField.cacheControl.rawValue], HTTPHeaderValue.noCache.rawValue)
+        #expect(request.url?.absoluteString == "https://test.com/login?password=\(password)&username=\(username)")
+        #expect(request.cachePolicy == .reloadIgnoringLocalAndRemoteCacheData)
+        #expect(request.timeoutInterval == 60)
+        #expect(request.httpMethod == "POST")
+        #expect(request.allHTTPHeaderFields?[HTTPHeaderField.cacheControl.rawValue] == HTTPHeaderValue.noCache.rawValue)
 
-        let data = try XCTUnwrap(request.httpBody)
-        let string = try XCTUnwrap(String(data: data, encoding: .utf8))
-        XCTAssertTrue(string.contains("password=\(password)"))
-        XCTAssertTrue(string.contains("username=\(username)"))
+        let data = try #require(request.httpBody)
+        let string = try #require(String(data: data, encoding: .utf8))
+        #expect(string.contains("password=\(password)"))
+        #expect(string.contains("username=\(username)"))
     }
 
-    func testBuildPostDataRequest() throws {
+    @Test func buildPostDataRequest() throws {
         let message = "Hello world"
         let request = try URLRequest.buildRequest(
             from: TestEndpoint.postData(message: message)
         )
-        XCTAssertEqual(request.url?.absoluteString, "https://test.com/postMessage")
-        XCTAssertEqual(request.cachePolicy, .reloadIgnoringLocalAndRemoteCacheData)
-        XCTAssertEqual(request.timeoutInterval, 60)
-        XCTAssertEqual(request.httpMethod, "POST")
-        XCTAssertEqual(request.allHTTPHeaderFields, [HTTPHeaderField.contentType.rawValue: HTTPHeaderValue.jsonContent.rawValue])
+        #expect(request.url?.absoluteString == "https://test.com/postMessage")
+        #expect(request.cachePolicy == .reloadIgnoringLocalAndRemoteCacheData)
+        #expect(request.timeoutInterval == 60)
+        #expect(request.httpMethod == "POST")
+        #expect(request.allHTTPHeaderFields == [HTTPHeaderField.contentType.rawValue: HTTPHeaderValue.jsonContent.rawValue])
 
-        let json = try XCTUnwrap(MessagePayload(message: message).toJSON())
+        let json = try #require(MessagePayload(message: message).toJSON())
         let serializedPayload = try JSONSerialization.data(withJSONObject: json)
-        XCTAssertEqual(request.httpBody, serializedPayload)
+        #expect(request.httpBody == serializedPayload)
     }
 
-    func testBuildPostDataRequestWithIllegalData() throws {
+    @Test func buildPostDataRequestWithIllegalData() throws {
         let request = try URLRequest.buildRequest(
             from: TestEndpoint.invalidEndpoint
         )
-        XCTAssertEqual(request.cachePolicy, .reloadIgnoringLocalAndRemoteCacheData)
-        XCTAssertEqual(request.timeoutInterval, 60)
-        XCTAssertEqual(request.httpMethod, "POST")
+        #expect(request.cachePolicy == .reloadIgnoringLocalAndRemoteCacheData)
+        #expect(request.timeoutInterval == 60)
+        #expect(request.httpMethod == "POST")
 
         // Invalid data, so no content type was added
-        XCTAssertEqual(request.allHTTPHeaderFields, [:])
-        XCTAssertNil(request.httpBody)
+        #expect(request.allHTTPHeaderFields == [:])
+        #expect(request.httpBody == nil)
     }
 }
 

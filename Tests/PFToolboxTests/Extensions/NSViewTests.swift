@@ -3,41 +3,42 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
+import AppKit
 import ExceptionCatcher
 @testable import PFToolbox
-import XCTest
+import Testing
 
 #if canImport(AppKit)
-    final class NSViewTests: XCTestCase {
-        func testLoadingNib() {
+    struct NSViewTests {
+        @Test func loadingNib() {
             // TODO: For some reason this fails on Github Actions
             // let testView = TestView()
             // testView.loadNib(in: Bundle.module)
         }
 
-        func testLoadingNibFromMain() throws {
+        @Test func loadingNibFromMain() throws {
             let testView = TestView()
             do {
                 _ = try ExceptionCatcher.catch {
                     testView.loadNib()
                 }
             } catch {
-                XCTAssertTrue(error.localizedDescription.contains("could not load the nib"))
+                #expect(error.localizedDescription.contains("could not load the nib"))
             }
         }
 
-        func testPinningEdges() {
+        @Test func pinningEdges() {
             let superView = NSView(frame: .zero)
             let view = NSView(frame: .zero)
 
-            XCTAssertTrue(view.translatesAutoresizingMaskIntoConstraints)
-            XCTAssertTrue(view.constraints.isEmpty)
+            #expect(view.translatesAutoresizingMaskIntoConstraints)
+            #expect(view.constraints.isEmpty)
 
             superView.addSubview(view)
             view.pinEdges(to: superView)
 
-            XCTAssertFalse(view.translatesAutoresizingMaskIntoConstraints)
-            XCTAssertTrue(view.constraints.isEmpty)
+            #expect(!view.translatesAutoresizingMaskIntoConstraints)
+            #expect(view.constraints.isEmpty)
         }
     }
 #endif

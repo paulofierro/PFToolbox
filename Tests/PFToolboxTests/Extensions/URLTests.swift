@@ -4,17 +4,18 @@
 //
 
 import CwlPreconditionTesting
+import Foundation
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class URLTests: XCTestCase {
-    func testURLCreation() {
+struct URLTests {
+    @Test func urlCreation() {
         let valid = URL.from(string: "https://paulofierro.com")
-        XCTAssertNotNil(valid)
+        #expect(valid.absoluteString == "https://paulofierro.com")
 
         let exception = catchBadInstruction {
             _ = URL.from(string: "")
         }
-        XCTAssertNotNil(exception)
+        #expect(exception != nil)
     }
 }

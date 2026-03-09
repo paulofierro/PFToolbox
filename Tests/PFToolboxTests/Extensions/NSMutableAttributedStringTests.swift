@@ -5,10 +5,10 @@
 
 @testable import PFToolbox
 import SwiftUI
-import XCTest
+import Testing
 
-final class NSMutableAttributedStringTests: XCTestCase {
-    func testAddingAttributes() {
+struct NSMutableAttributedStringTests {
+    @Test func addingAttributes() {
         let text = "This is my string"
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: Color(.red),
@@ -26,6 +26,6 @@ final class NSMutableAttributedStringTests: XCTestCase {
         let stringB = NSMutableAttributedString(string: text)
         stringB.addAttributes(attributes)
 
-        XCTAssertEqual(stringA, stringB)
+        #expect(stringA == stringB)
     }
 }

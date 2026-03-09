@@ -4,16 +4,17 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import QuartzCore
+import Testing
 
-final class CALayerTests: XCTestCase {
-    func testRemovingSublayers() {
+struct CALayerTests {
+    @Test func removingSublayers() {
         let layer = CALayer()
         layer.addSublayer(CALayer())
         layer.addSublayer(CALayer())
 
-        XCTAssertEqual(layer.sublayers?.count, 2)
+        #expect(layer.sublayers?.count == 2)
         layer.removeAllSublayers()
-        XCTAssertTrue(layer.sublayers.isEmptyOrNil)
+        #expect(layer.sublayers.isEmptyOrNil)
     }
 }

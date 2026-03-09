@@ -4,17 +4,17 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class EncodableTests: XCTestCase {
+struct EncodableTests {
     struct MyStruct: Encodable {
         let name: String
     }
 
-    func testJSONEncoding() throws {
+    @Test func jsonEncoding() throws {
         let value = MyStruct(name: "Paulo")
         let json = try value.toJSON()
-        XCTAssertEqual(json, """
+        #expect(json == """
         {
           "name" : "Paulo"
         }

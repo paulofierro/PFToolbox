@@ -3,30 +3,30 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
+import Foundation
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class DataTests: XCTestCase {
-    func testLoadingData() throws {
+struct DataTests {
+    @Test func loadingData() throws {
         let data = try Data.load(filename: "fileNotFound.txt")
-        XCTAssertNil(data)
+        #expect(data == nil)
     }
 
-    func testPrettyPrinting() throws {
+    @Test func prettyPrinting() throws {
         let json = ["name": "Paulo"]
         let data = try JSONSerialization.data(withJSONObject: json)
-        XCTAssertNotNil(data)
 
-        XCTAssertEqual(data.prettyPrinted(), """
+        #expect(data.prettyPrinted() == """
         {
           "name" : "Paulo"
         }
         """)
     }
 
-    func testInvalidPrettyPrinting() {
+    @Test func invalidPrettyPrinting() {
         let string = "Invalid JSON"
         let data = string.data(using: .utf8)
-        XCTAssertNil(data?.prettyPrinted())
+        #expect(data?.prettyPrinted() == nil)
     }
 }

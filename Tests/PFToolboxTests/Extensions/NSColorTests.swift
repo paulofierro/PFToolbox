@@ -4,23 +4,23 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import Testing
 
 #if canImport(AppKit)
     import AppKit
 
-    final class NSColorTests: XCTestCase {
-        func testAlpha() {
+    struct NSColorTests {
+        @Test func alpha() {
             let red: NSColor = .red
             let transparentRed: NSColor = .red.withAlphaComponent(0.5)
 
-            XCTAssertEqual(red.alpha, 1.0)
-            XCTAssertEqual(transparentRed.alpha, 0.5)
+            #expect(red.alpha == 1.0)
+            #expect(transparentRed.alpha == 0.5)
         }
 
-        func testRandomColor() {
+        @Test func randomColor() {
             let color = NSColor.randomColor
-            XCTAssertNotNil(color)
+            #expect(color.alphaComponent > 0)
         }
     }
 #endif

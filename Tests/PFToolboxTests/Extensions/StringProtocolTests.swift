@@ -4,15 +4,15 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class StringProtocolTests: XCTestCase {
-    func testDoesNotContain() {
+struct StringProtocolTests {
+    @Test func doesNotContain() {
         let string = "abc"
-        XCTAssertFalse(string.doesNotContain("a"))
-        XCTAssertFalse(string.doesNotContain("abc"))
+        #expect(!string.doesNotContain("a"))
+        #expect(!string.doesNotContain("abc"))
 
-        XCTAssertTrue(string.doesNotContain("e"))
-        XCTAssertTrue(string.doesNotContain("123"))
+        #expect(string.doesNotContain("e"))
+        #expect(string.doesNotContain("123"))
     }
 }

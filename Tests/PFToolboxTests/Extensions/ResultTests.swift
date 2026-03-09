@@ -4,10 +4,10 @@
 //
 
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class ResultTests: XCTestCase {
-    func testURLCreation() {
+struct ResultTests {
+    @Test func urlCreation() {
         let result = getResult()
         switch result {
         case .success:
@@ -15,7 +15,7 @@ final class ResultTests: XCTestCase {
             break
 
         case .failure:
-            XCTFail("Result should not be a failure")
+            Issue.record("Result should not be a failure")
         }
     }
 

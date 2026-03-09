@@ -3,18 +3,19 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
+import Foundation
 @testable import PFToolbox
-import XCTest
+import Testing
 
-final class ErrorTests: XCTestCase {
+struct ErrorTests {
     let url = URL.from(string: "http://paulofierro.com")
 
-    func testComparingDecodingError() {
-        XCTAssertEqual(DecodingError.fileNotFound("abc.json"), DecodingError.fileNotFound("abc.json"))
+    @Test func comparingDecodingError() {
+        #expect(DecodingError.fileNotFound("abc.json") == DecodingError.fileNotFound("abc.json"))
     }
 
-    func testComparingEncodingError() {
-        XCTAssertEqual(EncodingError.noData, EncodingError.noData)
-        XCTAssertNotEqual(EncodingError.noData, EncodingError.encodingFailed)
+    @Test func comparingEncodingError() {
+        #expect(EncodingError.noData == EncodingError.noData)
+        #expect(EncodingError.noData != EncodingError.encodingFailed)
     }
 }
