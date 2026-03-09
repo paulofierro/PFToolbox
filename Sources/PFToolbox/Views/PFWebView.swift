@@ -14,6 +14,10 @@ public struct PFWebView: View {
     public let url: URL
     @Environment(\.dismiss) var dismiss
 
+    public init(url: URL) {
+        self.url = url
+    }
+
     /// The web page being loaded
     @State private var page: WebPage?
 

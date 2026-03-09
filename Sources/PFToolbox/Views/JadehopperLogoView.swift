@@ -6,6 +6,7 @@
 import SwiftUI
 
 /// The Jadehopper logo drawn in a Canvas
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct JadehopperLogoView: View {
     /// The current size category
     @Environment(\.sizeCategory) var sizeCategory
