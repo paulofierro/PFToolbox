@@ -22,7 +22,7 @@ jobs:
         run: swift --version
 
       - name: Run tests
-        run: swift test --enable-code-coverage | xcpretty
+        run: swift test --enable-code-coverage
 
       - name: Output coverage
         run: ./coverage.sh
