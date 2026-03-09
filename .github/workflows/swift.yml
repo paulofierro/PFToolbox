@@ -10,13 +10,13 @@ on:
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: macOS-26
     defaults:
       run:
         shell: bash # Enables fail-fast behaviour via set -eo pipefail
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Get Swift version
         run: swift --version
