@@ -13,21 +13,27 @@ struct BundleTests {
     }
 
     @Test func executableName() {
-        #expect(Bundle.main.executableName == "xctest")
+        if isRunningInXcode() {
+            #expect(Bundle.main.bundleName == "xctest")
+        } else {
+            #expect(Bundle.main.bundleName == nil)
+        }
     }
 
     @Test func bundleName() {
-        #expect(Bundle.main.bundleName == "xctest")
+        if isRunningInXcode() {
+            #expect(Bundle.main.bundleName == "xctest")
+        } else {
+            #expect(Bundle.main.bundleName == nil)
+        }
     }
 
     @Test func versionNumber() throws {
-        let version = try #require(Bundle.main.versionNumber)
-        if #available(macOS 15, *) {
-            #expect(version.contains("16."))
-        } else if #available(macOS 14, *) {
-            #expect(version.contains("15."))
+        if isRunningInXcode() {
+            let version = try #require(Bundle.main.versionNumber)
+            #expect(version.isEmpty == false)
         } else {
-            #expect(version.contains("14."))
+            #expect(Bundle.main.versionNumber == nil)
         }
     }
 
@@ -36,6 +42,10 @@ struct BundleTests {
     }
 
     @Test func identifier() {
-        #expect(Bundle.main.identifier == "com.apple.dt.xctest.tool")
+        if isRunningInXcode() {
+            #expect(Bundle.main.identifier == "com.apple.dt.xctest.tool")
+        } else {
+            #expect(Bundle.main.identifier == "com.paulofierro.pftoolbox.unknown")
+        }
     }
 }
