@@ -7,7 +7,7 @@
 import XCTest
 
 final class DictionaryTests: XCTestCase {
-    func testMerging() async throws {
+    func testMerging() {
         var one = ["a": 1, "b": 2]
         let two = ["c": 3]
         one.merge(dict: two)
@@ -16,7 +16,7 @@ final class DictionaryTests: XCTestCase {
         XCTAssertEqual(one["c"], 3)
     }
 
-    func testMergingOverwrite() async throws {
+    func testMergingOverwrite() {
         var one = ["a": 1, "b": 2]
         let two = ["b": 3]
         one.merge(dict: two)
@@ -24,7 +24,7 @@ final class DictionaryTests: XCTestCase {
         XCTAssertEqual(one["b"], 3)
     }
 
-    func testMergingNil() async throws {
+    func testMergingNil() {
         var one = ["a": 1, "b": 2]
         one.merge(dict: nil)
         XCTAssertEqual(one["a"], 1)

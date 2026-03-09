@@ -7,7 +7,7 @@
 import XCTest
 
 final class LoggerTests: XCTestCase {
-    func testExistence() throws {
+    func testExistence() {
         let log = Logger(
             subsystem: "com.paulofierro.PFToolboxTests",
             category: "PFToolboxTests"

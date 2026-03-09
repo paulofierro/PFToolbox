@@ -23,27 +23,27 @@ class ValueConstructableTests: XCTestCase {
         }
     }
 
-    func testCreatingFromString() throws {
+    func testCreatingFromString() {
         let value = StringEnum.from("two")
         XCTAssertEqual(value, StringEnum.two)
     }
 
-    func testCreatingFromInt() throws {
+    func testCreatingFromInt() {
         let value = IntEnum.from(1)
         XCTAssertEqual(value, IntEnum.two)
     }
 
-    func testNilDefaultValue() throws {
+    func testNilDefaultValue() {
         XCTAssertEqual(StringEnum.from(nil), StringEnum.one)
         XCTAssertEqual(IntEnum.from(nil), IntEnum.one)
     }
 
-    func testEmptyDefaultValue() throws {
+    func testEmptyDefaultValue() {
         XCTAssertEqual(StringEnum.from(""), StringEnum.one)
         XCTAssertEqual(IntEnum.from(nil), IntEnum.one)
     }
 
-    func testOptionalDefaultValue() throws {
+    func testOptionalDefaultValue() {
         let value: String? = ""
         XCTAssertEqual(StringEnum.from(value), StringEnum.one)
         XCTAssertEqual(IntEnum.from(nil), IntEnum.one)

@@ -7,15 +7,15 @@
 import XCTest
 
 final class BundleTests: XCTestCase {
-    func testAppPath() throws {
+    func testAppPath() {
         XCTAssertNotNil(Bundle.appPath.absoluteString)
     }
 
-    func testExecutableName() throws {
+    func testExecutableName() {
         XCTAssertEqual(Bundle.main.executableName, "xctest")
     }
 
-    func testBundleName() throws {
+    func testBundleName() {
         XCTAssertEqual(Bundle.main.bundleName, "xctest")
     }
 
@@ -30,11 +30,11 @@ final class BundleTests: XCTestCase {
         }
     }
 
-    func testTeamIdentifier() throws {
+    func testTeamIdentifier() {
         XCTAssertEqual(Bundle.main.teamIdentifierPrefix, "")
     }
 
-    func testIdentifier() throws {
+    func testIdentifier() {
         XCTAssertEqual(Bundle.main.identifier, "com.apple.dt.xctest.tool")
     }
 }

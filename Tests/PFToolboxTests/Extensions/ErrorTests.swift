@@ -9,11 +9,11 @@ import XCTest
 final class ErrorTests: XCTestCase {
     let url = URL.from(string: "http://paulofierro.com")
 
-    func testComparingDecodingError() throws {
+    func testComparingDecodingError() {
         XCTAssertEqual(DecodingError.fileNotFound("abc.json"), DecodingError.fileNotFound("abc.json"))
     }
 
-    func testComparingEncodingError() throws {
+    func testComparingEncodingError() {
         XCTAssertEqual(EncodingError.noData, EncodingError.noData)
         XCTAssertNotEqual(EncodingError.noData, EncodingError.encodingFailed)
     }

@@ -7,7 +7,7 @@
 import XCTest
 
 final class NetworkErrorTests: XCTestCase {
-    func testEquality() throws {
+    func testEquality() {
         XCTAssertEqual(NetworkError.authenticationError(400).localizedDescription, "authenticationError(400)")
         XCTAssertEqual(NetworkError.badRequest(300).localizedDescription, "badRequest(300)")
         XCTAssertEqual(NetworkError.failed(404).localizedDescription, "failed(404)")

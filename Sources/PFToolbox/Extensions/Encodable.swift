@@ -12,7 +12,6 @@ public extension Encodable {
         encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes, .sortedKeys]
 
         let jsonData = try encoder.encode(self)
-        let jsonString = String(data: jsonData, encoding: .utf8)
-        return jsonString
+        return String(data: jsonData, encoding: .utf8)
     }
 }

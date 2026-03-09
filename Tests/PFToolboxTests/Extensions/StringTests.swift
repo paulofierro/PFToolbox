@@ -7,7 +7,7 @@
 import XCTest
 
 final class StringTests: XCTestCase {
-    func testBoolValues() throws {
+    func testBoolValues() {
         let trueValue = "true"
         let yesValue = "yes"
         let oneValue = "1"
@@ -19,7 +19,7 @@ final class StringTests: XCTestCase {
         XCTAssertFalse(otherValue.boolValue)
     }
 
-    func testOptionalBoolValues() throws {
+    func testOptionalBoolValues() {
         let trueValue: String?
         let yesValue: String?
         let oneValue: String?

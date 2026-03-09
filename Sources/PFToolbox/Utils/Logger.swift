@@ -6,9 +6,6 @@
 import Foundation
 import os
 
-/// The global logger. Remember to create your own!
-public let log = Logger(subsystem: "com.paulofierro.PFToolbox", category: "PFToolbox")
-
 /// A simple logger.
 /// To see these log messages outside of Xcode you can use the Console or Terminal:
 ///     - Console: Search for `category:{{MY_CATEGORY}}`, and enable Info and Debug messages from the Action menu.

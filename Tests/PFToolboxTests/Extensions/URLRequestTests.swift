@@ -123,7 +123,7 @@ final class URLRequestTests: XCTestCase {
         XCTAssertEqual(header.value, HTTPHeaderValue.urlEncodedFormContent.rawValue)
     }
 
-    func testCreatingRequestWithMethods() throws {
+    func testCreatingRequestWithMethods() {
         let url = URL.from(string: "http://jadehopper.com")
         let getRequest = URLRequest(url: url)
         XCTAssertEqual(getRequest.httpMethod, "GET")
@@ -141,7 +141,7 @@ final class URLRequestTests: XCTestCase {
         XCTAssertEqual(deleteRequest.httpMethod, "DELETE")
     }
 
-    func testAddingURLParams() throws {
+    func testAddingURLParams() {
         let username = "paulo"
         let password = "password"
         var request = URLRequest(url: url)
@@ -154,7 +154,7 @@ final class URLRequestTests: XCTestCase {
         XCTAssertEqual(request.url?.absoluteString, "\(url.absoluteString)?password=\(password)&username=\(username)")
     }
 
-    func testAddingNoURLParams() throws {
+    func testAddingNoURLParams() {
         var request = URLRequest(url: url)
         request.addURLParameters([:])
         XCTAssertEqual(request.url?.absoluteString, url.absoluteString)

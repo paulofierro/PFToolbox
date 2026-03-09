@@ -8,7 +8,7 @@ import SwiftUI
 import XCTest
 
 final class NSMutableAttributedStringTests: XCTestCase {
-    func testAddingAttributes() throws {
+    func testAddingAttributes() {
         let text = "This is my string"
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: Color(.red),

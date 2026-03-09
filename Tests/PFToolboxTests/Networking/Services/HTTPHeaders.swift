@@ -7,7 +7,7 @@
 import XCTest
 
 final class HTTPHeadersTests: XCTestCase {
-    func testEquality() throws {
+    func testEquality() {
         XCTAssertEqual(HTTPHeaderValue.jsonContent.rawValue, "application/json")
         XCTAssertEqual(HTTPHeaderValue.basicAuthorization(token: "XYZ").rawValue, "Basic XYZ")
         XCTAssertEqual(HTTPHeaderValue.bearer(token: "XYZ").rawValue, "Bearer XYZ")

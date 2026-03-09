@@ -9,7 +9,7 @@ import XCTest
 
 #if canImport(AppKit)
     final class NSViewTests: XCTestCase {
-        func testLoadingNib() throws {
+        func testLoadingNib() {
             // TODO: For some reason this fails on Github Actions
             // let testView = TestView()
             // testView.loadNib(in: Bundle.module)
@@ -26,7 +26,7 @@ import XCTest
             }
         }
 
-        func testPinningEdges() throws {
+        func testPinningEdges() {
             let superView = NSView(frame: .zero)
             let view = NSView(frame: .zero)
 

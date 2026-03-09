@@ -7,7 +7,7 @@
 import XCTest
 
 final class DecodingErrorTests: XCTestCase {
-    func testLocalizedErrors() throws {
+    func testLocalizedErrors() {
         let error: DecodingError = .fileNotFound("readme.txt")
         XCTAssertEqual(error.localizedDescription, "File not found: readme.txt")
     }

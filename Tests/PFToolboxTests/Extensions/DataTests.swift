@@ -24,7 +24,7 @@ final class DataTests: XCTestCase {
         """)
     }
 
-    func testInvalidPrettyPrinting() throws {
+    func testInvalidPrettyPrinting() {
         let string = "Invalid JSON"
         let data = string.data(using: .utf8)
         XCTAssertNil(data?.prettyPrinted())

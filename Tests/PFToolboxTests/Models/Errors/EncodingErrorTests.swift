@@ -7,7 +7,7 @@
 import XCTest
 
 final class EncodingErrorTests: XCTestCase {
-    func testLocalizedErrors() throws {
+    func testLocalizedErrors() {
         XCTAssertNotNil(EncodingError.noData.localizedDescription)
         XCTAssertNotNil(EncodingError.encodingFailed.localizedDescription)
     }

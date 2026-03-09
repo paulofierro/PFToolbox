@@ -26,10 +26,9 @@
         /// Returns the view as an image
         func toImage() -> UIImage {
             let renderer = UIGraphicsImageRenderer(size: bounds.size)
-            let image = renderer.image { _ in
+            return renderer.image { _ in
                 drawHierarchy(in: bounds, afterScreenUpdates: true)
             }
-            return image
         }
     }
 #endif
