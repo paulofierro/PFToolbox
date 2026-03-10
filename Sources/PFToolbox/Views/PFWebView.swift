@@ -3,10 +3,9 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
-import SwiftUI
 #if canImport(WebKit)
+import SwiftUI
 import WebKit
-#endif
 
 /// A web view that loads a URL and shows errors
 @available(iOS 26.0, macOS 26.0, *)
@@ -107,3 +106,4 @@ public struct PFWebView: View {
     /// Handle navigation events
     private func handleNavigationEvent(_ event: WebPage.NavigationEvent) {}
 }
+#endif
