@@ -4,7 +4,9 @@
 //
 
 import SwiftUI
+#if canImport(WebKit)
 import WebKit
+#endif
 
 /// A web view that loads a URL and shows errors
 @available(iOS 26.0, macOS 26.0, *)
