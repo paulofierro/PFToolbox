@@ -86,6 +86,7 @@ struct StringTests {
         #expect(string[1] == "i")
 
         // Test safe accessing
+        #expect(string[safeIndex: -1] == nil)
         #expect(string[safeIndex: 0] == "H")
         #expect(string[safeIndex: 1] == "i")
         #expect(string[safeIndex: 2] == nil) // Yay, nil!

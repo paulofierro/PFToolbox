@@ -21,5 +21,6 @@ struct ArrayTests {
 
         // Out of bounds exception
         #expect(array[safeIndex: 3] == nil)
+        #expect(array[safeIndex: -1] == nil)
     }
 }
