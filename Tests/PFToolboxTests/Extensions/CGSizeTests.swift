@@ -14,7 +14,15 @@ struct CGSizeTests {
         let portrait = CGSize(width: 100, height: 200)
 
         #expect(square.isSquare)
+        #expect(landscape.isSquare == false)
+        #expect(portrait.isSquare == false)
+        
+        #expect(square.isLandscape == false)
         #expect(landscape.isLandscape)
+        #expect(portrait.isLandscape == false)
+        
+        #expect(square.isPortrait == false)
+        #expect(landscape.isPortrait == false)
         #expect(portrait.isPortrait)
     }
 }

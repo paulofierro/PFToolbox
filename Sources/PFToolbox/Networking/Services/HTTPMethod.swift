@@ -12,7 +12,7 @@ public enum HTTPMethod: String {
     case patch = "PATCH"
     case delete = "DELETE"
 
-    var isUploadMethod: Bool {
+    public var isUploadMethod: Bool {
         switch self {
         case .post, .put, .patch:
             true

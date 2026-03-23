@@ -15,6 +15,6 @@ public extension CGSize {
     }
 
     var isPortrait: Bool {
-        !isLandscape
+        height > width
     }
 }
