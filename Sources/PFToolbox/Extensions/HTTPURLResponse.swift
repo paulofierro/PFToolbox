@@ -15,11 +15,11 @@ public extension HTTPURLResponse {
         case 404:
             NetworkError.notFound(statusCode)
 
-        case 401 ... 499:
+        case 400 ... 499:
             NetworkError.authenticationError(statusCode)
 
         case 500 ... 599:
-            NetworkError.badRequest(statusCode)
+            NetworkError.serverError(statusCode)
 
         case 600:
             NetworkError.outdated(statusCode)

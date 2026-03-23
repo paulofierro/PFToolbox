@@ -8,7 +8,7 @@ import Foundation
 /// Errors that occur during network operations
 public enum NetworkError: Error {
     case authenticationError(Int)
-    case badRequest(Int)
+    case serverError(Int)
     case failed(Int)
     case noData(Int)
     case outdated(Int)

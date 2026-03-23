@@ -27,7 +27,7 @@ struct HTTPURLResponseTests {
 
     @Test func badRequestStatusCode() {
         let response = HTTPURLResponse(url: url, statusCode: 500, httpVersion: nil, headerFields: nil)
-        #expect(response?.statusCodeError == NetworkError.badRequest(500))
+        #expect(response?.statusCodeError == NetworkError.serverError(500))
     }
 
     @Test func outdatedStatusCode() {

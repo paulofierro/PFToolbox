@@ -9,7 +9,7 @@ import Testing
 struct NetworkErrorTests {
     @Test func equality() {
         #expect(NetworkError.authenticationError(400).localizedDescription == "authenticationError(400)")
-        #expect(NetworkError.badRequest(300).localizedDescription == "badRequest(300)")
+        #expect(NetworkError.serverError(300).localizedDescription == "serverError(300)")
         #expect(NetworkError.failed(404).localizedDescription == "failed(404)")
         #expect(NetworkError.noData(400).localizedDescription == "noData(400)")
         #expect(NetworkError.outdated(422).localizedDescription == "outdated(422)")
