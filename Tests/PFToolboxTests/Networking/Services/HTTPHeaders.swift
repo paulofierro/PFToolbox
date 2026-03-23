@@ -15,6 +15,7 @@ struct HTTPHeadersTests {
         #expect(HTTPHeaderField.pragma.rawValue == "Pragma")
         #expect(HTTPHeaderField.cacheControl.rawValue == "Cache-Control")
         #expect(HTTPHeaderField.acceptEncoding.rawValue == "Accept-Encoding")
+        #expect(HTTPHeaderField.custom("X-Request-Id").rawValue == "X-Request-Id")
     }
 
     @Test func headerValueRawValues() {

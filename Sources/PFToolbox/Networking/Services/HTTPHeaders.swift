@@ -7,14 +7,28 @@ import Foundation
 
 public typealias HTTPHeaders = [HTTPHeaderField: HTTPHeaderValue]
 
-public enum HTTPHeaderField: String {
-    case accept = "Accept"
-    case contentType = "Content-Type"
-    case userAgent = "User-Agent"
-    case authorization = "Authorization"
-    case pragma = "Pragma"
-    case cacheControl = "Cache-Control"
-    case acceptEncoding = "Accept-Encoding"
+public enum HTTPHeaderField: Hashable {
+    case accept
+    case contentType
+    case userAgent
+    case authorization
+    case pragma
+    case cacheControl
+    case acceptEncoding
+    case custom(String)
+
+    public var rawValue: String {
+        switch self {
+        case .accept: "Accept"
+        case .contentType: "Content-Type"
+        case .userAgent: "User-Agent"
+        case .authorization: "Authorization"
+        case .pragma: "Pragma"
+        case .cacheControl: "Cache-Control"
+        case .acceptEncoding: "Accept-Encoding"
+        case .custom(let name): name
+        }
+    }
 }
 
 public enum HTTPHeaderValue {
@@ -27,7 +41,7 @@ public enum HTTPHeaderValue {
     case gzipEncoding
     case generic(string: String)
 
-    var rawValue: String {
+    public var rawValue: String {
         switch self {
         case .jsonContent:
             "application/json"
