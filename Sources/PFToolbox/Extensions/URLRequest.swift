@@ -67,7 +67,7 @@ public extension URLRequest {
             .map { key, value in
                 URLQueryItem(
                     name: key,
-                    value: "\(value)".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+                    value: "\(value)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                 )
             }
 
