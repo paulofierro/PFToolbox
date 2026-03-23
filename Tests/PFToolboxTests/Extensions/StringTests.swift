@@ -112,4 +112,19 @@ struct StringTests {
         let readString = try #require(String(data: data, encoding: .utf8))
         #expect(string == readString)
     }
+
+    @Test func savingToDiskWithSpaces() throws {
+        let string = "hello world"
+        let path = "/tmp/path with spaces/test file.txt"
+        let dir = "/tmp/path with spaces"
+        try FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true)
+        let url = try string.saveToDisk(path: path)
+        #expect(url.path == path)
+
+        let data = try #require(FileManager.default.contents(atPath: url.path))
+        let readString = try #require(String(data: data, encoding: .utf8))
+        #expect(string == readString)
+
+        try FileManager.default.removeItem(atPath: dir)
+    }
 }

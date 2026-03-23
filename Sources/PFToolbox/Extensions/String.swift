@@ -43,10 +43,10 @@ public extension String {
     /// Returns the path to the file on disk
     @discardableResult
     func saveToDisk(path: String) throws -> URL {
-        let path = URL.from(string: "file:///\(path)")
-        try write(to: path, atomically: true, encoding: .utf8)
-        log.info("Saved to \(path.absoluteString)")
-        return path
+        let url = URL(fileURLWithPath: path)
+        try write(to: url, atomically: true, encoding: .utf8)
+        log.info("Saved to \(url.absoluteString)")
+        return url
     }
 }
 
