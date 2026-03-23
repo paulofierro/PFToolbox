@@ -9,8 +9,8 @@ public extension Data {
     /// Loads a file from the bundle path
     static func load(filename: String) throws -> Data? {
         let path = Bundle.appPath.appendingPathComponent(filename)
-        let contents = try? String(contentsOf: path)
-        return contents?.data(using: .utf8)
+        let contents = try String(contentsOf: path)
+        return contents.data(using: .utf8)
     }
 
     /// Pretty prints an object as JSON

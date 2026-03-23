@@ -8,9 +8,10 @@ import Foundation
 import Testing
 
 struct DataTests {
-    @Test func loadingData() throws {
-        let data = try Data.load(filename: "fileNotFound.txt")
-        #expect(data == nil)
+    @Test func loadingData() {
+        #expect(throws: (any Error).self) {
+            try Data.load(filename: "fileNotFound.txt")
+        }
     }
 
     @Test func prettyPrinting() throws {
