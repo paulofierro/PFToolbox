@@ -18,9 +18,8 @@ public extension String {
 
     /// Returns true if the string is a valid email address
     var isValidEmailAddress: Bool {
-        let pattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let predicate = NSPredicate(format: "SELF MATCHES %@", pattern)
-        return predicate.evaluate(with: self)
+        let pattern = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$"
+        return range(of: pattern, options: .regularExpression) != nil
     }
 
     /// Trims trailing whitespace and newlines
@@ -37,7 +36,6 @@ public extension String {
             return self
         }
         return string
-            .replacingOccurrences(of: " ", with: "+")
             .replacingOccurrences(of: " ", with: "+", options: [], range: nil)
     }
 
