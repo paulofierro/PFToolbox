@@ -33,6 +33,6 @@ public extension Bundle {
 
     /// Returns the bundle identifier as a non-optional string
     var identifier: String {
-        Bundle.main.bundleIdentifier ?? "com.paulofierro.pftoolbox.unknown"
+        bundleIdentifier ?? "com.paulofierro.pftoolbox.unknown"
     }
 }
