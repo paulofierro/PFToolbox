@@ -5,7 +5,7 @@
 
 import Foundation
 #if canImport(UIKit)
-    import UIKit
+import UIKit
 #endif
 
 public enum Constants {
@@ -15,8 +15,8 @@ public enum Constants {
     public static let versionText = "Version \(versionNumber)"
 
     #if canImport(UIKit)
-        /// The URL to the app's settings page
-        public static let settingsUrl = URL.from(string: UIApplication.openSettingsURLString)
+    /// The URL to the app's settings page
+    public static let settingsUrl = URL.from(string: UIApplication.openSettingsURLString)
     #endif
 
     /// The URL to the company website

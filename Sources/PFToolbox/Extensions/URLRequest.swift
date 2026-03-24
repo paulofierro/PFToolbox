@@ -83,9 +83,9 @@ public extension URLRequest {
             }
             httpBody = try JSONSerialization.data(withJSONObject: json)
             #if DEBUG
-                if let prettyJSON = httpBody?.prettyPrinted() {
-                    log.debug("JSON: \(prettyJSON)")
-                }
+            if let prettyJSON = httpBody?.prettyPrinted() {
+                log.debug("JSON: \(prettyJSON)")
+            }
             #endif
 
             // Add the content-type header if its not already present

@@ -11,7 +11,7 @@ public struct MadeWithLoveView: View {
     @State private var heartScale: CGFloat = 1.0
 
     public let animated: Bool
-    
+
     public init(animated: Bool = true) {
         self.animated = animated
     }
@@ -35,7 +35,7 @@ public struct MadeWithLoveView: View {
         let beatUp: UInt64 = 250_000_000
         let beatDown: UInt64 = 250_000_000
         let pause: UInt64 = 5_000_000_000
-        
+
         while !Task.isCancelled {
             // First beat (lub)
             withAnimation(.easeIn(duration: 0.25)) {
@@ -70,7 +70,7 @@ public struct MadeWithLoveView: View {
     VStack(spacing: 16) {
         MadeWithLoveView()
             .foregroundStyle(.secondary)
-        
+
         MadeWithLoveView(animated: false)
     }
     .frame(
