@@ -8,7 +8,7 @@ import SwiftUI
 import Testing
 
 struct NSMutableAttributedStringTests {
-    @Test func addingAttributes() {
+    @Test func `adding attributes`() {
         let text = "This is my string"
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: Color(.red),

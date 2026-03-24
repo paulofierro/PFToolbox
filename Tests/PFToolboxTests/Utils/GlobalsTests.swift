@@ -7,7 +7,7 @@
 import Testing
 
 struct GlobalsTests {
-    @Test func isShowingPreviewTest() {
+    @Test func `is showing preview test`() {
         #expect(!isShowingPreview())
     }
 }

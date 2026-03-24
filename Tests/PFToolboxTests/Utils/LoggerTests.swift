@@ -15,7 +15,7 @@ struct LoggerTests {
         #expect(log.currentLogLevel == .debug)
     }
 
-    @Test func logTypes() {
+    @Test func `log types`() {
         #expect(Logger.LogLevel.none.logType == .default)
         #expect(Logger.LogLevel.error.logType == .error)
         #expect(Logger.LogLevel.warning.logType == .fault)
@@ -23,7 +23,7 @@ struct LoggerTests {
         #expect(Logger.LogLevel.debug.logType == .debug)
     }
 
-    @Test func allowedLevels() {
+    @Test func `allowed levels`() {
         #expect(Logger.LogLevel.none.allowedLevels == [])
         #expect(Logger.LogLevel.error.allowedLevels == [.error])
         #expect(Logger.LogLevel.warning.allowedLevels == [.error, .warning])

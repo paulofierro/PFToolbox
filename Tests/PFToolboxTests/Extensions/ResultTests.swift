@@ -7,7 +7,7 @@
 import Testing
 
 struct ResultTests {
-    @Test func urlCreation() {
+    @Test func `url creation`() {
         let result = getResult()
         switch result {
         case .success:

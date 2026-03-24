@@ -10,11 +10,11 @@ import Testing
 struct ErrorTests {
     let url = URL.from(string: "http://paulofierro.com")
 
-    @Test func comparingDecodingError() {
+    @Test func `comparing decoding error`() {
         #expect(DecodingError.fileNotFound("abc.json") == DecodingError.fileNotFound("abc.json"))
     }
 
-    @Test func comparingEncodingError() {
+    @Test func `comparing encoding error`() {
         #expect(EncodingError.noData == EncodingError.noData)
         #expect(EncodingError.noData != EncodingError.encodingFailed)
     }

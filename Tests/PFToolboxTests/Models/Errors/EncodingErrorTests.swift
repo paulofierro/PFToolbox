@@ -7,7 +7,7 @@
 import Testing
 
 struct EncodingErrorTests {
-    @Test func localizedErrors() {
+    @Test func `localized errors`() {
         #expect(EncodingError.noData.localizedDescription.isEmpty == false)
         #expect(EncodingError.encodingFailed.localizedDescription.isEmpty == false)
     }

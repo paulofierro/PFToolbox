@@ -15,7 +15,7 @@ struct PayloadTests {
         }
     }
 
-    @Test func failedEncode() {
+    @Test func `failed encode`() {
         let payload = UnencodablePayload(name: "")
         #expect(payload.toJSON() == nil)
         #expect(payload["name"] == nil)
@@ -25,7 +25,7 @@ struct PayloadTests {
         let id: String
     }
 
-    @Test func subscriptAccess() throws {
+    @Test func `subscript access`() throws {
         let test = TestPayload(id: "123")
         #expect(try #require(test["id"] as? String) == "123")
     }

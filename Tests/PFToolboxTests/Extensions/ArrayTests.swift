@@ -7,7 +7,7 @@
 import Testing
 
 struct ArrayTests {
-    @Test func safeIndex() {
+    @Test func `safe index`() {
         let array = [1, 2, 3]
 
         #expect(array[0] == 1)

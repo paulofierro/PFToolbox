@@ -8,7 +8,7 @@ import Foundation
 import Testing
 
 struct StringTests {
-    @Test func boolValues() {
+    @Test func `bool values`() {
         let trueValue = "true"
         let yesValue = "yes"
         let oneValue = "1"
@@ -20,7 +20,7 @@ struct StringTests {
         #expect(!otherValue.boolValue)
     }
 
-    @Test func optionalBoolValues() {
+    @Test func `optional bool values`() {
         let trueValue: String?
         let yesValue: String?
         let oneValue: String?
@@ -39,7 +39,7 @@ struct StringTests {
         #expect(!nilValue.boolValue)
     }
 
-    @Test func validEmails() {
+    @Test func `valid emails`() {
         let addresses: [String] = [
             "paulo@paulofierro.com",
             "paulo+test@paulofierro.com",
@@ -52,7 +52,7 @@ struct StringTests {
         }
     }
 
-    @Test func invalidEmails() {
+    @Test func `invalid emails`() {
         let addresses: [String] = [
             "paulo.fierro?paulofierro.com",
             "",
@@ -80,7 +80,7 @@ struct StringTests {
         #expect(stringWithNewlines.trim() == originalString)
     }
 
-    @Test func subscriptAccess() {
+    @Test func `subscript access`() {
         let string = "Hi"
         #expect(string[0] == "H")
         #expect(string[1] == "i")
@@ -92,7 +92,7 @@ struct StringTests {
         #expect(string[safeIndex: 2] == nil) // Yay, nil!
     }
 
-    @Test func percentEscapingString() {
+    @Test func `percent escaping string`() {
         var string = "a_b.c*d"
         #expect(string == string.percentEscapeString())
 
@@ -103,7 +103,7 @@ struct StringTests {
         #expect(string.percentEscapeString() == "paulo%40paulofierro.com")
     }
 
-    @Test func savingToDisk() throws {
+    @Test func `saving to disk`() throws {
         let string = "hello world"
         let url = try string.saveToDisk(path: "/tmp/test")
         #expect(FileManager.default.fileExists(atPath: url.path))
@@ -113,7 +113,7 @@ struct StringTests {
         #expect(string == readString)
     }
 
-    @Test func savingToDiskWithSpaces() throws {
+    @Test func `saving to disk with spaces`() throws {
         let string = "hello world"
         let path = "/tmp/path with spaces/test file.txt"
         let dir = "/tmp/path with spaces"

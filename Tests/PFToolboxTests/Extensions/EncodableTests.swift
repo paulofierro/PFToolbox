@@ -11,7 +11,7 @@ struct EncodableTests {
         let name: String
     }
 
-    @Test func jsonEncoding() throws {
+    @Test func `json encoding`() throws {
         let value = MyStruct(name: "Paulo")
         let json = try value.toJSON()
         #expect(json == """

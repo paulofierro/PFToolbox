@@ -8,7 +8,7 @@ import QuartzCore
 import Testing
 
 struct CALayerTests {
-    @Test func removingSublayers() {
+    @Test func `removing sublayers`() {
         let layer = CALayer()
         layer.addSublayer(CALayer())
         layer.addSublayer(CALayer())

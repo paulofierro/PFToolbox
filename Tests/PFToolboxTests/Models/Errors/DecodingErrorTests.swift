@@ -7,7 +7,7 @@
 import Testing
 
 struct DecodingErrorTests {
-    @Test func localizedErrors() {
+    @Test func `localized errors`() {
         let error: DecodingError = .fileNotFound("readme.txt")
         #expect(error.localizedDescription == "File not found: readme.txt")
     }

@@ -7,7 +7,7 @@
 import Testing
 
 struct HTTPHeadersTests {
-    @Test func headerFieldRawValues() {
+    @Test func `header field raw values`() {
         #expect(HTTPHeaderField.accept.rawValue == "Accept")
         #expect(HTTPHeaderField.contentType.rawValue == "Content-Type")
         #expect(HTTPHeaderField.userAgent.rawValue == "User-Agent")
@@ -18,7 +18,7 @@ struct HTTPHeadersTests {
         #expect(HTTPHeaderField.custom("X-Request-Id").rawValue == "X-Request-Id")
     }
 
-    @Test func headerValueRawValues() {
+    @Test func `header value raw values`() {
         #expect(HTTPHeaderValue.jsonContent.rawValue == "application/json")
         #expect(HTTPHeaderValue.urlEncodedFormContent.rawValue == "application/x-www-form-urlencoded")
         #expect(HTTPHeaderValue.basicAuthorization(token: "XYZ").rawValue == "Basic XYZ")

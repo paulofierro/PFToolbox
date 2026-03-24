@@ -9,7 +9,7 @@ import Foundation
 import Testing
 
 struct URLTests {
-    @Test func urlCreation() {
+    @Test func `url creation`() {
         let valid = URL.from(string: "https://paulofierro.com")
         #expect(valid.absoluteString == "https://paulofierro.com")
 

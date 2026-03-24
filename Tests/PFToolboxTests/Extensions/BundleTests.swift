@@ -8,11 +8,11 @@ import Foundation
 import Testing
 
 struct BundleTests {
-    @Test func appPath() {
+    @Test func `app path`() {
         #expect(Bundle.appPath.absoluteString.isEmpty == false)
     }
 
-    @Test func executableName() {
+    @Test func `executable name`() {
         if isRunningInXcode() {
             #expect(Bundle.main.bundleName == "xctest")
         } else {
@@ -20,7 +20,7 @@ struct BundleTests {
         }
     }
 
-    @Test func bundleName() {
+    @Test func `bundle name`() {
         if isRunningInXcode() {
             #expect(Bundle.main.bundleName == "xctest")
         } else {
@@ -28,7 +28,7 @@ struct BundleTests {
         }
     }
 
-    @Test func versionNumber() throws {
+    @Test func `version number`() throws {
         if isRunningInXcode() {
             let version = try #require(Bundle.main.versionNumber)
             #expect(version.isEmpty == false)
@@ -37,7 +37,7 @@ struct BundleTests {
         }
     }
 
-    @Test func teamIdentifier() {
+    @Test func `team identifier`() {
         #expect(Bundle.main.teamIdentifierPrefix == "")
     }
 

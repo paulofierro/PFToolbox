@@ -7,7 +7,7 @@
 import Testing
 
 struct GenericErrorTests {
-    @Test func localizedErrors() {
+    @Test func `localized errors`() {
         let message = "Something happened"
         let error: GenericError = .custom(message)
         #expect(error.localizedDescription == message)

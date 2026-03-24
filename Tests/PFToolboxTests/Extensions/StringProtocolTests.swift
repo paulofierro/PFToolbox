@@ -7,7 +7,7 @@
 import Testing
 
 struct StringProtocolTests {
-    @Test func doesNotContain() {
+    @Test func `does not contain`() {
         let string = "abc"
         #expect(!string.doesNotContain("a"))
         #expect(!string.doesNotContain("abc"))

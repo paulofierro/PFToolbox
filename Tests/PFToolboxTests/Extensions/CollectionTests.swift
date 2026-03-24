@@ -7,7 +7,7 @@
 import Testing
 
 struct CollectionTests {
-    @Test func isNotEmpty() {
+    @Test func `is not empty`() {
         let array = [String]()
         let dict: [String: String] = [:]
         let string = ""
@@ -20,7 +20,7 @@ struct CollectionTests {
         #expect(!string.isNotEmpty)
     }
 
-    @Test func optionalIsNotEmpty() {
+    @Test func `optional is not empty`() {
         let array: [String]? = []
         let dict: [String: String]? = [:]
         let string: String? = ""
@@ -30,7 +30,7 @@ struct CollectionTests {
         #expect(!string.isNotEmpty)
     }
 
-    @Test func optionalIsEmptyOrNil() {
+    @Test func `optional is empty or nil`() {
         var array: [String]?
         var dict: [String: String]?
         var string: String?
@@ -50,7 +50,7 @@ struct CollectionTests {
         #expect(string.isEmptyOrNil)
     }
 
-    @Test func onlyContains() {
+    @Test func `only contains`() {
         let invalidString = "ABC"
         let validString = "A"
         #expect(!invalidString.onlyContains("A"))

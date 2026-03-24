@@ -10,7 +10,7 @@ import Testing
 struct URLRequestTests {
     private let url = URL.from(string: "https://paulofierro.com")
 
-    @Test func addingHeaderArray() throws {
+    @Test func `adding header array`() throws {
         // No headers
         var request = URLRequest(url: url)
         #expect(request.allHTTPHeaderFields == nil)
@@ -31,7 +31,7 @@ struct URLRequestTests {
         #expect(header == value)
     }
 
-    @Test func addingDefinedHeader() throws {
+    @Test func `adding defined header`() throws {
         // No headers
         var request = URLRequest(url: url)
         #expect(request.allHTTPHeaderFields == nil)
@@ -46,7 +46,7 @@ struct URLRequestTests {
         #expect(header == HTTPHeaderValue.jsonContent.rawValue)
     }
 
-    @Test func addingStringHeader() throws {
+    @Test func `adding string header`() throws {
         // No headers
         var request = URLRequest(url: url)
         #expect(request.allHTTPHeaderFields == nil)
@@ -61,7 +61,7 @@ struct URLRequestTests {
         #expect(header == HTTPHeaderValue.jsonContent.rawValue)
     }
 
-    @Test func uploadMethods() {
+    @Test func `upload methods`() {
         let uploadMethods: [HTTPMethod] = [.post, .put, .patch]
         let downloadMethods: [HTTPMethod] = [.get, .delete]
 
@@ -74,7 +74,7 @@ struct URLRequestTests {
         }
     }
 
-    @Test func addingJSONPayload() throws {
+    @Test func `adding JSON payload`() throws {
         // No payload
         var request = URLRequest(url: url)
         #expect(request.httpBody == nil)
@@ -93,7 +93,7 @@ struct URLRequestTests {
         #expect(header.value == HTTPHeaderValue.jsonContent.rawValue)
     }
 
-    @Test func addingInvalidJSONPayload() {
+    @Test func `adding invalid JSON payload`() {
         // No payload
         var request = URLRequest(url: url)
         #expect(request.httpBody == nil)
@@ -105,7 +105,7 @@ struct URLRequestTests {
         }
     }
 
-    @Test func addingFormPayload() throws {
+    @Test func `adding form payload`() throws {
         // No payload
         var request = URLRequest(url: url)
         #expect(request.httpBody == nil)
@@ -124,7 +124,7 @@ struct URLRequestTests {
         #expect(header.value == HTTPHeaderValue.urlEncodedFormContent.rawValue)
     }
 
-    @Test func creatingRequestWithMethods() {
+    @Test func `creating request with methods`() {
         let url = URL.from(string: "http://jadehopper.com")
         let getRequest = URLRequest(url: url)
         #expect(getRequest.httpMethod == "GET")
@@ -142,7 +142,7 @@ struct URLRequestTests {
         #expect(deleteRequest.httpMethod == "DELETE")
     }
 
-    @Test func addingURLParams() {
+    @Test func `adding URL params`() {
         let username = "paulo"
         let password = "password"
         var request = URLRequest(url: url)
@@ -155,13 +155,13 @@ struct URLRequestTests {
         #expect(request.url?.absoluteString == "\(url.absoluteString)?password=\(password)&username=\(username)")
     }
 
-    @Test func addingNoURLParams() {
+    @Test func `adding no URL params`() {
         var request = URLRequest(url: url)
         request.addURLParameters([:])
         #expect(request.url?.absoluteString == url.absoluteString)
     }
 
-    @Test func buildStartRequest() throws {
+    @Test func `build start request`() throws {
         let request = try URLRequest.buildRequest(
             from: TestEndpoint.start,
             cachePolicy: .returnCacheDataDontLoad,
@@ -174,7 +174,7 @@ struct URLRequestTests {
         #expect(request.allHTTPHeaderFields == [:])
     }
 
-    @Test func buildLoginRequest() throws {
+    @Test func `build login request`() throws {
         let username = "user"
         let password = "pass"
         let request = try URLRequest.buildRequest(
@@ -195,7 +195,7 @@ struct URLRequestTests {
         #expect(string.contains("username=\(username)"))
     }
 
-    @Test func buildPostDataRequest() throws {
+    @Test func `build post data request`() throws {
         let message = "Hello world"
         let request = try URLRequest.buildRequest(
             from: TestEndpoint.postData(message: message)
@@ -211,7 +211,7 @@ struct URLRequestTests {
         #expect(request.httpBody == serializedPayload)
     }
 
-    @Test func buildPostDataRequestWithIllegalData() throws {
+    @Test func `build post data request with illegal data`() throws {
         let request = try URLRequest.buildRequest(
             from: TestEndpoint.invalidEndpoint
         )

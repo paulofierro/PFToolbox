@@ -8,13 +8,13 @@ import Foundation
 import Testing
 
 struct DataTests {
-    @Test func loadingData() {
+    @Test func `loading data`() {
         #expect(throws: (any Error).self) {
             try Data.load(filename: "fileNotFound.txt")
         }
     }
 
-    @Test func prettyPrinting() throws {
+    @Test func `pretty printing`() throws {
         let json = ["name": "Paulo"]
         let data = try JSONSerialization.data(withJSONObject: json)
 
@@ -25,7 +25,7 @@ struct DataTests {
         """)
     }
 
-    @Test func invalidPrettyPrinting() {
+    @Test func `invalid pretty printing`() {
         let string = "Invalid JSON"
         let data = string.data(using: .utf8)
         #expect(data?.prettyPrinted() == nil)

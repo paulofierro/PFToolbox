@@ -16,7 +16,7 @@ struct DictionaryTests {
         #expect(one["c"] == 3)
     }
 
-    @Test func mergingOverwrite() {
+    @Test func `merging overwrite`() {
         var one = ["a": 1, "b": 2]
         let two = ["b": 3]
         one.merge(dict: two)
@@ -24,7 +24,7 @@ struct DictionaryTests {
         #expect(one["b"] == 3)
     }
 
-    @Test func mergingNil() {
+    @Test func `merging nil`() {
         var one = ["a": 1, "b": 2]
         one.merge(dict: nil)
         #expect(one["a"] == 1)

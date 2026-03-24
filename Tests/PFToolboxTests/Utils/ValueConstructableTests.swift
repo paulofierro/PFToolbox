@@ -23,27 +23,27 @@ struct ValueConstructableTests {
         }
     }
 
-    @Test func creatingFromString() {
+    @Test func `creating from string`() {
         let value = StringEnum.from("two")
         #expect(value == StringEnum.two)
     }
 
-    @Test func creatingFromInt() {
+    @Test func `creating from int`() {
         let value = IntEnum.from(1)
         #expect(value == IntEnum.two)
     }
 
-    @Test func nilDefaultValue() {
+    @Test func `nil default value`() {
         #expect(StringEnum.from(nil) == StringEnum.one)
         #expect(IntEnum.from(nil) == IntEnum.one)
     }
 
-    @Test func emptyDefaultValue() {
+    @Test func `empty default value`() {
         #expect(StringEnum.from("") == StringEnum.one)
         #expect(IntEnum.from(nil) == IntEnum.one)
     }
 
-    @Test func optionalDefaultValue() {
+    @Test func `optional default value`() {
         let value: String? = ""
         #expect(StringEnum.from(value) == StringEnum.one)
         #expect(IntEnum.from(nil) == IntEnum.one)
