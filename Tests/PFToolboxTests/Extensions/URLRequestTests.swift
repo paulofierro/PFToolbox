@@ -4,6 +4,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 @testable import PFToolbox
 import Testing
 

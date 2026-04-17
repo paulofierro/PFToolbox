@@ -4,6 +4,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 public extension HTTPURLResponse {
     /// Returns an error if the HTTP response status code maps to an error.

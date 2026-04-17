@@ -3,6 +3,7 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
 
 /// A view that displays "made with ♥️ in Cayman" with a pulsing heartbeat animation on the heart.
@@ -79,3 +80,4 @@ public struct MadeWithLoveView: View {
     )
     .background(.gray.opacity(0.25))
 }
+#endif

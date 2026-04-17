@@ -4,8 +4,10 @@
 //
 
 @testable import PFToolbox
-import QuartzCore
 import Testing
+
+#if canImport(QuartzCore)
+import QuartzCore
 
 struct CALayerTests {
     @Test func `removing sublayers`() {
@@ -18,3 +20,4 @@ struct CALayerTests {
         #expect(layer.sublayers.isEmptyOrNil)
     }
 }
+#endif

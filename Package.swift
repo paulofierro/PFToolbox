@@ -4,6 +4,30 @@
 import PackageDescription
 
 let name = "PFToolbox"
+
+#if os(Linux)
+let packageDependencies: [Package.Dependency] = []
+let testDependencies: [Target.Dependency] = [
+    Target.Dependency(stringLiteral: name)
+]
+#else
+let packageDependencies: [Package.Dependency] = [
+    .package(
+        url: "https://github.com/sindresorhus/ExceptionCatcher",
+        from: "2.2.0"
+    ),
+    .package(
+        url: "https://github.com/mattgallagher/CwlPreconditionTesting",
+        from: "2.2.2"
+    )
+]
+let testDependencies: [Target.Dependency] = [
+    Target.Dependency(stringLiteral: name),
+    "ExceptionCatcher",
+    "CwlPreconditionTesting"
+]
+#endif
+
 let package = Package(
     name: name,
     platforms: [
@@ -20,16 +44,7 @@ let package = Package(
             ]
         )
     ],
-    dependencies: [
-        .package(
-            url: "https://github.com/sindresorhus/ExceptionCatcher",
-            from: "2.2.0"
-        ),
-        .package(
-            url: "https://github.com/mattgallagher/CwlPreconditionTesting",
-            from: "2.2.2"
-        )
-    ],
+    dependencies: packageDependencies,
     targets: [
         .target(
             name: name,
@@ -38,11 +53,7 @@ let package = Package(
         ),
         .testTarget(
             name: "\(name)Tests",
-            dependencies: [
-                Target.Dependency(stringLiteral: name),
-                "ExceptionCatcher",
-                "CwlPreconditionTesting"
-            ],
+            dependencies: testDependencies,
             resources: [
                 .process("Resources")
             ]

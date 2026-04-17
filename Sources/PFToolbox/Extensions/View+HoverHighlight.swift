@@ -3,6 +3,7 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
 
 public extension View {
@@ -23,3 +24,4 @@ public extension View {
         #endif
     }
 }
+#endif

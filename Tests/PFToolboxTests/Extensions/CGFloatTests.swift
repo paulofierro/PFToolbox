@@ -3,9 +3,11 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
-import CoreGraphics
 @testable import PFToolbox
 import Testing
+
+#if canImport(CoreGraphics)
+import CoreGraphics
 
 struct CGFloatTests {
     @Test func `degrees to radians`() {
@@ -13,3 +15,4 @@ struct CGFloatTests {
         #expect(value.degreesToRadians() == CGFloat.pi)
     }
 }
+#endif
