@@ -3,6 +3,7 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
+#if canImport(CoreGraphics)
 import CoreGraphics
 import Foundation
 
@@ -13,3 +14,4 @@ public extension CGFloat {
             .value
     }
 }
+#endif

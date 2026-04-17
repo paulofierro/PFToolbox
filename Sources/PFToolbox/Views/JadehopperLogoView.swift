@@ -3,6 +3,7 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
 
 /// The Jadehopper logo drawn in a Canvas
@@ -122,3 +123,4 @@ public struct JadehopperLogoView: View {
     )
     .background(.gray.opacity(0.25))
 }
+#endif

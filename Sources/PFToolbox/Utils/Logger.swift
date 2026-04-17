@@ -4,7 +4,9 @@
 //
 
 import Foundation
+#if canImport(os)
 import os
+#endif
 
 /// A simple logger.
 /// To see these log messages outside of Xcode you can use the Console or Terminal:
@@ -19,6 +21,7 @@ public struct Logger {
         case info
         case debug
 
+        #if canImport(os)
         /// Returns the corresponding type for os_log usage
         var logType: OSLogType {
             switch self {
@@ -38,6 +41,7 @@ public struct Logger {
                 .default
             }
         }
+        #endif
 
         /// The type of logs allowed depending on the level
         var allowedLevels: [LogLevel] {
@@ -83,18 +87,28 @@ public struct Logger {
     /// The default log level
     var currentLogLevel: LogLevel
 
+    #if canImport(os)
     /// Creates an OSLog object using our specific subsystem
     private let logIdentifier: OSLog
+    #else
+    private let subsystem: String
+    private let category: String
+    #endif
 
     /// Creates an instance of the logger
     /// - Parameters:
     ///   - subsystem: The subsystem to use for the logger, e.g. "com.paulofierro.MyApp"
     ///   - category: The category to use for the logger, e.g. "MyApp"
     public init(subsystem: String, category: String, logLevel: LogLevel = .debug) {
+        #if canImport(os)
         logIdentifier = OSLog(
             subsystem: subsystem,
             category: category
         )
+        #else
+        self.subsystem = subsystem
+        self.category = category
+        #endif
         currentLogLevel = logLevel
     }
 
@@ -145,12 +159,16 @@ extension Logger {
             emitter = "[\(filename) \(functionName)]: "
         }
 
+        #if canImport(os)
         os_log(
             "%{public}@ %{public}@ %{public}@",
             log: logIdentifier,
             type: logLevel.logType,
             emitter, logLevel.emoji, message
         )
+        #else
+        print("[\(subsystem)/\(category)] \(emitter)\(logLevel.emoji) \(message)")
+        #endif
         return true
     }
 }

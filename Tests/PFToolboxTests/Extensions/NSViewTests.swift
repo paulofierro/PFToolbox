@@ -3,12 +3,13 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
-import AppKit
-import ExceptionCatcher
 @testable import PFToolbox
 import Testing
 
 #if canImport(AppKit)
+import AppKit
+import ExceptionCatcher
+
 struct NSViewTests {
     @Test func `loading nib`() {
         // TODO: For some reason this fails on Github Actions

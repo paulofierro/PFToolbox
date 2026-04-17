@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  macOS:
     runs-on: macOS-26
     defaults:
       run:
@@ -33,3 +33,22 @@ jobs:
           files: ./lcov.info
           name: codecov-umbrella
           verbose: true
+
+  linux:
+    runs-on: ubuntu-latest
+    container: swift:6.2
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Swift version
+        run: swift --version
+
+      - name: Build
+        run: swift build
+
+      - name: Run tests
+        run: swift test

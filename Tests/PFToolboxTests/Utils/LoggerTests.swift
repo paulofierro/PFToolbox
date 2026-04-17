@@ -15,6 +15,7 @@ struct LoggerTests {
         #expect(log.currentLogLevel == .debug)
     }
 
+    #if canImport(os)
     @Test func `log types`() {
         #expect(Logger.LogLevel.none.logType == .default)
         #expect(Logger.LogLevel.error.logType == .error)
@@ -22,6 +23,7 @@ struct LoggerTests {
         #expect(Logger.LogLevel.info.logType == .info)
         #expect(Logger.LogLevel.debug.logType == .debug)
     }
+    #endif
 
     @Test func `allowed levels`() {
         #expect(Logger.LogLevel.none.allowedLevels == [])

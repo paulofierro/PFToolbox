@@ -4,6 +4,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 public extension URLRequest {
     /// Creates and initializes a URLRequest with the given URL and cache policy.

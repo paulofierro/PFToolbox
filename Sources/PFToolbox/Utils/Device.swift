@@ -13,7 +13,7 @@ public enum Device {
     public static func isPhone() -> Bool {
         #if canImport(UIKit)
         UIDevice.current.userInterfaceIdiom == .phone
-        #elseif canImport(AppKit)
+        #else
         false
         #endif
     }
@@ -21,7 +21,7 @@ public enum Device {
     public static func isIpad() -> Bool {
         #if canImport(UIKit)
         UIDevice.current.userInterfaceIdiom == .pad
-        #elseif canImport(AppKit)
+        #else
         false
         #endif
     }
@@ -29,7 +29,7 @@ public enum Device {
     public static func isTV() -> Bool {
         #if canImport(UIKit)
         UIDevice.current.userInterfaceIdiom == .tv
-        #elseif canImport(AppKit)
+        #else
         false
         #endif
     }
@@ -37,7 +37,7 @@ public enum Device {
     public static func isCarPlay() -> Bool {
         #if canImport(UIKit)
         UIDevice.current.userInterfaceIdiom == .carPlay
-        #elseif canImport(AppKit)
+        #else
         false
         #endif
     }
@@ -47,13 +47,15 @@ public enum Device {
         UIDevice.current.userInterfaceIdiom == .mac
         #elseif canImport(AppKit)
         true
+        #else
+        false
         #endif
     }
 
     public static func isVision() -> Bool {
         #if canImport(UIKit)
         UIDevice.current.userInterfaceIdiom == .vision
-        #elseif canImport(AppKit)
+        #else
         false
         #endif
     }

@@ -4,8 +4,10 @@
 //
 
 @testable import PFToolbox
-import SwiftUI
 import Testing
+
+#if canImport(SwiftUI)
+import SwiftUI
 
 struct NSMutableAttributedStringTests {
     @Test func `adding attributes`() {
@@ -29,3 +31,4 @@ struct NSMutableAttributedStringTests {
         #expect(stringA == stringB)
     }
 }
+#endif

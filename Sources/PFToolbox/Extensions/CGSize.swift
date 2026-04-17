@@ -3,6 +3,7 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
+#if canImport(CoreGraphics)
 import CoreGraphics
 
 public extension CGSize {
@@ -18,3 +19,4 @@ public extension CGSize {
         height > width
     }
 }
+#endif
