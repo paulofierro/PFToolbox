@@ -174,7 +174,7 @@ struct URLRequestTests {
         #expect(request.cachePolicy == .returnCacheDataDontLoad)
         #expect(request.timeoutInterval == 10)
         #expect(request.httpMethod == "GET")
-        #expect(request.allHTTPHeaderFields == [:])
+        #expect(request.allHTTPHeaderFields.isEmptyOrNil)
     }
 
     @Test func `build login request`() throws {
@@ -223,7 +223,7 @@ struct URLRequestTests {
         #expect(request.httpMethod == "POST")
 
         // Invalid data, so no content type was added
-        #expect(request.allHTTPHeaderFields == [:])
+        #expect(request.allHTTPHeaderFields.isEmptyOrNil)
         #expect(request.httpBody == nil)
     }
 }
