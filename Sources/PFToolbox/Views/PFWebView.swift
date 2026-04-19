@@ -53,11 +53,7 @@ public struct PFWebView: View {
                         }
                     }
                     .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Cancel", systemImage: "xmark") {
-                                dismiss()
-                            }
-                        }
+                        CancelToolbarItem()
                     }
             }
         }
