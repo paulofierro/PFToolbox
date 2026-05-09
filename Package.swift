@@ -53,10 +53,7 @@ let package = Package(
         ),
         .testTarget(
             name: "\(name)Tests",
-            dependencies: testDependencies,
-            resources: [
-                .process("Resources")
-            ]
+            dependencies: testDependencies
         )
     ],
     swiftLanguageModes: [.v5]

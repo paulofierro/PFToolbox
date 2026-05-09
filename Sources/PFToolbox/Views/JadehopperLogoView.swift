@@ -6,17 +6,65 @@
 #if canImport(SwiftUI)
 import SwiftUI
 
-/// The Jadehopper logo drawn in a Canvas
+/// The Jadehopper logo, drawn as a `Shape` so it honors the inherited foreground style.
+///
+/// ```swift
+/// JadehopperLogoView()
+///     .foregroundStyle(.tertiary)
+/// ```
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct JadehopperLogoView: View {
-    /// The current size category
-    @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.sizeCategory) private var sizeCategory
 
-    private let columns: Int = 19
-    private let rows: Int = 9
-    private let padding: CGFloat = 1
-    private let blockSize: CGFloat = 2
-    private let matrix = [
+    public init() {}
+
+    public var body: some View {
+        JadehopperLogoShape()
+            .frame(
+                width: 28 * JadehopperLogoShape.blockSize,
+                height: 14 * JadehopperLogoShape.blockSize
+            )
+            .padding([.vertical, .trailing], 2)
+            .padding(.leading, 8)
+            .scaleEffect(logoScale)
+    }
+
+    /// Defines the scaling of the logo based on the current size category
+    private var logoScale: CGFloat {
+        switch sizeCategory {
+        case .extraSmall, .small, .medium:
+            1.0
+        case .large:
+            1.1
+        case .extraLarge:
+            1.2
+        case .extraExtraLarge:
+            1.3
+        case .extraExtraExtraLarge:
+            1.4
+        case .accessibilityMedium:
+            1.6
+        case .accessibilityLarge:
+            1.8
+        case .accessibilityExtraLarge:
+            2.0
+        case .accessibilityExtraExtraLarge:
+            2.2
+        case .accessibilityExtraExtraExtraLarge:
+            2.4
+        @unknown default:
+            1.0
+        }
+    }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+private struct JadehopperLogoShape: Shape {
+    static let blockSize: CGFloat = 2
+    private static let columns = 19
+    private static let rows = 9
+    private static let padding: CGFloat = 1
+    private static let matrix: [Int] = [
         0, 0, 0, 0, 1, 0, 1, 0, 0,
         0, 0, 0, 1, 1, 1, 1, 0, 1,
         0, 0, 0, 1, 1, 1, 1, 1, 0,
@@ -38,89 +86,45 @@ public struct JadehopperLogoView: View {
         1, 0, 0, 0, 0, 0, 0, 0, 0
     ]
 
-    private var blocks: [CGRect] = []
-
-    public let color: Color
-
-    public init(color: Color) {
-        self.color = color
-
-        // Build the array of rects to draw the squares
+    func path(in _: CGRect) -> Path {
+        var path = Path()
         var index = 0
-        for column in 0 ... columns - 1 {
-            for row in 0 ... rows - 1 {
-                if matrix[index] == 1 {
-                    let column = CGFloat(column)
-                    let row = CGFloat(row)
-
-                    let rect = CGRect(
-                        x: column * blockSize + column * padding,
-                        y: row * blockSize + row * padding,
-                        width: blockSize,
-                        height: blockSize
+        for column in 0 ..< Self.columns {
+            for row in 0 ..< Self.rows {
+                if Self.matrix[index] == 1 {
+                    let x = CGFloat(column) * (Self.blockSize + Self.padding)
+                    let y = CGFloat(row) * (Self.blockSize + Self.padding)
+                    path.addRect(
+                        CGRect(
+                            x: x,
+                            y: y,
+                            width: Self.blockSize,
+                            height: Self.blockSize
+                        )
                     )
-                    blocks.append(rect)
                 }
                 index += 1
             }
         }
-    }
-
-    public var body: some View {
-        Canvas { context, _ in
-            for rect in blocks {
-                context.fill(Path(rect), with: .color(color))
-            }
-        }
-        .frame(
-            width: 28 * blockSize,
-            height: 14 * blockSize
-        )
-        .padding([.vertical, .trailing], 2)
-        .padding(.leading, 8)
-        .scaleEffect(logoScale)
-    }
-
-    /// Defines the scaling of the logo based on the current size category
-    private var logoScale: CGFloat {
-        switch sizeCategory {
-        case .extraSmall, .small, .medium:
-            return 1.0
-        case .large:
-            return 1.1
-        case .extraLarge:
-            return 1.2
-        case .extraExtraLarge:
-            return 1.3
-        case .extraExtraExtraLarge:
-            return 1.4
-        case .accessibilityMedium:
-            return 1.6
-        case .accessibilityLarge:
-            return 1.8
-        case .accessibilityExtraLarge:
-            return 2.0
-        case .accessibilityExtraExtraLarge:
-            return 2.2
-        case .accessibilityExtraExtraExtraLarge:
-            return 2.4
-        @unknown default:
-            return 1.0
-        }
+        return path
     }
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 #Preview {
-    VStack {
-        Text("This is text")
-        JadehopperLogoView(color: .purple)
-            .background(.red)
+    VStack(spacing: 16) {
+        JadehopperLogoView()
+
+        JadehopperLogoView()
+            .foregroundStyle(.tertiary)
+
+        ForEach(ContentSizeCategory.allCases, id: \.self) {
+            JadehopperLogoView()
+                .foregroundStyle(.purple)
+                .environment(\.sizeCategory, $0)
+        }
     }
-    .frame(
-        maxWidth: .infinity,
-        maxHeight: .infinity
-    )
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(.gray.opacity(0.25))
 }
 #endif
