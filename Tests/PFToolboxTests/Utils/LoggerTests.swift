@@ -3,6 +3,7 @@
 //   Copyright © Paulo Fierro. All rights reserved.
 //
 
+import Foundation
 @testable import PFToolbox
 import Testing
 
@@ -53,5 +54,14 @@ struct LoggerTests {
         #expect(logger.error("Test"))
 
         #expect(!logger.error(nil))
+    }
+
+    @Test func `stored subsystem and category`() {
+        let logger = Logger(
+            subsystem: "com.paulofierro.A",
+            category: "B"
+        )
+        #expect(logger.subsystem == "com.paulofierro.A")
+        #expect(logger.category == "B")
     }
 }
