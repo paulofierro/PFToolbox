@@ -7,7 +7,6 @@
 import SwiftUI
 
 /// A view that displays "made with ♥️ in Cayman" with a pulsing heartbeat animation on the heart.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, visionOS 1.0, *)
 public struct MadeWithLoveView: View {
     @State private var heartScale: CGFloat = 1.0
 
@@ -66,7 +65,6 @@ public struct MadeWithLoveView: View {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, visionOS 1.0, *)
 #Preview {
     VStack(spacing: 16) {
         MadeWithLoveView()

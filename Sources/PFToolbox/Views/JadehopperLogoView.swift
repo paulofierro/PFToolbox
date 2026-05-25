@@ -12,7 +12,6 @@ import SwiftUI
 /// JadehopperLogoView()
 ///     .foregroundStyle(.tertiary)
 /// ```
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct JadehopperLogoView: View {
     @Environment(\.sizeCategory) private var sizeCategory
 
@@ -58,7 +57,6 @@ public struct JadehopperLogoView: View {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 private struct JadehopperLogoShape: Shape {
     static let blockSize: CGFloat = 2
     private static let columns = 19
@@ -110,7 +108,6 @@ private struct JadehopperLogoShape: Shape {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 #Preview {
     VStack(spacing: 16) {
         JadehopperLogoView()

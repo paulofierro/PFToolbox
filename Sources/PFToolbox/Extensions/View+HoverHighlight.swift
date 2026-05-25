@@ -11,8 +11,7 @@ public extension View {
     /// tvOS: Adds a hover effect
     /// Other: No-op
     @ViewBuilder
-    @available(iOS 13, macOS 12, visionOS 1, tvOS 18, *)
-    func roundedRectangleHoverEffect(cornerRadius: CGFloat = 10) -> some View {
+    func roundedRectangleHoverEffect(cornerRadius: Double = 10) -> some View {
         #if os(visionOS)
         contentShape(.interaction, RoundedRectangle(cornerRadius: cornerRadius))
             .contentShape(.hoverEffect, RoundedRectangle(cornerRadius: cornerRadius))
