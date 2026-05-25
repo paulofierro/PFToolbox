@@ -13,7 +13,6 @@ import WebKit
 @available(tvOS, unavailable)
 public struct PFWebView: View {
     public let url: URL
-    @Environment(\.dismiss) var dismiss
 
     public init(url: URL) {
         self.url = url
@@ -23,7 +22,7 @@ public struct PFWebView: View {
     @State private var page: WebPage?
 
     /// The default web page configuration
-    private static var configuration: WebPage.Configuration = {
+    private static let configuration: WebPage.Configuration = {
         var prefs = WebPage.NavigationPreferences()
         prefs.allowsContentJavaScript = true
         prefs.preferredHTTPSNavigationPolicy = .keepAsRequested
@@ -38,53 +37,57 @@ public struct PFWebView: View {
 
     public var body: some View {
         NavigationStack {
-            if let page {
-                WebView(page)
-                    .webViewContentBackground(.hidden)
-                    .ignoresSafeArea(.container, edges: .bottom)
-                    .overlay {
-                        if page.isLoading {
-                            ProgressView()
-                                .frame(
-                                    maxWidth: .infinity,
-                                    maxHeight: .infinity
-                                )
-                                .background(.black.opacity(0.25))
+            Group {
+                if let page {
+                    WebView(page)
+                        .webViewContentBackground(.hidden)
+                        .ignoresSafeArea(.container, edges: .bottom)
+                        .overlay {
+                            if page.isLoading {
+                                ProgressView()
+                                    .frame(
+                                        maxWidth: .infinity,
+                                        maxHeight: .infinity
+                                    )
+                                    .background(.black.opacity(0.25))
+                            }
                         }
-                    }
-                    .toolbar {
-                        CancelToolbarItem()
-                    }
+                } else {
+                    ProgressView()
+                        .frame(
+                            maxWidth: .infinity,
+                            maxHeight: .infinity
+                        )
+                }
+            }
+            .toolbar {
+                CancelToolbarItem()
             }
         }
         .background(.clear)
-        .onAppear {
-            load()
+        .task {
+            await load()
         }
     }
 
     // MARK: - Private Methods
 
-    /// Loads the page
-    private func load() {
+    /// Loads the page and observes navigation events for the lifetime of the view.
+    private func load() async {
         var request = URLRequest(url: url)
         request.attribution = .user
 
         let page = WebPage(configuration: Self.configuration)
         _ = page.load(request)
-
         self.page = page
 
-        // Start observing navigations
-        Task {
-            do {
-                for try await event in page.navigations {
-                    handleNavigationEvent(event)
-                }
-            } catch {
-                log.error("Web page error: \(error.localizedDescription)")
-                loadErrorPage()
+        do {
+            for try await event in page.navigations {
+                handleNavigationEvent(event)
             }
+        } catch {
+            log.error("Web page error: \(error.localizedDescription)")
+            loadErrorPage()
         }
     }
 
@@ -98,7 +101,7 @@ public struct PFWebView: View {
 
         page.load(URLRequest(url: url))
     }
-
+    
     /// Handle navigation events
     private func handleNavigationEvent(_ event: WebPage.NavigationEvent) {}
 }
