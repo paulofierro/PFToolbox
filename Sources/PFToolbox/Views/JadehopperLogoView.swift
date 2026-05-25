@@ -13,7 +13,7 @@ import SwiftUI
 ///     .foregroundStyle(.tertiary)
 /// ```
 public struct JadehopperLogoView: View {
-    @Environment(\.sizeCategory) private var sizeCategory
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     public init() {}
 
@@ -28,28 +28,28 @@ public struct JadehopperLogoView: View {
             .scaleEffect(logoScale)
     }
 
-    /// Defines the scaling of the logo based on the current size category
-    private var logoScale: CGFloat {
-        switch sizeCategory {
-        case .extraSmall, .small, .medium:
+    /// Defines the scaling of the logo based on the current Dynamic Type size.
+    private var logoScale: Double {
+        switch dynamicTypeSize {
+        case .xSmall, .small, .medium:
             1.0
         case .large:
             1.1
-        case .extraLarge:
+        case .xLarge:
             1.2
-        case .extraExtraLarge:
+        case .xxLarge:
             1.3
-        case .extraExtraExtraLarge:
+        case .xxxLarge:
             1.4
-        case .accessibilityMedium:
+        case .accessibility1:
             1.6
-        case .accessibilityLarge:
+        case .accessibility2:
             1.8
-        case .accessibilityExtraLarge:
+        case .accessibility3:
             2.0
-        case .accessibilityExtraExtraLarge:
+        case .accessibility4:
             2.2
-        case .accessibilityExtraExtraExtraLarge:
+        case .accessibility5:
             2.4
         @unknown default:
             1.0
@@ -58,10 +58,10 @@ public struct JadehopperLogoView: View {
 }
 
 private struct JadehopperLogoShape: Shape {
-    static let blockSize: CGFloat = 2
+    static let blockSize: Double = 2
     private static let columns = 19
     private static let rows = 9
-    private static let padding: CGFloat = 1
+    private static let padding: Double = 1
     private static let matrix: [Int] = [
         0, 0, 0, 0, 1, 0, 1, 0, 0,
         0, 0, 0, 1, 1, 1, 1, 0, 1,
@@ -90,8 +90,8 @@ private struct JadehopperLogoShape: Shape {
         for column in 0 ..< Self.columns {
             for row in 0 ..< Self.rows {
                 if Self.matrix[index] == 1 {
-                    let x = CGFloat(column) * (Self.blockSize + Self.padding)
-                    let y = CGFloat(row) * (Self.blockSize + Self.padding)
+                    let x = Double(column) * (Self.blockSize + Self.padding)
+                    let y = Double(row) * (Self.blockSize + Self.padding)
                     path.addRect(
                         CGRect(
                             x: x,
@@ -115,10 +115,10 @@ private struct JadehopperLogoShape: Shape {
         JadehopperLogoView()
             .foregroundStyle(.tertiary)
 
-        ForEach(ContentSizeCategory.allCases, id: \.self) {
+        ForEach(DynamicTypeSize.allCases, id: \.self) {
             JadehopperLogoView()
                 .foregroundStyle(.purple)
-                .environment(\.sizeCategory, $0)
+                .dynamicTypeSize($0)
         }
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
