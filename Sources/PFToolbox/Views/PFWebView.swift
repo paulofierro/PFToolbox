@@ -101,7 +101,7 @@ public struct PFWebView: View {
 
         page.load(URLRequest(url: url))
     }
-    
+
     /// Handle navigation events
     private func handleNavigationEvent(_ event: WebPage.NavigationEvent) {}
 }

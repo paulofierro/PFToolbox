@@ -70,72 +70,72 @@ public struct Logger {
     }
 }
 
-extension Logger {
+public extension Logger {
     /// Defines the level of logs
-    public enum LogLevel: String, Sendable {
+    enum LogLevel: String, Sendable {
         case none
         case error
         case warning
         case info
         case debug
-        
-#if canImport(os)
+
+        #if canImport(os)
         /// Returns the corresponding type for os_log usage
         var logType: OSLogType {
             switch self {
             case .error:
-                    .error
-                
+                .error
+
             case .warning:
-                    .fault
-                
+                .default
+
             case .info:
-                    .info
-                
+                .info
+
             case .debug:
-                    .debug
-                
+                .debug
+
             default:
-                    .default
+                .default
             }
         }
-#endif
-        
+        #endif
+
         /// The type of logs allowed depending on the level
         var allowedLevels: [LogLevel] {
             switch self {
             case .none:
                 []
-                
+
             case .error:
                 [.error]
-                
+
             case .warning:
                 [.error, .warning]
-                
+
             case .info:
                 [.error, .warning, .info]
-                
+
             case .debug:
                 [.error, .warning, .info, .debug]
             }
         }
-        
+
         /// Returns the corresponding emoji
         var emoji: String {
             switch self {
             case .error:
                 "‼️‼️‼️"
-                
+
             case .warning:
                 "⚠️⚠️⚠️"
-                
+
             case .info:
                 "✳️✳️✳️"
-                
+
             case .debug:
                 "🔹🔹🔹"
-                
+
             default:
                 ""
             }
@@ -145,19 +145,19 @@ extension Logger {
 
 // MARK: - Forwarding
 
-extension Logger {
+public extension Logger {
     /// A closure invoked for every log message that passes the level filter.
     /// Use to bridge log output to external systems (Sentry, Crashlytics, file sinks, etc.).
     /// Forwarders may be invoked from any thread, so the closure must be `@Sendable`.
-    public typealias Forwarder = @Sendable (_ message: String, _ level: LogLevel, _ subsystem: String, _ category: String, _ file: String, _ line: Int, _ function: String) -> Void
+    typealias Forwarder = @Sendable (_ message: String, _ level: LogLevel, _ subsystem: String, _ category: String, _ file: String, _ line: Int, _ function: String) -> Void
 
     /// An opaque handle returned by `addForwarder`. Pass it to `removeForwarder(token:)` to unregister.
-    public struct ForwarderToken: Hashable, Sendable {
+    struct ForwarderToken: Hashable, Sendable {
         fileprivate let id: UUID
     }
 
     private static let forwarderLock = NSLock()
-    nonisolated(unsafe) private static var forwarders: [(token: ForwarderToken, forwarder: Forwarder)] = []
+    private nonisolated(unsafe) static var forwarders: [(token: ForwarderToken, forwarder: Forwarder)] = []
 
     /// Registers a closure to receive every log message that survives the level filter.
     ///
@@ -172,7 +172,7 @@ extension Logger {
     ///
     /// - Returns: A token that can be passed to `removeForwarder(token:)` to unregister this forwarder.
     @discardableResult
-    public static func addForwarder(_ forwarder: @escaping Forwarder) -> ForwarderToken {
+    static func addForwarder(_ forwarder: @escaping Forwarder) -> ForwarderToken {
         let token = ForwarderToken(id: UUID())
         forwarderLock.lock()
         defer { forwarderLock.unlock() }
@@ -181,26 +181,28 @@ extension Logger {
     }
 
     /// Removes a previously registered forwarder by its token. No-op if the token is unknown.
-    public static func removeForwarder(token: ForwarderToken) {
+    static func removeForwarder(token: ForwarderToken) {
         forwarderLock.lock()
         defer { forwarderLock.unlock() }
         forwarders.removeAll { $0.token == token }
     }
 
     /// Removes all registered forwarders. Primarily useful in tests.
-    public static func removeAllForwarders() {
+    static func removeAllForwarders() {
         forwarderLock.lock()
         defer { forwarderLock.unlock() }
         forwarders.removeAll()
     }
 
+    // Mirrors the Forwarder signature, so the parameter count is fixed by that contract
+    // swiftlint:disable:next function_parameter_count
     private static func dispatchToForwarders(_ message: String, level: LogLevel, subsystem: String, category: String, file: String, line: Int, function: String) {
         forwarderLock.lock()
         guard forwarders.isNotEmpty else {
             forwarderLock.unlock()
             return
         }
-        
+
         let snapshot = forwarders
         forwarderLock.unlock()
         for entry in snapshot {

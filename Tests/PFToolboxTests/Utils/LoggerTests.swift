@@ -20,7 +20,7 @@ struct LoggerTests {
     @Test func `log types`() {
         #expect(Logger.LogLevel.none.logType == .default)
         #expect(Logger.LogLevel.error.logType == .error)
-        #expect(Logger.LogLevel.warning.logType == .fault)
+        #expect(Logger.LogLevel.warning.logType == .default)
         #expect(Logger.LogLevel.info.logType == .info)
         #expect(Logger.LogLevel.debug.logType == .debug)
     }
