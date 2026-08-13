@@ -14,14 +14,37 @@ struct DataTests {
         }
     }
 
-    @Test func `loading from an explicit bundle`() {
-        #expect(throws: DecodingError.fileNotFound("fileNotFound.txt")) {
-            try Data.load(filename: "fileNotFound.txt", in: Bundle(for: BundleMarker.self))
+    @Test func `loading a resource from a bundle`() throws {
+        let contents = Data("hello world".utf8)
+        let bundle = try TemporaryBundle(
+            info: ["CFBundleName": "Fixture"],
+            resources: ["greeting.txt": contents]
+        )
+        defer { bundle.remove() }
+
+        #expect(try Data.load(filename: "greeting.txt", in: bundle.value) == contents)
+    }
+
+    @Test func `loading a missing file from an explicit bundle`() throws {
+        let bundle = try TemporaryBundle(info: ["CFBundleName": "Fixture"])
+        defer { bundle.remove() }
+
+        #expect(throws: DecodingError.fileNotFound("nope.txt")) {
+            try Data.load(filename: "nope.txt", in: bundle.value)
         }
     }
 
-    /// Gives `Bundle(for:)` a class in the test bundle to resolve against
-    private final class BundleMarker {}
+    /// Non-UTF8 bytes must survive, which the old String round-trip could not manage
+    @Test func `loading binary data`() throws {
+        let contents = Data([0x00, 0xFF, 0xFE, 0x80, 0x01])
+        let bundle = try TemporaryBundle(
+            info: ["CFBundleName": "Fixture"],
+            resources: ["blob.bin": contents]
+        )
+        defer { bundle.remove() }
+
+        #expect(try Data.load(filename: "blob.bin", in: bundle.value) == contents)
+    }
 
     @Test func `pretty printing`() throws {
         let json = ["name": "Paulo"]

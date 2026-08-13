@@ -16,9 +16,29 @@ public func isRunningOnCI() -> Bool {
     ProcessInfo.processInfo.environment["CI"] == "true"
 }
 
-/// Returns true if the process is running a test bundle under XCTest
+/// Returns true if the process was launched to run a test suite.
+///
+/// Covers both hosts this package is tested under. XCTest sets environment variables that
+/// nothing else does, but SwiftPM runs swift-testing suites through its own helper binary
+/// without loading XCTest at all, so there is nothing in the environment to look for and the
+/// executable name is the only signal left.
 public func isRunningTests() -> Bool {
-    ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+    let environment = ProcessInfo.processInfo.environment
+    let testEnvironmentKeys = [
+        "XCTestConfigurationFilePath",
+        "XCTestBundlePath",
+        "XCTestSessionIdentifier"
+    ]
+
+    if testEnvironmentKeys.contains(where: { environment[$0] != nil }) {
+        return true
+    }
+
+    guard let executable = ProcessInfo.processInfo.arguments.first else {
+        return false
+    }
+    let name = URL(fileURLWithPath: executable).lastPathComponent
+    return name == "swiftpm-testing-helper" || name == "xctest"
 }
 
 /// The global logger. Remember to create your own!
