@@ -37,8 +37,13 @@ public func isRunningTests() -> Bool {
     guard let executable = ProcessInfo.processInfo.arguments.first else {
         return false
     }
+    // Darwin runs the suite through `swiftpm-testing-helper` or the `xctest` tool, while Linux
+    // builds the bundle as a standalone `<Package>PackageTests.xctest` executable.
     let name = URL(fileURLWithPath: executable).lastPathComponent
-    return name == "swiftpm-testing-helper" || name == "xctest"
+    return name == "swiftpm-testing-helper"
+        || name == "xctest"
+        || name.hasSuffix(".xctest")
+        || name.hasSuffix("PackageTests")
 }
 
 /// The global logger. Remember to create your own!

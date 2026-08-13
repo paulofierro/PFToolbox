@@ -7,9 +7,8 @@
 import Testing
 
 struct DeviceTests {
-    /// Exactly one idiom can be true at a time, whichever platform the suite runs on
-    @Test func `reports a single idiom`() {
-        let idioms = [
+    private var idioms: [Bool] {
+        [
             Device.isPhone(),
             Device.isIpad(),
             Device.isTV(),
@@ -17,7 +16,12 @@ struct DeviceTests {
             Device.isMac(),
             Device.isVision()
         ]
-        #expect(idioms.filter(\.self).count == 1)
+    }
+
+    /// The idioms are mutually exclusive. Platforms without a UI framework match none of them,
+    /// which is why this is an upper bound rather than an exact count.
+    @Test func `reports at most one idiom`() {
+        #expect(idioms.filter(\.self).count <= 1)
     }
 
     @Test func `reports the idiom for the running platform`() {
@@ -29,6 +33,9 @@ struct DeviceTests {
         #expect(Device.isVision())
         #elseif os(iOS)
         #expect(Device.isPhone() || Device.isIpad() || Device.isMac())
+        #else
+        // Linux has neither UIKit nor AppKit, so every idiom reports false
+        #expect(idioms.allSatisfy { $0 == false })
         #endif
     }
 }

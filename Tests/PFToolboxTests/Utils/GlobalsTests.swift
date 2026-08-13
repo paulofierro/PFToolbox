@@ -12,9 +12,11 @@ struct GlobalsTests {
         #expect(!isShowingPreview())
     }
 
-    /// The suite is running under XCTest by definition
+    /// True by definition here, whichever runner is hosting the suite. The executable is
+    /// reported so that a failure on an unfamiliar host names the process it did not recognise.
     @Test func `is running tests`() {
-        #expect(isRunningTests())
+        let executable = ProcessInfo.processInfo.arguments.first ?? "<none>"
+        #expect(isRunningTests(), "Unrecognised test runner: \(executable)")
     }
 
     @Test func `is running on CI`() {
