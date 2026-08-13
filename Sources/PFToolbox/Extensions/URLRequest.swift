@@ -49,7 +49,7 @@ public extension URLRequest {
             break
         case .requestWithJSONPayload(let payload):
             if let payload {
-                guard let json = payload.toJSON() else {
+                guard let json = payload.toJSONObject() else {
                     throw EncodingError.noData
                 }
                 try request.addJSONPayload(json)
@@ -92,11 +92,9 @@ public extension URLRequest {
                 throw EncodingError.encodingFailed
             }
             httpBody = try JSONSerialization.data(withJSONObject: json)
-            #if DEBUG
-            if let prettyJSON = httpBody?.prettyPrinted() {
-                log.debug("JSON: \(prettyJSON)")
-            }
-            #endif
+            // Only the size is logged. The body routinely carries credentials and personal
+            // data, and log messages outlive the process that wrote them.
+            log.debug("Encoded a JSON payload of \(httpBody?.count ?? 0) bytes")
 
             // Add the content-type header if its not already present
             addContentTypeHeader(for: .jsonContent)
@@ -142,8 +140,10 @@ public extension URLRequest {
 // MARK: - Helpers
 
 extension URLRequest {
-    /// Adds the content-type header
+    /// Adds the content-type header, leaving any value the caller already set in place
     private mutating func addContentTypeHeader(for type: HTTPHeaderValue) {
-        setValue(type.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
+        let field = HTTPHeaderField.contentType.rawValue
+        guard value(forHTTPHeaderField: field) == nil else { return }
+        setValue(type.rawValue, forHTTPHeaderField: field)
     }
 }
