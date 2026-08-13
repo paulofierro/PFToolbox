@@ -13,21 +13,33 @@ public extension HTTPURLResponse {
     var statusCodeError: NetworkError? {
         switch statusCode {
         case 200 ... 299:
+            // Success
             nil
+
+        case 304:
+            // Not Modified is the successful outcome of a conditional request
+            nil
+
+        case 401, 403:
+            // Unauthorized and Forbidden are the only genuine authentication failures
+            NetworkError.authenticationError(statusCode)
 
         case 404:
             NetworkError.notFound(statusCode)
 
+        case 410, 426:
+            // Gone and Upgrade Required both mean the client is out of date
+            NetworkError.outdated(statusCode)
+
         case 400 ... 499:
-            NetworkError.authenticationError(statusCode)
+            // Any other client error
+            NetworkError.failed(statusCode)
 
         case 500 ... 599:
             NetworkError.serverError(statusCode)
 
-        case 600:
-            NetworkError.outdated(statusCode)
-
         default:
+            // Anything outside the ranges defined by RFC 9110
             NetworkError.badResponse(statusCode)
         }
     }
