@@ -1,8 +1,6 @@
 //
-//  CancelToolbarItem.swift
-//  PFToolbox
-//
-//  Created by Paulo Fierro on 19/04/2026.
+//   CancelToolbarItem.swift
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 #if canImport(SwiftUI)

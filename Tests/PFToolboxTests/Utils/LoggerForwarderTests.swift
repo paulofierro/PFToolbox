@@ -1,8 +1,6 @@
 //
-//  LoggerTests 2.swift
-//  PFToolbox
-//
-//  Created by Paulo Fierro on 23/05/2026.
+//   LoggerForwarderTests.swift
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 import Foundation
@@ -190,24 +188,24 @@ private final class ForwarderSink: @unchecked Sendable {
         let line: Int
         let function: String
     }
-    
+
     private let lock = NSLock()
     private var _entries: [Entry] = []
-    
+
     func append(_ entry: Entry) {
         lock.lock(); defer { lock.unlock() }
         _entries.append(entry)
     }
-    
+
     var entries: [Entry] {
         lock.lock(); defer { lock.unlock() }
         return _entries
     }
-    
+
     /// Returns a `Logger.Forwarder` that writes into this sink.
     func makeForwarder() -> Logger.Forwarder {
         { [self] message, level, subsystem, category, file, line, function in
-            self.append(
+            append(
                 Entry(
                     message: message,
                     level: level,
