@@ -65,7 +65,7 @@ public struct PFWebView: View {
             }
         }
         .background(.clear)
-        .task {
+        .task(id: url) {
             await load()
         }
     }
@@ -93,9 +93,9 @@ public struct PFWebView: View {
 
     /// Loads the error page from the app bundle
     private func loadErrorPage() {
-        let url = Bundle.main.url(forResource: "error", withExtension: "html")
-        guard let page, let url else {
-            log.error("Error file not found")
+        guard let page else { return }
+        guard let url = Bundle.main.url(forResource: "error", withExtension: "html") else {
+            log.error("Could not find error.html in the main bundle")
             return
         }
 
