@@ -13,7 +13,7 @@ struct BundleTests {
     }
 
     @Test func `executable name`() {
-        if isRunningInXcode() {
+        if isRunningTests() {
             #expect(Bundle.main.executableName == "xctest")
         } else {
             #expect(Bundle.main.executableName == nil)
@@ -21,7 +21,7 @@ struct BundleTests {
     }
 
     @Test func `bundle name`() {
-        if isRunningInXcode() {
+        if isRunningTests() {
             #expect(Bundle.main.bundleName == "xctest")
         } else {
             #expect(Bundle.main.bundleName == nil)
@@ -29,7 +29,7 @@ struct BundleTests {
     }
 
     @Test func `version number`() throws {
-        if isRunningInXcode() {
+        if isRunningTests() {
             let version = try #require(Bundle.main.versionNumber)
             #expect(version.isEmpty == false)
         } else {
@@ -38,11 +38,11 @@ struct BundleTests {
     }
 
     @Test func `team identifier`() {
-        #expect(Bundle.main.teamIdentifierPrefix == "")
+        #expect(Bundle.main.teamIdentifierPrefix.isEmpty)
     }
 
     @Test func identifier() {
-        if isRunningInXcode() {
+        if isRunningTests() {
             #expect(Bundle.main.identifier == "com.apple.dt.xctest.tool")
         } else {
             #expect(Bundle.main.identifier == "com.paulofierro.pftoolbox.unknown")

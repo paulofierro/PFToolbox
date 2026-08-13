@@ -11,10 +11,12 @@ struct ErrorTests {
     let url = URL.from(string: "http://paulofierro.com")
 
     @Test func `comparing decoding error`() {
+        // swiftlint:disable:next identical_operands
         #expect(DecodingError.fileNotFound("abc.json") == DecodingError.fileNotFound("abc.json"))
     }
 
     @Test func `comparing encoding error`() {
+        // swiftlint:disable:next identical_operands
         #expect(EncodingError.noData == EncodingError.noData)
         #expect(EncodingError.noData != EncodingError.encodingFailed)
     }

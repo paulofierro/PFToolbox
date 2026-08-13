@@ -17,7 +17,7 @@ struct PayloadTests {
 
     @Test func `failed encode`() {
         let payload = UnencodablePayload(name: "")
-        #expect(payload.toJSON() == nil)
+        #expect(payload.toJSONObject() == nil)
         #expect(payload["name"] == nil)
     }
 

@@ -246,7 +246,7 @@ struct URLRequestTests {
         #expect(request.httpMethod == "POST")
         #expect(request.allHTTPHeaderFields == [HTTPHeaderField.contentType.rawValue: HTTPHeaderValue.jsonContent.rawValue])
 
-        let json = try #require(MessagePayload(message: message).toJSON())
+        let json = try #require(MessagePayload(message: message).toJSONObject())
         let serializedPayload = try JSONSerialization.data(withJSONObject: json)
         #expect(request.httpBody == serializedPayload)
     }
@@ -380,7 +380,7 @@ struct MessagePayload: Payload {
     let message: String
 }
 
-/// A payload whose encoding always fails, so `toJSON()` yields nil
+/// A payload whose encoding always fails, so `toJSONObject()` yields nil
 private struct UnencodablePayload: Payload {
     func encode(to encoder: any Encoder) throws {
         throw EncodingError.encodingFailed

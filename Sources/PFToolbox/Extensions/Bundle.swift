@@ -6,7 +6,8 @@
 import Foundation
 
 public extension Bundle {
-    /// Returns the path to the app
+    /// Returns the directory containing the app bundle, not the bundle itself.
+    /// To reach resources shipped inside the bundle use `url(forResource:withExtension:)`.
     static var appPath: URL {
         Bundle.main.bundleURL.deletingLastPathComponent()
     }
