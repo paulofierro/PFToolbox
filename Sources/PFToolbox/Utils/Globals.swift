@@ -16,7 +16,8 @@ public func isRunningOnCI() -> Bool {
     ProcessInfo.processInfo.environment["CI"] == "true"
 }
 
-public func isRunningInXcode() -> Bool {
+/// Returns true if the process is running a test bundle under XCTest
+public func isRunningTests() -> Bool {
     ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
 }
 
