@@ -8,6 +8,8 @@ import SwiftUI
 
 /// A view that displays "made with ♥️ in Cayman" with a pulsing heartbeat animation on the heart.
 public struct MadeWithLoveView: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @State private var heartScale: Double = 1.0
 
     public let animated: Bool
@@ -28,7 +30,7 @@ public struct MadeWithLoveView: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Made with love in Cayman")
         .task {
-            guard animated else { return }
+            guard animated, !reduceMotion else { return }
             await heartbeat()
         }
     }

@@ -20,8 +20,8 @@ public struct JadehopperLogoView: View {
     public var body: some View {
         JadehopperLogoShape()
             .frame(
-                width: 28 * JadehopperLogoShape.blockSize,
-                height: 14 * JadehopperLogoShape.blockSize
+                width: JadehopperLogoShape.size.width,
+                height: JadehopperLogoShape.size.height
             )
             .padding([.vertical, .trailing], 2)
             .padding(.leading, 8)
@@ -62,6 +62,16 @@ private struct JadehopperLogoShape: Shape {
     private static let columns = 19
     private static let rows = 9
     private static let padding: Double = 1
+
+    /// The exact size of the drawn path. `path(in:)` ignores the proposed rect and lays the
+    /// blocks out at a fixed scale, so the frame has to be derived from the same constants.
+    static var size: CGSize {
+        CGSize(
+            width: Double(columns - 1) * (blockSize + padding) + blockSize,
+            height: Double(rows - 1) * (blockSize + padding) + blockSize
+        )
+    }
+
     private static let matrix: [Int] = [
         0, 0, 0, 0, 1, 0, 1, 0, 0,
         0, 0, 0, 1, 1, 1, 1, 0, 1,
