@@ -14,9 +14,9 @@ struct BundleTests {
 
     @Test func `executable name`() {
         if isRunningInXcode() {
-            #expect(Bundle.main.bundleName == "xctest")
+            #expect(Bundle.main.executableName == "xctest")
         } else {
-            #expect(Bundle.main.bundleName == nil)
+            #expect(Bundle.main.executableName == nil)
         }
     }
 

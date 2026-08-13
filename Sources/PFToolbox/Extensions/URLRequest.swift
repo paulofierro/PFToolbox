@@ -48,7 +48,10 @@ public extension URLRequest {
             // Do nothing
             break
         case .requestWithJSONPayload(let payload):
-            if let json = payload?.toJSON() {
+            if let payload {
+                guard let json = payload.toJSON() else {
+                    throw EncodingError.noData
+                }
                 try request.addJSONPayload(json)
             }
         case .requestWithForm(let params):
@@ -57,25 +60,29 @@ public extension URLRequest {
         return request
     }
 
-    /// Add URL parameters to a request
+    /// Add URL parameters to a request, preserving any query items already present on the URL
     mutating func addURLParameters(_ parameters: Parameters) {
         guard let url, parameters.isNotEmpty else { return }
 
-        // Add a query item for each param
+        // Add a query item for each param. Values are passed through unescaped because
+        // `URLComponents` percent-encodes them when it builds the URL below.
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        components?.queryItems = parameters
+        let queryItems = parameters
             .sorted(by: {
                 $0.key < $1.key
             })
             .map { key, value in
                 URLQueryItem(
                     name: key,
-                    value: "\(value)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                    value: "\(value)"
                 )
             }
+        let existingItems = components?.queryItems ?? []
+        components?.queryItems = existingItems + queryItems
 
-        // Finally replace our URL
-        self.url = components?.url
+        // Finally replace our URL, leaving it untouched if the components could not be rebuilt
+        guard let newURL = components?.url else { return }
+        self.url = newURL
     }
 
     /// Add a JSON payload to a request. Also adds required HTTP headers if these are missing
@@ -101,7 +108,7 @@ public extension URLRequest {
     /// Adds a dictionary of string values to a request. Also adds required HTTP headers if these are missing
     mutating func addURLEncodedForm(params: [String: String]) throws {
         let parameters = params.map { key, value in
-            "\(key)=\(value.percentEscapeString())"
+            "\(key.percentEscapeString())=\(value.percentEscapeString())"
         }
 
         httpBody = parameters

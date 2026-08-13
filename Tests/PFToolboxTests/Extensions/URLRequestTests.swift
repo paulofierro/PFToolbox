@@ -127,6 +127,17 @@ struct URLRequestTests {
         #expect(header.value == HTTPHeaderValue.urlEncodedFormContent.rawValue)
     }
 
+    /// Keys are escaped as well as values, otherwise a key containing a separator
+    /// silently splits the body into extra fields.
+    @Test func `adding form payload with reserved characters`() throws {
+        var request = URLRequest(url: url)
+        try request.addURLEncodedForm(params: ["a&b=c": "x y"])
+
+        let data = try #require(request.httpBody)
+        let string = try #require(String(data: data, encoding: .utf8))
+        #expect(string == "a%26b%3Dc=x+y")
+    }
+
     @Test func `creating request with methods`() {
         let url = URL.from(string: "http://jadehopper.com")
         let getRequest = URLRequest(url: url)
@@ -162,6 +173,32 @@ struct URLRequestTests {
         var request = URLRequest(url: url)
         request.addURLParameters([:])
         #expect(request.url?.absoluteString == url.absoluteString)
+    }
+
+    /// Values are handed to `URLComponents` unescaped so that they are percent-encoded
+    /// exactly once, rather than escaping the escapes.
+    @Test func `adding URL params with reserved characters`() {
+        var request = URLRequest(url: url)
+        request.addURLParameters(
+            [
+                "query": "a b&c=d",
+                "discount": "50%"
+            ]
+        )
+        #expect(request.url?.absoluteString == "\(url.absoluteString)?discount=50%25&query=a%20b%26c%3Dd")
+    }
+
+    @Test func `adding URL params keeps the existing query`() {
+        let existing = URL.from(string: "https://paulofierro.com?existing=1")
+        var request = URLRequest(url: existing)
+        request.addURLParameters(["added": "2"])
+        #expect(request.url?.absoluteString == "https://paulofierro.com?existing=1&added=2")
+    }
+
+    @Test func `adding URL params to a non-string value`() {
+        var request = URLRequest(url: url)
+        request.addURLParameters(["count": 42])
+        #expect(request.url?.absoluteString == "\(url.absoluteString)?count=42")
     }
 
     @Test func `build start request`() throws {
@@ -226,6 +263,22 @@ struct URLRequestTests {
         #expect(request.allHTTPHeaderFields.isEmptyOrNil)
         #expect(request.httpBody == nil)
     }
+
+    /// A payload that cannot be turned into JSON must surface as an error rather than
+    /// quietly producing a request with no body.
+    @Test func `build request with an unencodable payload`() {
+        #expect(throws: EncodingError.noData) {
+            try URLRequest.buildRequest(from: TestEndpoint.unencodablePayload)
+        }
+    }
+
+    /// An absent payload is a valid way to describe a body-less request, so it must not throw.
+    @Test func `build request with no payload`() throws {
+        let request = try URLRequest.buildRequest(from: TestEndpoint.missingPayload)
+        #expect(request.httpMethod == "POST")
+        #expect(request.httpBody == nil)
+        #expect(request.allHTTPHeaderFields.isEmptyOrNil)
+    }
 }
 
 private enum TestEndpoint {
@@ -233,6 +286,8 @@ private enum TestEndpoint {
     case login(username: String, password: String)
     case postData(message: String)
     case invalidEndpoint
+    case unencodablePayload
+    case missingPayload
 }
 
 extension TestEndpoint: Endpoint {
@@ -258,6 +313,9 @@ extension TestEndpoint: Endpoint {
 
         case .invalidEndpoint:
             "invalid"
+
+        case .unencodablePayload, .missingPayload:
+            "postMessage"
         }
     }
 
@@ -285,6 +343,12 @@ extension TestEndpoint: Endpoint {
         case .postData(let message):
             let payload = MessagePayload(message: message)
             return .requestWithJSONPayload(payload)
+
+        case .unencodablePayload:
+            return .requestWithJSONPayload(UnencodablePayload())
+
+        case .missingPayload:
+            return .requestWithJSONPayload(nil)
         }
     }
 
@@ -314,4 +378,11 @@ extension TestEndpoint: Endpoint {
 
 struct MessagePayload: Payload {
     let message: String
+}
+
+/// A payload whose encoding always fails, so `toJSON()` yields nil
+private struct UnencodablePayload: Payload {
+    func encode(to encoder: any Encoder) throws {
+        throw EncodingError.encodingFailed
+    }
 }
