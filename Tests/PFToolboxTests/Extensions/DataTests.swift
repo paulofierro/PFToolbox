@@ -8,11 +8,20 @@ import Foundation
 import Testing
 
 struct DataTests {
-    @Test func `loading data`() {
-        #expect(throws: (any Error).self) {
+    @Test func `loading a missing file`() {
+        #expect(throws: DecodingError.fileNotFound("fileNotFound.txt")) {
             try Data.load(filename: "fileNotFound.txt")
         }
     }
+
+    @Test func `loading from an explicit bundle`() {
+        #expect(throws: DecodingError.fileNotFound("fileNotFound.txt")) {
+            try Data.load(filename: "fileNotFound.txt", in: Bundle(for: BundleMarker.self))
+        }
+    }
+
+    /// Gives `Bundle(for:)` a class in the test bundle to resolve against
+    private final class BundleMarker {}
 
     @Test func `pretty printing`() throws {
         let json = ["name": "Paulo"]
