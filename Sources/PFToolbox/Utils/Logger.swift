@@ -35,37 +35,57 @@ public struct Logger {
         self.subsystem = subsystem
         self.category = category
         #if canImport(os)
-        logIdentifier = OSLog(
+        self.logIdentifier = OSLog(
             subsystem: subsystem,
             category: category
         )
         #endif
-        currentLogLevel = logLevel
+        self.currentLogLevel = logLevel
     }
 
     // MARK: - Public Methods
 
     /// Prints a debug message
     @discardableResult
-    public func debug(_ message: String?, file: String = #fileID, line: Int = #line, function: String = #function) -> Bool {
+    public func debug(
+        _ message: String?,
+        file: String = #fileID,
+        line: Int = #line,
+        function: String = #function
+    ) -> Bool {
         printMessage(message, logLevel: .debug, file: file, line: line, function: function)
     }
 
     /// Prints an informative message
     @discardableResult
-    public func info(_ message: String?, file: String = #fileID, line: Int = #line, function: String = #function) -> Bool {
+    public func info(
+        _ message: String?,
+        file: String = #fileID,
+        line: Int = #line,
+        function: String = #function
+    ) -> Bool {
         printMessage(message, logLevel: .info, file: file, line: line, function: function)
     }
 
     /// Prints a warning message
     @discardableResult
-    public func warn(_ message: String?, file: String = #fileID, line: Int = #line, function: String = #function) -> Bool {
+    public func warn(
+        _ message: String?,
+        file: String = #fileID,
+        line: Int = #line,
+        function: String = #function
+    ) -> Bool {
         printMessage(message, logLevel: .warning, file: file, line: line, function: function)
     }
 
     /// Prints an error message
     @discardableResult
-    public func error(_ message: String?, file: String = #fileID, line: Int = #line, function: String = #function) -> Bool {
+    public func error(
+        _ message: String?,
+        file: String = #fileID,
+        line: Int = #line,
+        function: String = #function
+    ) -> Bool {
         printMessage(message, logLevel: .error, file: file, line: line, function: function)
     }
 }
@@ -149,7 +169,15 @@ public extension Logger {
     /// A closure invoked for every log message that passes the level filter.
     /// Use to bridge log output to external systems (Sentry, Crashlytics, file sinks, etc.).
     /// Forwarders may be invoked from any thread, so the closure must be `@Sendable`.
-    typealias Forwarder = @Sendable (_ message: String, _ level: LogLevel, _ subsystem: String, _ category: String, _ file: String, _ line: Int, _ function: String) -> Void
+    typealias Forwarder = @Sendable (
+        _ message: String,
+        _ level: LogLevel,
+        _ subsystem: String,
+        _ category: String,
+        _ file: String,
+        _ line: Int,
+        _ function: String
+    ) -> Void
 
     /// An opaque handle returned by `addForwarder`. Pass it to `removeForwarder(token:)` to unregister.
     struct ForwarderToken: Hashable, Sendable {
@@ -196,7 +224,15 @@ public extension Logger {
 
     // Mirrors the Forwarder signature, so the parameter count is fixed by that contract
     // swiftlint:disable:next function_parameter_count
-    private static func dispatchToForwarders(_ message: String, level: LogLevel, subsystem: String, category: String, file: String, line: Int, function: String) {
+    private static func dispatchToForwarders(
+        _ message: String,
+        level: LogLevel,
+        subsystem: String,
+        category: String,
+        file: String,
+        line: Int,
+        function: String
+    ) {
         forwarderLock.lock()
         guard forwarders.isNotEmpty else {
             forwarderLock.unlock()
@@ -216,7 +252,13 @@ public extension Logger {
 extension Logger {
     /// Prints a message to the log if available
     @discardableResult
-    private func printMessage(_ message: String?, logLevel: LogLevel, file: String, line: Int, function: String) -> Bool {
+    private func printMessage(
+        _ message: String?,
+        logLevel: LogLevel,
+        file: String,
+        line: Int,
+        function: String
+    ) -> Bool {
         guard let message else { return false }
         guard currentLogLevel.allowedLevels.contains(logLevel) else {
             return false
@@ -242,7 +284,15 @@ extension Logger {
         print("[\(subsystem)/\(category)] \(emitter)\(logLevel.emoji) \(message)")
         #endif
 
-        Logger.dispatchToForwarders(message, level: logLevel, subsystem: subsystem, category: category, file: file, line: line, function: function)
+        Logger.dispatchToForwarders(
+            message,
+            level: logLevel,
+            subsystem: subsystem,
+            category: category,
+            file: file,
+            line: line,
+            function: function
+        )
         return true
     }
 }

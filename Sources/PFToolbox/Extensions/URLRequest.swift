@@ -13,8 +13,14 @@ public extension URLRequest {
     /// - parameter: url The URL for the request.
     /// - parameter: httpMethod The HTTP method to use for the request
     /// - parameter: cachePolicy The cache policy for the request. Defaults to `.useProtocolCachePolicy`
-    /// - parameter: timeoutInterval The timeout interval for the request. See the commentary for the `timeoutInterval` for more information on timeout intervals. Defaults to 60.0
-    init(url: URL, httpMethod: HTTPMethod, cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy, timeoutInterval: TimeInterval = 60.0) {
+    /// - parameter: timeoutInterval The timeout interval for the request. See the commentary for the `timeoutInterval`
+    /// for more information on timeout intervals. Defaults to 60.0
+    init(
+        url: URL,
+        httpMethod: HTTPMethod,
+        cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy,
+        timeoutInterval: TimeInterval = 60.0
+    ) {
         self.init(
             url: url,
             cachePolicy: cachePolicy,
@@ -26,7 +32,8 @@ public extension URLRequest {
     /// Creates a URLRequest for an endpoint
     /// - parameter: route The endpoint route
     /// - parameter: cachePolicy The cache policy for the request. Defaults to `.useProtocolCachePolicy`
-    /// - parameter: timeoutInterval The timeout interval for the request. See the commentary for the `timeoutInterval` for more information on timeout intervals. Defaults to 60.0
+    /// - parameter: timeoutInterval The timeout interval for the request. See the commentary for the `timeoutInterval`
+    /// for more information on timeout intervals. Defaults to 60.0
     static func buildRequest(
         from route: Endpoint,
         cachePolicy: URLRequest.CachePolicy = .reloadIgnoringLocalAndRemoteCacheData,

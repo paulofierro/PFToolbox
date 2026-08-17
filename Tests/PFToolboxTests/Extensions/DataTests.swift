@@ -36,7 +36,7 @@ struct DataTests {
 
     /// Non-UTF8 bytes must survive, which the old String round-trip could not manage
     @Test func `loading binary data`() throws {
-        let contents = Data([0x00, 0xFF, 0xFE, 0x80, 0x01])
+        let contents = Data([0x00, 0xff, 0xfe, 0x80, 0x01])
         let bundle = try TemporaryBundle(
             info: ["CFBundleName": "Fixture"],
             resources: ["blob.bin": contents]

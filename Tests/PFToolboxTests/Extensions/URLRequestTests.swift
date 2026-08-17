@@ -244,7 +244,8 @@ struct URLRequestTests {
         #expect(request.cachePolicy == .reloadIgnoringLocalAndRemoteCacheData)
         #expect(request.timeoutInterval == 60)
         #expect(request.httpMethod == "POST")
-        #expect(request.allHTTPHeaderFields == [HTTPHeaderField.contentType.rawValue: HTTPHeaderValue.jsonContent.rawValue])
+        #expect(request
+            .allHTTPHeaderFields == [HTTPHeaderField.contentType.rawValue: HTTPHeaderValue.jsonContent.rawValue])
 
         let json = try #require(MessagePayload(message: message).toJSONObject())
         let serializedPayload = try JSONSerialization.data(withJSONObject: json)

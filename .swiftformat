@@ -4,18 +4,51 @@
 #
 
 --header "\n  {file}\n  Copyright © Paulo Fierro. All rights reserved.\n"
---swiftversion 6.2
+--swiftversion 6.3
+--language-mode 5
 
-#
-# NOTES:
-#
-# hoistPatternLet   - 🤢 can be enabled, but not a fan.
-# trailingClosures  – 👎 we prefer explicit closures
-# trailingCommas    - 👎 these aren't useful
-# unusedArguments   - 👎 removing args that aren't in use isn't useful
-# wrapMultilineStatementBraces - 👎 no thanks
-#
+# File options
+--exclude Package.swift
 
+# Formatting options
 --decimal-grouping 3
+--hex-grouping ignore
+--hex-literal-case lowercase
 --ifdef no-indent
---disable hoistPatternLet, trailingClosures, trailingCommas, unusedArguments, wrapMultilineStatementBraces
+--import-grouping testable-first
+--self init-only
+--short-optionals except-properties
+--wrap-arguments before-first
+--wrap-parameters before-first
+--wrap-collections before-first
+--wrap-conditions after-first
+--max-width 120
+
+# Rules
+--lint-only unusedPrivateDeclarations
+# `appDelegate` has no reader in the source — @NSApplicationDelegateAdaptor consumes it — so the
+# rule reports it as unused. Removing it would strip the app of every AppKit surface it owns.
+--preserve-decls appDelegate
+
+--enable emptyExtensions
+--enable isEmpty
+--enable noForceTryInTests
+--enable noForceUnwrapInTests
+--enable preferFinalClasses
+--enable redundantAsync
+--enable redundantThrows
+--enable redundantEquatable
+--enable redundantMemberwiseInit
+--enable redundantVariable
+
+--disable hoistPatternLet
+--disable trailingClosures # Prefer explicit closures
+--disable trailingCommas
+--disable unusedArguments
+--disable wrapMultilineStatementBraces
+--disable redundantSendable # We want explicit Sendable as a signal of cross-actor intent
+--disable wrapFunctionBodies
+--disable wrapPropertyBodies
+--disable docComments
+--disable consecutiveSpaces
+--disable sortImports 

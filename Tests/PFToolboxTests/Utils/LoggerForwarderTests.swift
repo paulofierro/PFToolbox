@@ -101,16 +101,40 @@ struct LoggerForwarderTests {
         // Filtering on the original marker via subsystem ensures we ignore noise.
         Logger.addForwarder { msg, _, subsystem, _, _, _, _ in
             guard subsystem == marker else { return }
-            order.append(.init(message: "first", level: .info, subsystem: subsystem, category: "", file: "", line: 0, function: ""))
+            order.append(.init(
+                message: "first",
+                level: .info,
+                subsystem: subsystem,
+                category: "",
+                file: "",
+                line: 0,
+                function: ""
+            ))
             _ = msg
         }
         Logger.addForwarder { _, _, subsystem, _, _, _, _ in
             guard subsystem == marker else { return }
-            order.append(.init(message: "second", level: .info, subsystem: subsystem, category: "", file: "", line: 0, function: ""))
+            order.append(.init(
+                message: "second",
+                level: .info,
+                subsystem: subsystem,
+                category: "",
+                file: "",
+                line: 0,
+                function: ""
+            ))
         }
         Logger.addForwarder { _, _, subsystem, _, _, _, _ in
             guard subsystem == marker else { return }
-            order.append(.init(message: "third", level: .info, subsystem: subsystem, category: "", file: "", line: 0, function: ""))
+            order.append(.init(
+                message: "third",
+                level: .info,
+                subsystem: subsystem,
+                category: "",
+                file: "",
+                line: 0,
+                function: ""
+            ))
         }
         defer { Logger.removeAllForwarders() }
 

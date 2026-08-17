@@ -72,7 +72,7 @@ struct TemporaryBundle {
     private let root: URL
 
     init(named name: String = "Fixture", info: [String: Any], resources: [String: Data] = [:]) throws {
-        root = FileManager.default.temporaryDirectory
+        self.root = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString, isDirectory: true)
 
         let bundleURL = root.appendingPathComponent("\(name).bundle", isDirectory: true)
@@ -101,7 +101,7 @@ struct TemporaryBundle {
         guard let bundle = Bundle(url: bundleURL) else {
             throw GenericError.custom("Could not open the bundle at \(bundleURL.path)")
         }
-        value = bundle
+        self.value = bundle
     }
 
     func remove() {
