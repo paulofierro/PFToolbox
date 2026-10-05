@@ -1,8 +1,6 @@
 //
-//  View+Modify.swift
-//  PFToolbox
-//
-//  Created by Paulo Fierro on 05/10/2026.
+//   View+Modify.swift
+//   Copyright © Paulo Fierro. All rights reserved.
 //
 
 #if canImport(SwiftUI)
@@ -23,4 +21,14 @@ public extension View {
         modifier(self)
     }
 }
+
+public extension ToolbarContent {
+    /// Allows for inline modification of toolbar content, mirroring
+    /// `View.modify` so availability checks can be applied
+    /// to individual toolbar items.
+    func modify(@ToolbarContentBuilder _ modifier: (Self) -> some ToolbarContent) -> some ToolbarContent {
+        modifier(self)
+    }
+}
+
 #endif
